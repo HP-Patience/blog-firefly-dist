@@ -53,27 +53,16 @@ export const commentConfig: CommentConfig = {
 
 	//giscus评论系统配置
 	giscus: {
-		// 设置 Giscus 评论系统仓库
-		repo: "CuteLeaf/Firefly",
-		// 设置 Giscus 评论系统仓库ID
-		repoId: "R_kgD2gfdFGd",
-		// 设置 Giscus 评论系统分类
-		category: "General",
-		// 获取 Giscus 评论系统分类ID
-		categoryId: "DIC_kwDOKy9HOc4CegmW",
-		// 获取 Giscus 评论系统映射方式
-		mapping: "title",
-		// 获取 Giscus 评论系统严格模式
+		repo: "HP-Patience/Firefly",
+		repoId: "R_kgDOSqEZHQ",
+		category: "Show and tell",
+		categoryId: "DIC_kwDOSqEZHc4C-A0X",
+		mapping: "pathname",
 		strict: "0",
-		// 获取 Giscus 评论系统反应功能
 		reactionsEnabled: "1",
-		// 获取 Giscus 评论系统元数据功能
-		emitMetadata: "1",
-		// 获取 Giscus 评论系统输入位置
-		inputPosition: "top",
-		// 获取 Giscus 评论系统语言
+		emitMetadata: "0",
+		inputPosition: "bottom",
 		lang: "zh-CN",
-		// 获取 Giscus 评论系统加载方式
 		loading: "lazy",
 	},
 
