@@ -1,29 +1,30 @@
-# 关于我 / About Me
+## 👋 你好，我是 Celyn
 
-你好！我是 **夏叶** ，一个在数字世界中默默无闻的一片叶子。
+一名热爱技术与学习的开发者，目前在上海学习与工作。我坚信**费曼学习法**——只有当你能把一个概念清晰地讲给别人听时，你才算真正理解了它。这也是我创建这个博客的初衷：**反思近期所学并反馈输出，将所学知识内化**。
 
-## 🛠️ 关于本站
+## 🎯 学习方向
 
-这个网站使用 **Astro** 框架构建，采用了 [Firefly](https://github.com/CuteLeaf/Firefly) 模板，Firefly 是基于 [Fuwari](https://github.com/saicaca/fuwari) 的二次开发。
+- **机器学习**：系统学习西瓜书，从基础理论（绪论、模型评估、线性模型、决策树、神经网络、支持向量机）到实践优化
+- **大模型 & LLM**：参与书生·浦语实战营，深入 RAG、Agent、微调（XTuner）、模型评测（OpenCompass）、提示词工程（LangGPT）
+- **AI 安全 & CV**：AI 攻防赛题研究、目标检测等前沿方向
+- **开发工具与自动化**：Claude Code CLI 配置与插件生态、n8n 工作流自动化部署、Playwright 爬虫脚本自动化
+- **编程语言**：Python（主力），Java
 
-**Firefly** 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。
+## 📝 博客内容
 
+主要涵盖：
 
-**🖥️在线预览： [Firefly - Demo site](https://firefly.cuteleaf.cn/)**
+- 🍉 **机器学习**（西瓜书系列：绪论 → 模型评估 → 线性模型 → 决策树 → 神经网络 → 支持向量机，含神经网络优化专题）
+- 🤖 **大模型实战**（书生·浦语全链路体系、RAG 文档问答、XTuner 微调、Lagent Agent 搭建、OpenCompass 评测、LangGPT 提示词）
+- 🔧 **工具与运维**（Claude Code CLI 安装配置、n8n Docker 部署、Hexo 博客搭建、Git 协作开发、IP 防护与 WebRTC 泄露预防）
+- 🐍 **Python 开发**（调试技巧、爬虫实战、类与方法设计）
+- 📸 **AI 攻防 & CV**（CV 赛题解读、模型攻防实践）
 
-**🏠我的博客： [https://blog.cuteleaf.cn](https://blog.cuteleaf.cn/)**
+## 🌐 联系我
 
-**📝Firefly使用文档： [https://docs-firefly.cuteleaf.cn](https://docs-firefly.cuteleaf.cn/)**
-
-**⭐Firefly开源地址：[https://github.com/CuteLeaf/Firefly](https://github.com/CuteLeaf/Firefly)** 
-
-**⭐Fuwari开源地址：[https://github.com/saicaca/fuwari](https://github.com/saicaca/fuwari)**
-
-::github{repo="CuteLeaf/Firefly"}
-
-::github{repo="saicaca/fuwari"}
+- GitHub: [HP-Patience](https://github.com/HP-Patience)
+- Email: <1249140039@qq.com>
 
 ---
 
 *感谢你的来访！希望在这里能找到对你有用的内容！*
-
