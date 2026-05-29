@@ -1,6 +1,7 @@
 ---
 title: 【n8n】基于WSL2-Docker完整部署教程
 published: 2026-05-12
+slug: "n8n-wsl2-docker-deploy"
 description: "基于WSL2+Docker一键部署开源自动化工作流工具n8n，实现低代码可视化流程编排与定时任务。"
 image: /img/n8n.png
 tags: ["n8n", "Docker", "WSL2"]
@@ -68,7 +69,7 @@ dism.exe /online /enable-feature /featurename:Hyper-V-Online /all /norestart
 
 确定后**重启电脑**。
 
-![](n8n-wsl2-docker-deploy/Pastedimage20260512121830.png)
+![](./Pastedimage20260512121830.png)
 
 ### 2.3.3 开启 CPU 虚拟化
 
@@ -97,12 +98,12 @@ wsl --import Ubuntu-22.04 F:\wsl\Ubuntu2204 F:\wsl\jammy-server-cloudimg-amd64-r
 
 修改 `Disk image location`，把 Docker 存储路径迁移到**非 C 盘**。
 
-![](n8n-wsl2-docker-deploy/Pastedimage20260512114819.png)
+![](./Pastedimage20260512114819.png)
 ## 3.3 WSL integration 配置
 
 开启对应 `Ubuntu-22.04` 的 WSL 集成，让 Docker 与 WSL 互通
 
-![](n8n-wsl2-docker-deploy/Pastedimage20260512114718.png)
+![](./Pastedimage20260512114718.png)
 ## 3.4 Docker Engine 镜像加速配置
 粘贴以下完整配置，配置国内镜像源加速拉取：
 ```
@@ -125,7 +126,7 @@ wsl --import Ubuntu-22.04 F:\wsl\Ubuntu2204 F:\wsl\jammy-server-cloudimg-amd64-r
 }
 ```
 配置后重启 Docker 生效。
-![](n8n-wsl2-docker-deploy/Pastedimage20260512114943.png)
+![](./Pastedimage20260512114943.png)
 
 # 4 n8n 部署与使用
 ## 4.1 Docker 部署启动 n8n
@@ -144,19 +145,19 @@ docker run -d ` --name n8n ` -p 5678:5678 ` -e GENERIC_TIMEZONE="Asia/Shanghai" 
 
 浏览器打开：[http://localhost:5678/](http://localhost:5678/)
 
-![](n8n-wsl2-docker-deploy/Pastedimage20260512115338.png)
+![](./Pastedimage20260512115338.png)
 
 同时在docker desktop中的Containers中出现该容器
 
-![](n8n-wsl2-docker-deploy/Pastedimage20260512115207.png)
+![](./Pastedimage20260512115207.png)
 
 ## 4.2 n8n 的webui界面操作
 
-![](n8n-wsl2-docker-deploy/Pastedimage20260512115650.png)
+![](./Pastedimage20260512115650.png)
 
-![](n8n-wsl2-docker-deploy/Pastedimage20260512115812.png)
+![](./Pastedimage20260512115812.png)
 
-![](n8n-wsl2-docker-deploy/Pastedimage20260512115832.png)
+![](./Pastedimage20260512115832.png)
 
 
 # 5 参考文档：

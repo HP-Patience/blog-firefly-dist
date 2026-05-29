@@ -1,6 +1,7 @@
 ---
 title: My first blog
 published: 2024-04-23
+slug: "my-first-blog"
 draft: true
 description: "博客搭建成功纪念文章，记录个人技术博客的首次部署。"
 tags: ["随笔"]

@@ -1,6 +1,7 @@
 ---
 title: 【lagent】agent搭建
 published: 2024-09-18
+slug: "lagent-agent-setup"
 description: "使用Lagent框架搭建AI Agent智能体，学习Agent技术原理和实践，包括自定义工具扩展和Web UI部署。"
 tags: ["Agent"]
 category: 书生·浦语三期实战营
@@ -19,7 +20,7 @@ conda activate agent_camp3
 lmdeploy serve api_server /share/new_models/Shanghai_AI_Laboratory/internlm2_5-7b-chat --model-name internlm2_5-7b-chat
 ```
 
-![](lagent-agent-setup/1.png)
+![](./1.png)
 
 
 
@@ -33,7 +34,7 @@ conda activate agent_camp3
 streamlit run examples/internlm2_agent_web_demo.py
 ```
 
-![](lagent-agent-setup/2.png)
+![](./2.png)
 
 
 
@@ -41,7 +42,7 @@ streamlit run examples/internlm2_agent_web_demo.py
 
 
 
-![](lagent-agent-setup/3.png)
+![](./3.png)
 
 # Q&A
 
@@ -63,7 +64,7 @@ Due to griffe's recent 1.x release, the `griffe.enumerations` module has been re
 
 
 
-![](lagent-agent-setup/4.png)
+![](./4.png)
 
 
 
@@ -71,7 +72,7 @@ Due to griffe's recent 1.x release, the `griffe.enumerations` module has been re
 
 
 
-![](lagent-agent-setup/5.png)
+![](./5.png)
 
 
 
@@ -81,11 +82,11 @@ Due to griffe's recent 1.x release, the `griffe.enumerations` module has been re
 
 PS:很是可惜，没有找到我想要的内容[[1706.03762] Attention Is All You Need (arxiv.org)](https://arxiv.org/abs/1706.03762)
 
-![](lagent-agent-setup/6.png)
+![](./6.png)
 
 # 自定义工具
 
-![](lagent-agent-setup/7.png)
+![](./7.png)
 
 
 
@@ -109,7 +110,7 @@ from lagent.agents.internlm2_agent import INTERPRETER_CN, META_CN, PLUGIN_CN, In
         ]
 ```
 
-![](lagent-agent-setup/8.png)
+![](./8.png)
 
 
 
@@ -125,7 +126,7 @@ from lagent.agents.internlm2_agent import INTERPRETER_CN, META_CN, PLUGIN_CN, In
 
 
 
-![](lagent-agent-setup/9.png)
+![](./9.png)
 
 <!-- broken image removed: 10.png -->
 
@@ -137,6 +138,6 @@ from lagent.agents.internlm2_agent import INTERPRETER_CN, META_CN, PLUGIN_CN, In
 
 
 
-![](lagent-agent-setup/12.png)
+![](./12.png)
 
-![](lagent-agent-setup/13.png)
+![](./13.png)

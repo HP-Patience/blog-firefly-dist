@@ -1,6 +1,7 @@
 ---
 title: 🍉Book-1章-绪论
 published: 2024-05-15
+slug: "watermelon-book-ch1"
 description: "西瓜书-第一章-学习笔记 #文章描述"
 tags: ["机器学习"]
 category: 🍉Book
@@ -8,7 +9,7 @@ category: 🍉Book
 
 # 本书的使用：
 
-![](watermelon-book-ch1/1.png)
+![](./1.png)
 第1章-绪论
 
 
@@ -193,7 +194,7 @@ $$ ( x _ { i } , y _ { i } )$$
 
 	任意算法的“训练集外误差”相等，即不同算法的误差期望相同，无绝对意义上的更优算法。
 
-![](watermelon-book-ch1/2.jpg)
+![](./2.jpg)
 
 所以 **不能摆脱具体问题** 谈论算法的**优劣**
 

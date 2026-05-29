@@ -1,6 +1,7 @@
 ---
 title: 【Git】项目协作开发教程
 published: 2026-05-19
+slug: "git-collaboration-guide"
 description: "GitHub协作开发全流程指南，从Conventional Commit规范到Fork+PR贡献代码的标准化操作。"
 image: /img/Git_workflow_visualization_with_commits_and_branches.png
 tags: ["Git", "GitHub"]
@@ -36,12 +37,12 @@ git config user.email
 > 我在实验室电脑执行 git push、提交 PR 时，由于疏忽检查，提交记录带入电脑里留存的其他用户信息，导致 pr 时对方被设为共同作者，并且在我 fork 的仓库中显示上传 commit的用户并不是自己。所以一定要提前核对清楚本地个人账号信息，不然你的辛苦付出最后反倒会为他人做了嫁衣。
 
 
-![](git-collaboration-guide/Pasted-image-20260519032430.png)
+![](./Pasted-image-20260519032430.png)
 注：pr 里面多了个不知名的 xxxu680
 # 3 Git 代理配置（解决 GitHub 下载慢）
 若访问 GitHub 速度缓慢，可配置 **7897 端口代理**（本地常用代理端口），提升克隆、拉取代码的效率。
 
-![](git-collaboration-guide/Pasted-image-20260519031146.png)
+![](./Pasted-image-20260519031146.png)
 ## 3.1 设置 7897 端口代理
 适用于 http/https 协议下载 GitHub
 ```
@@ -61,7 +62,7 @@ git config --global --get http.proxy
 git config --global --get https.proxy
 ```
 
-![](git-collaboration-guide/Pasted-image-20260519031247.png)
+![](./Pasted-image-20260519031247.png)
 ## 3.3 取消代理（备用）
 若无需代理，可执行以下命令清除配置：
 ```
@@ -78,7 +79,7 @@ git config --global --unset https.proxy
 以==我参与开发的项目==为例：
 在 GitHub 上将目标仓库（如 `jihe520/MathModelAgent`）Fork 到**自己的账号**下，生成个人副本（如 `HP-Patience/MathModelAgent`）。
 
-![](git-collaboration-guide/Pasted-image-20260519031658.png)
+![](./Pasted-image-20260519031658.png)
 ## 4.2 本地初始化仓库
 
 ### 4.2.1 方式 1：下载 ZIP 压缩包后初始化
@@ -104,7 +105,7 @@ git pull origin main
 git clone https://github.com/HP-Patience/MathModelAgent.git
 ```
 
-![](git-collaboration-guide/Pasted-image-20260519031751.png)
+![](./Pasted-image-20260519031751.png)
 # 5 分支开发与代码提交
 
 ## 5.1 创建开发分支
@@ -172,7 +173,7 @@ git branch -D myfeat
 git push origin main
 ```
 
-![](git-collaboration-guide/Pasted-image-20260519031920.png)
+![](./Pasted-image-20260519031920.png)
 
 ---
 

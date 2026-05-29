@@ -1,6 +1,7 @@
 ---
 title: 🍉Book-3章-线性模型
 published: 2024-05-16
+slug: "watermelon-book-ch3"
 description: "西瓜书-第三章-学习笔记 #文章描述"
 tags: ["机器学习"]
 category: 🍉Book
@@ -83,7 +84,7 @@ $$ x _ { 1 } = ( 1 ; 0 ; 0 ) , x _ { 2 } = (  0 ; 1 ; 0 ) , x _ { 3 } = (  0 ; 0
 
 对于==回归==，==二分类==，==多分类==任务，我们给出不同的线性模型
 
-![1.png](watermelon-book-ch3/1.png)
+![1.png](./1.png)
 
 # 回归任务
 
@@ -145,7 +146,7 @@ $$
 
 **注意**：此处将$f\left(\boldsymbol{x}_{i}\right)=\boldsymbol{w}^{\mathrm{T}} \boldsymbol{x}_{i}+b$中的 $b$ 拆成`b*1`的形式，用$x$吸收$1$，用$w$吸收$b$变成$\hat{\boldsymbol{w}}$
 
-![2.png](watermelon-book-ch3/2.png)
+![2.png](./2.png)
 `[图片源于周志华老师]`
 
 <center>3.解得w</center>

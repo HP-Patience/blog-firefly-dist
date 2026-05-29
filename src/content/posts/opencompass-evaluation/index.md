@@ -1,6 +1,7 @@
 ---
 title: 【评测】opencompass-司南
 published: 2024-09-04
+slug: "opencompass-evaluation"
 description: "使用OpenCompass司南评测工具对大模型进行全方位评测，了解模型性能指标和能力边界。"
 tags: ["评测"]
 category: 书生·浦语三期实战营
@@ -12,7 +13,7 @@ category: 书生·浦语三期实战营
 
 # 任务内容
 
-![](opencompass-evaluation/0.png)
+![](./0.png)
 
 # 任务复现过程
 
@@ -22,10 +23,10 @@ category: 书生·浦语三期实战营
 python tools/list_configs.py internlm ceval
 ```
 
-![](opencompass-evaluation/1.png)
+![](./1.png)
 
-![](opencompass-evaluation/2.png)
+![](./2.png)
 
 ==评测结束==
 
-![](opencompass-evaluation/3.png)
+![](./3.png)

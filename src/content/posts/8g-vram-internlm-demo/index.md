@@ -1,6 +1,7 @@
 ---
 title: 8G显存玩转书生大模型Demo
 published: 2024-08-20
+slug: "8g-vram-internlm-demo"
 description: "详细介绍如何在8G显存环境下部署和运行书生大模型Demo，包括InternLM2-Chat-1.8B、InternLM-XComposer2-VL-1.8B和InternVL2-2B模型的部署教程。"
 tags: ["大模型"]
 category: 书生·浦语三期实战营
@@ -24,7 +25,7 @@ pip install accelerate==0.33.0
 pip install streamlit==1.37.0
 ```
 
-![](8g-vram-internlm-demo/P1.png)
+![](./P1.png)
 
 # InternLM2-Chat-1.8B 模型部署
 
@@ -37,7 +38,7 @@ mkdir -p /root/demo
 touch /root/demo/cli_demo.py
 ```
 
-![](8g-vram-internlm-demo/P2.png)
+![](./P2.png)
 
  其中`cli_demo.py` 的代码为：
 
@@ -78,7 +79,7 @@ while True:
 
 3.使用 Cli Demo 完成 InternLM2-Chat-1.8B 模型的部署，并生成 300 字小故事
 
-![](8g-vram-internlm-demo/P3.png)
+![](./P3.png)
 
 ## 二、用Streamlit Web Demo 部署
 
@@ -96,7 +97,7 @@ cd /root/demo
 streamlit run /root/demo/Tutorial/tools/streamlit_demo.py --server.address 127.0.0.1 --server.port 6006
 ```
 
-![](8g-vram-internlm-demo/P4.png)
+![](./P4.png)
 
 3.在**本地**的 PowerShell 中输入以下命令，将端口映射到本地：
 
@@ -104,11 +105,11 @@ streamlit run /root/demo/Tutorial/tools/streamlit_demo.py --server.address 127.0
 ssh -CNg -L 6006:127.0.0.1:6006 root@ssh.intern-ai.org.cn -p 你的 ssh 端口号
 ```
 
-![](8g-vram-internlm-demo/P5.png)
+![](./P5.png)
 
 4.完成端口映射后，通过浏览器访问 `http://localhost:6006` 来启动我们的 Demo。
 
-![](8g-vram-internlm-demo/P6.png)
+![](./P6.png)
 
 # LMDeploy 部署
 
@@ -131,7 +132,7 @@ pip install lmdeploy[all]==0.5.1
 pip install timm==1.0.7
 ```
 
-![](8g-vram-internlm-demo/P7.png)
+![](./P7.png)
 
 2.使用 LMDeploy 启动一个与 InternLM-XComposer2-VL-1.8B 模型交互的 Gradio 服务。
 
@@ -139,7 +140,7 @@ pip install timm==1.0.7
 lmdeploy serve gradio /share/new_models/Shanghai_AI_Laboratory/internlm-xcomposer2-vl-1_8b --cache-max-entry-count 0.1
 ```
 
-![](8g-vram-internlm-demo/P8.png)
+![](./P8.png)
 
 3.若已关闭端口映射，重新输入以下代码即可:
 
@@ -147,11 +148,11 @@ lmdeploy serve gradio /share/new_models/Shanghai_AI_Laboratory/internlm-xcompose
 ssh -CNg -L 6006:127.0.0.1:6006 root@ssh.intern-ai.org.cn -p 36558
 ```
 
-![](8g-vram-internlm-demo/P9.png)
+![](./P9.png)
 
 通过浏览器访问 `http://localhost:6006` 来启动==InternLM-XComposer2-VL-1.8B==模型
 
-![](8g-vram-internlm-demo/P10.png)
+![](./P10.png)
 
 输入图片并询问图片里有什么：
 
@@ -159,7 +160,7 @@ ssh -CNg -L 6006:127.0.0.1:6006 root@ssh.intern-ai.org.cn -p 36558
 
 输出：
 
-![](8g-vram-internlm-demo/P11.png)
+![](./P11.png)
 
 ## 二、InternVL2-2B 模型
 
@@ -182,14 +183,14 @@ lmdeploy serve gradio /share/new_models/OpenGVLab/InternVL2-2B --cache-max-entry
 ssh -CNg -L 6006:127.0.0.1:6006 root@ssh.intern-ai.org.cn -p 36558
 ```
 
-![](8g-vram-internlm-demo/P9.png)
+![](./P9.png)
 
 通过浏览器访问 `http://localhost:6006` 来启动==InternVL2-2B==模型
 
 
 输入图片并询问详细描述图片内容：
 
-![](8g-vram-internlm-demo/cat2.png)
+![](./cat2.png)
 输出：
 
-![](8g-vram-internlm-demo/P12.png)
+![](./P12.png)
