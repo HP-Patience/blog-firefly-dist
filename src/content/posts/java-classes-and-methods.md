@@ -1,6 +1,7 @@
 ---
 title: 定义类和方法
 published: 2024-05-14
+slug: "java-classes-and-methods"
 description: "Java面向对象编程基础，讲解类的定义、对象的实例化以及成员变量与方法的概念。"
 category: Java
 ---

@@ -1,6 +1,7 @@
 ---
 title: 【RAG】使用Llamaindex框架部署InternLM2-1.8B
 published: 2024-09-04
+slug: "rag-llamaindex-internlm2"
 description: "学习使用LlamaIndex框架结合InternLM2-1.8B大模型实现RAG检索增强生成，为模型注入外部知识库。"
 tags: ["RAG"]
 category: 书生·浦语三期实战营
@@ -272,16 +273,16 @@ category: 书生·浦语三期实战营
 
 # 七、作业
 
-![](rag-llamaindex-internlm2/1.png)
+![](./1.png)
 
 ==RAG前==
 
-![](rag-llamaindex-internlm2/2.png)
+![](./2.png)
 
 ==RAG后==
 
-![](rag-llamaindex-internlm2/3.png)
+![](./3.png)
 
 ==使用Streamlit部署webui（使用RAG）==
 
-![](rag-llamaindex-internlm2/4.png)
+![](./4.png)

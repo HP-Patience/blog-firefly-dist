@@ -1,6 +1,7 @@
 ---
 title: 🍉Book-2章-模型评估与选择
 published: 2024-05-16
+slug: "watermelon-book-ch2"
 description: "西瓜书-第二章-学习笔记 #文章描述"
 tags: ["机器学习"]
 category: 🍉Book
@@ -83,7 +84,7 @@ category: 🍉Book
 
 我们引入**新的划分方法** <u>k-折交叉验证法</u> 可以有效解决该问题
 
-![](watermelon-book-ch2/1.jpg)
+![](./1.jpg)
 
 以该图为例：
 >首先将数据集D随机划分为10个子集，
@@ -104,7 +105,7 @@ category: 🍉Book
 
 ## 1.3 自助法
 
-![](watermelon-book-ch2/2.jpg)
+![](./2.jpg)
 
 “自助法”(bootstrapping)
 基于==放回取样== 亦称“可重复采样”
@@ -182,7 +183,7 @@ $$
 
 ==混淆矩阵==：
 
-![](watermelon-book-ch2/3.png)
+![](./3.png)
 
 其中查准率P和查全率R的定义为：
 $$

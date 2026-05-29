@@ -1,6 +1,7 @@
 ---
 title: 【Claude_Code_CLI安装】代理配置-本地模型-插件生态
 published: 2026-05-23
+slug: "claude-code-cli-setup"
 description: "Claude Code CLI完整安装指南，涵盖代理配置、DeepSeek/本地模型接入、内网穿透及插件生态。"
 image: /img/Claude_Code_CLI安装.png
 tags: ["Claude Code", "AI工具"]
@@ -35,7 +36,7 @@ npm install -g @anthropic-ai/claude-code
 
 `cc switch` 用于在多个模型配置之间快速切换，并对齐模型所需格式。
 
-![](claude-code-cli-setup/Pasted-image-20260523155037.png)
+![](./Pasted-image-20260523155037.png)
 
 # 4 配置 DeepSeek 兼容端点
 
@@ -51,9 +52,9 @@ Claude Code 默认走 Anthropic 官方 API，但也可以通过自定义端点�
 
 > 注意：DeepSeek 兼容的是 OpenAI API 格式，Claude Code 内部已做适配，直接使用社区提供的端点地址即可。
 
-![](claude-code-cli-setup/Pasted-image-20260523154919.png)
+![](./Pasted-image-20260523154919.png)
 
-![](claude-code-cli-setup/Pasted-image-20260523164457.png)
+![](./Pasted-image-20260523164457.png)
 点击获取模型列表，再点击一键设置即可
 记得勾选1M，表示可以使用1百万token上下文，当然前提是你的模型支持(比如deepseek)
 
@@ -89,11 +90,11 @@ ngrok http 8080
 
 配置完成后，在任意文件夹打开终端输入 `claude`，测试是否正常启用。
 
-![](claude-code-cli-setup/Pasted-image-20260523164024.png)
+![](./Pasted-image-20260523164024.png)
 
-![](claude-code-cli-setup/Pasted-image-20260523164123.png)
+![](./Pasted-image-20260523164123.png)
 
-![](claude-code-cli-setup/Pasted-image-20260523164159.png)
+![](./Pasted-image-20260523164159.png)
 
 ## 5.3 切换模型
 
@@ -107,9 +108,9 @@ ngrok http 8080
 
 ## 5.5 CC switch实际修改配置
 
-![](claude-code-cli-setup/Pasted-image-20260523165709.png)
+![](./Pasted-image-20260523165709.png)
 
-![](claude-code-cli-setup/Pasted-image-20260523165830.png)
+![](./Pasted-image-20260523165830.png)
 
 cc switch实际就是建立网关，将baseurl改成自己的端口，再填写供应商的api调用地址和映射模型进行模型调用
 
@@ -128,16 +129,16 @@ Claude Code 的真正威力在于可扩展生态。通过插件市场，你可�
 ```
 
 市场地址：[https://github.com/anthropics/skills](https://github.com/anthropics/skills)
-![](claude-code-cli-setup/Pasted-image-20260523184257.png)
+![](./Pasted-image-20260523184257.png)
 ## 6.2 浏览与安装
 
 添加市场后，输入 `/plugin` 即可浏览所有可用插件。按需安装，最后执行一次插件重载/reload-plugin即可生效。
 
-![](claude-code-cli-setup/Pasted-image-20260523184311.png)
+![](./Pasted-image-20260523184311.png)
 
 安装完成后，右下角状态栏会显示各服务的可用状态。如果某个 MCP 服务启动失败或需要官方验证，也会有相应提示，方便排查。
 
-![](claude-code-cli-setup/Pasted-image-20260523184326.png)
+![](./Pasted-image-20260523184326.png)
 
 
 ---

@@ -1,6 +1,7 @@
 ---
 title: 🍉Book-4章-决策树
 published: 2024-05-16
+slug: "watermelon-book-ch4"
 description: "西瓜书-第四章-学习笔记 #文章描述"
 tags: ["机器学习"]
 category: 🍉Book

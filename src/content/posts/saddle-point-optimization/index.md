@@ -1,6 +1,7 @@
 ---
 title: 神经网络优化核心：鞍点而非局部极小值
 published: 2026-05-10
+slug: "saddle-point-optimization"
 description: "深入解析神经网络梯度下降停滞的真正原因——鞍点问题，结合Hessian矩阵分析高维损失景观特性。"
 image: /img/saddle_point_cover.png
 tags: ["优化理论"]
@@ -17,9 +18,9 @@ category: 深度学习
 
 综上，局部最小值点与鞍点的梯度均为 0，这两类梯度为 0 的点统称为驻点。
 
-![](saddle-point-optimization/PixPin_2026-05-10_16-16-44.png)
+![](./PixPin_2026-05-10_16-16-44.png)
 
-![](saddle-point-optimization/PixPin_2026-05-10_16-15-32.png)
+![](./PixPin_2026-05-10_16-15-32.png)
 那么当我们遇到梯度为 0 的驻点时，如何判断其是局部最小值点还是导致优化停滞的鞍点呢？此时需要引入 Hessian 矩阵进行判别：
 
 # 3 Hessian 矩阵与二次型
@@ -45,7 +46,7 @@ $$
 这就是为什么我们可以用 Hessian 的特征值来判断临界点的类型。
 
 
-![](saddle-point-optimization/PixPin_2026-05-10_16-15-09.png)
+![](./PixPin_2026-05-10_16-15-09.png)
 # 4 收敛点的真实本质
 我们可以做一个简单的实验：重复训练同一个网络很多次，每次训练到收敛，然后计算每个临界点 Hessian 矩阵的**正特征值比例**（我们称之为 Minimum Ratio），并记录对应的训练损失。
 
@@ -53,7 +54,7 @@ $$
 1.  **左侧点群（Minimum Ratio 很低）**：损失都很高（0.08-0.09），这些是典型的低维鞍点，有大量负特征值，模型困在这里根本没学好。
 2.  **右侧点群（Minimum Ratio 很高）**：损失都很低，这些点看起来像“局部极小值”，但它们的 Minimum Ratio 远小于 1，说明 Hessian 矩阵里仍然存在少量负特征值，本质上还是鞍点。
 
-![](saddle-point-optimization/PixPin_2026-05-10_16-10-03.png)
+![](./PixPin_2026-05-10_16-10-03.png)
 
 图中的文字 `never reach a real "local minima"` 直接点破了真相：
 **我们几乎永远无法到达数学上严格定义的局部极小值，只能停在这些高维鞍点上。**

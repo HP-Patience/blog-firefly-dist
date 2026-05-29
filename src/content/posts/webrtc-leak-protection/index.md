@@ -1,6 +1,7 @@
 ---
 title: 【IP地址防护】-预防WebRTC泄露
 published: 2026-05-02
+slug: "webrtc-leak-protection"
 description: "详解WebRTC泄露原理及防护方法，保护你的真实IP地址不被泄露，提升网络隐私安全。"
 image: /img/WebRTC.png
 tags: ["WebRTC"]
@@ -27,11 +28,11 @@ chrome需要安装扩展来避免WebRTC 泄露，推荐一个开源扩展
 # 使用 IPPure 检查 WebRTC 泄露情况
 ## 安装前：
 [IPPure链接地址](https://ippure.com/Browser-WebRTC-Leak-Detect.html)
-![](webrtc-leak-protection/PixPin_2026-05-02_22-53-07.png)
+![](./PixPin_2026-05-02_22-53-07.png)
 
 ## 安装后 ：
-![](webrtc-leak-protection/PixPin_2026-05-02_22-53-10.png)
-![](webrtc-leak-protection/PixPin_2026-05-02_22-53-16.png)
+![](./PixPin_2026-05-02_22-53-10.png)
+![](./PixPin_2026-05-02_22-53-16.png)
 
 # Reference：
 1. [WebRTC解释](https://ippure.com/Browser-WebRTC-Leak-Detect.html)

@@ -1,13 +1,14 @@
 ---
 title: 【爬虫项目解析】-小鹅通m3u8逆向解密
 published: 2026-03-30
+slug: "xiaoe-m3u8-reverse"
 description: "小鹅通平台m3u8视频流的逆向分析与解密实战，学习网络爬虫和视频解密技术。"
 tags: ["逆向", "M3U8"]
 category: 爬虫
 ---
 
 打开 F12, 勾选保留日志，进行手动登录，找到请求方法为 POST 的信息，这就是登录时向服务器发送的请求，找到 cookie 的信息并记录。
-![](xiaoe-m3u8-reverse/PixPin_2026-03-30_21-31-11.png)
+![](./PixPin_2026-03-30_21-31-11.png)
 
 点击负载可以找到发起登录请求时传入的参数信息
 - `ticket`：验证码票据（用来校验你输入的验证码）
@@ -19,19 +20,19 @@ category: 爬虫
 - `keep_login`：是否记住登录状态（false 代表不记住）
 - `nation_login`：国家 / 地区登录标识（1 通常代表国内）
 
-![](xiaoe-m3u8-reverse/PixPin_2026-03-30_21-36-45.png)
+![](./PixPin_2026-03-30_21-36-45.png)
 
 
 播放视频时产生一系列 Session 会话，这些视频相关行都是客户端向服务器请求的视频分片 TS分片的会话，类型时 video/mp2t，也就是 HLS 流媒体切片文件，第四第五列分别是目标服务器域名以及请求的视频分片 url 路径，但是知识 ts 切片，需要**找到完整的 m3u8 文件**。
 
-![](xiaoe-m3u8-reverse/PixPin_2026-03-31_12-50-14.png)
+![](./PixPin_2026-03-31_12-50-14.png)
 
 ctrl+f 搜索 m3u8 的session会话
 
-![](xiaoe-m3u8-reverse/PixPin_2026-03-31_13-01-03.png)
+![](./PixPin_2026-03-31_13-01-03.png)
 
 请求头中包含 url 信息，需要加上 host 域名前缀
 
-![](xiaoe-m3u8-reverse/PixPin_2026-03-31_13-01-45.png)
+![](./PixPin_2026-03-31_13-01-45.png)
 
 未完......

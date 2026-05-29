@@ -33,9 +33,9 @@ export const friendsConfig: FriendLink[] = [
 	},
 	{
 		title: "Firefly",
-		imgurl: "https://cdn.jsdelivr.net/gh/HP-Patience/HP-Patience.github.io@main/source/avatar_img/me.jpg",
+		imgurl: "https://firefly.cuteleaf.cn/_astro/avatar.BcAu2wMi_yT6PR.webp",
 		desc: "基于 Astro 的优雅博客主题",
-		siteurl: "https://github.com/HP-Patience/Firefly",
+		siteurl: "https://firefly.cuteleaf.cn/",
 		tags: ["Theme"],
 		weight: 9,
 		enabled: true,

@@ -1,6 +1,7 @@
 ---
 title: 【Prompt Engineering】LangGPT结构化提示词编写
 published: 2024-09-03
+slug: "langgpt-structured-prompt"
 description: "学习使用LangGPT结构化提示词框架优化大模型输出，提升LLM在数字比对等任务上的准确性。"
 tags: ["提示词工程"]
 category: 书生·浦语三期实战营
@@ -119,7 +120,7 @@ print(response.choices[0].message.content)
 
 使用GPTS中LangGPT提示词专家，配合我们的需求生成LangGPT结构化提示词
 
-![](langgpt-structured-prompt/1.png)
+![](./1.png)
 ==生成结果如下==：
 
 ```
@@ -157,11 +158,11 @@ print(response.choices[0].message.content)
 
 ==加入系统提示词前：==
 PS：估计InternLM2-chat-1_8b版本太久远了，所以回答不出来🤔
-![](langgpt-structured-prompt/2.png)
+![](./2.png)
 
 ==加入系统提示词后：==
 PS：效果明显变好了😋
-![](langgpt-structured-prompt/3.png)
+![](./3.png)
 
 # Reference：
 

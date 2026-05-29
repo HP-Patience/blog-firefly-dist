@@ -1,6 +1,7 @@
 ---
 title: 🍉Book-5章-神经网络
 published: 2024-05-16
+slug: "watermelon-book-ch5"
 description: "西瓜书-第五章-学习笔记 #文章描述"
 tags: ["机器学习"]
 category: 🍉Book
@@ -28,7 +29,7 @@ category: 🍉Book
 
 通过训练模型，得出合适的w和$\theta$，其中训练算法最常见的就是下面会说到的BP算法
 
-![](watermelon-book-ch5/1.jpg)
+![](./1.jpg)
 
 
 ## 激活函数
@@ -58,7 +59,7 @@ $$ s i g m o i d ( x ) = \frac { 1 } { 1 + e ^ { - x } }$$
 BP算法是一种迭代算法，基于==梯度下降==(gradient descent)策略，
 数学推导过程不多做阐述，详见西瓜书or南瓜书
 
-![](watermelon-book-ch5/2.jpg)
+![](./2.jpg)
 
 # 缓解过拟合
 
