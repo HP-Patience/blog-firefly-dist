@@ -3,7 +3,8 @@ title: 神经网络优化核心：鞍点而非局部极小值
 published: 2026-05-10
 description: "深入解析神经网络梯度下降停滞的真正原因——鞍点问题，结合Hessian矩阵分析高维损失景观特性。"
 image: /img/saddle_point_cover.png
-tags: ["深度学习", "优化理论"]
+tags: ["优化理论"]
+category: 深度学习
 ---
 
 # 1 前言

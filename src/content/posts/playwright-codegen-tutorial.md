@@ -3,7 +3,8 @@ title: 【爬虫脚本自动化录制】playwright-codegen使用教程
 published: 2026-04-14
 description: "详细介绍Playwright codegen工具的使用方法，通过可视化录制方式自动生成Python/Java/JS爬虫脚本，提升自动化开发效率。"
 image: /img/playwright_spider.png
-tags: ["爬虫"]
+tags: ["Playwright"]
+category: 爬虫
 ---
 
 # 前言

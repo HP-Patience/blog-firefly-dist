@@ -4,6 +4,7 @@ published: 2026-05-23
 description: "Claude Code CLI完整安装指南，涵盖代理配置、DeepSeek/本地模型接入、内网穿透及插件生态。"
 image: /img/Claude_Code_CLI安装.png
 tags: ["Claude Code", "AI工具"]
+category: 工具
 ---
 
 # 1 前言

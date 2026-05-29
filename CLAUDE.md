@@ -4,23 +4,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Firefly 是一个基于 Astro 6.x 的静态博客主题，由 [fuwari](https://github.com/saicaca/fuwari) 二次开发而来。所有源码和配置都在 `Firefly/` 目录内。
+Firefly 是一个基于 Astro 6.x 的静态博客主题，由 [fuwari](https://github.com/saicaca/fuwari) 二次开发而来。
 
 ## Commands
 
-所有命令在 `Firefly/` 目录下执行，使用 pnpm（禁止 npm/yarn）。
+环境要求：Node.js >= 22，pnpm >= 9。所有命令在项目根目录执行，使用 pnpm（禁止 npm/yarn，preinstall 脚本已强制）。
 
 | Command | Description |
 |---|---|
-| `pnpm dev` | 启动开发服务器 `localhost:4321` |
-| `pnpm build` | 构建：生成图标 → astro build → pagefind 搜索索引 |
-| `pnpm preview` | 预览构建产物 |
+| `pnpm install` | 安装依赖 |
+| `pnpm dev` / `pnpm start` | 启动开发服务器 `localhost:4321` |
+| `pnpm build` | 构建到 `dist/`：生成图标 → astro build → pagefind 搜索索引 |
+| `pnpm preview` | 预览 `dist/` 构建产物 |
 | `pnpm check` | Astro 类型检查 |
 | `pnpm type-check` | TypeScript 类型检查（不输出文件） |
 | `pnpm format` | Biome 格式化 `./src` |
 | `pnpm lint` | Biome lint + 自动修复 `./src` |
 | `pnpm new-post <filename>` | 在 `src/content/posts/` 创建新文章 |
 | `pnpm icons` | 仅重新生成图标 |
+| `pnpm astro ...` | 执行任意 Astro CLI 命令 |
 
 ## Architecture
 
@@ -44,8 +46,24 @@ Firefly 是一个基于 Astro 6.x 的静态博客主题，由 [fuwari](https://g
 ### 内容系统
 
 - 文章是 `src/content/posts/` 下的 `.md` / `.mdx` 文件，通过 `content.config.ts` 中的 glob loader 加载
+- `src/content/spec/` 是第二个内容集合（`spec`），用于 Markdown 语法示例页面
 - Frontmatter schema 见 `content.config.ts` 的 zod 定义
 - `src/utils/content-utils.ts` — 文章排序（置顶优先，按日期降序）、标签/分类统计、相关文章推荐（Jaccard 相似度 + 时间衰减）
+- 密码加密文章使用 `src/utils/crypto-utils.ts`（前端 Pako 压缩 + Base64 编码）
+
+### i18n 系统
+
+- UI 文本通过 `src/i18n/translation.ts` 的 `i18n(key)` 函数获取
+- 所有 key 定义在 `src/i18n/i18nKey.ts` 的 `I18nKey` 枚举中
+- 翻译文件在 `src/i18n/languages/` 下（`zh_CN.ts`、`en.ts`、`ja.ts`、`ru.ts`、`zh_TW.ts`）
+- 新增语言：在 `languages/` 创建新文件 → 在 `translation.ts` 的 `map` 中注册映射
+- 翻译缺失时回退到 `zh_CN`，再缺失则用 `en`
+
+### 图标预处理管道
+
+- `scripts/generate-icons.js` — 构建时自动扫描 `src/` 下所有 `.svelte` 文件中的图标引用（`icon="prefix:name"` 模式），从 iconify JSON 中提取 SVG 内联数据，生成 `src/constants/icons.ts`
+- `src/constants/icons.ts` 由脚本自动生成，**不可手动编辑**
+- Svelte 组件使用 `getIconSvg("material-symbols:search")` 获取内联 SVG，无需运行时请求
 
 ### Markdown 处理管道
 
@@ -81,7 +99,9 @@ Firefly 是一个基于 Astro 6.x 的静态博客主题，由 [fuwari](https://g
 
 ## Tech Stack
 
-- **Framework:** Astro 6.x + Svelte 5（仅用于交互组件如 Search、SharePoster、DisplaySettings）
+- **Framework:** Astro 6.x + Svelte 5
+  - **Astro 组件**（`.astro`）用于所有静态结构和服务器端渲染逻辑：布局、Widget、Markdown 渲染、SEO meta
+  - **Svelte 组件**（`.svelte`，仅 `src/components/` 下 12 个文件）仅用于需要客户端交互的组件：Search、SharePoster、DisplaySettings、LightDarkSwitch、WallpaperSwitch、LayoutSwitchButton、ArchivePanel、DropdownItem/Panel、Icon、AdvancedSearch
 - **Styling:** Tailwind CSS 4 + Stylus（`src/styles/` 下的 `.styl` 文件）
 - **Code highlighting:** astro-expressive-code
 - **Package manager:** pnpm 9（preinstall 脚本强制 pnpm）
