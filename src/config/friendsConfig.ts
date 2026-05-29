@@ -23,19 +23,19 @@ export const friendsPageConfig: FriendsPageConfig = {
 // 友链配置
 export const friendsConfig: FriendLink[] = [
 	{
-		title: "Hexo",
-		imgurl: "https://hexo.io/icon/favicon-196x196.png",
-		desc: "快速、简洁且高效的博客框架",
-		siteurl: "https://hexo.io",
-		tags: ["Blog"],
+		title: "Astro",
+		imgurl: "https://astro.build/assets/press/astro-icon-dark.png",
+		desc: "现代化的静态站点生成框架",
+		siteurl: "https://astro.build",
+		tags: ["Framework"],
 		weight: 10,
 		enabled: true,
 	},
 	{
-		title: "Icarus",
-		imgurl: "https://cdn.jsdelivr.net/npm/hexo-theme-icarus@6.0.0/source/logo.svg",
-		desc: "简洁精致的 Hexo 主题",
-		siteurl: "https://github.com/ppoffice/hexo-theme-icarus",
+		title: "Firefly",
+		imgurl: "https://cdn.jsdelivr.net/gh/HP-Patience/HP-Patience.github.io@main/source/avatar_img/me.jpg",
+		desc: "基于 Astro 的优雅博客主题",
+		siteurl: "https://github.com/HP-Patience/Firefly",
 		tags: ["Theme"],
 		weight: 9,
 		enabled: true,

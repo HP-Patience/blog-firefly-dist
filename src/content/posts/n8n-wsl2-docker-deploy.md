@@ -3,7 +3,8 @@ title: 【n8n】基于WSL2-Docker完整部署教程
 published: 2026-05-12
 description: "基于WSL2+Docker一键部署开源自动化工作流工具n8n，实现低代码可视化流程编排与定时任务。"
 image: /img/n8n.png
-tags: ["自动化", "Docker"]
+tags: ["n8n", "Docker", "WSL2"]
+category: 工具
 ---
 
 # 1 引言：为什么使用 n8n
