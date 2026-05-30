@@ -53,10 +53,10 @@ export const commentConfig: CommentConfig = {
 
 	//giscus评论系统配置
 	giscus: {
-		repo: "HP-Patience/Firefly",
-		repoId: "R_kgDOSqEZHQ",
-		category: "Show and tell",
-		categoryId: "DIC_kwDOSqEZHc4C-A0X",
+		repo: "HP-Patience/blog-firefly-dist",
+		repoId: "R_kgDOSrY3YA",
+		category: "Announcements",
+		categoryId: "DIC_kwDOSrY3YM4C-HwG",
 		mapping: "pathname",
 		strict: "0",
 		reactionsEnabled: "1",

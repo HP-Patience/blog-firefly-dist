@@ -13,6 +13,7 @@
     "new-post": "node scripts/new-post.js",
     "format": "biome format --write ./src",
     "lint": "biome check --write ./src",
+    "deploy": "pnpm build && cd dist && git add -A && git commit -m \"deploy: $(date +%Y-%m-%d_%H:%M)\" && git push origin master",
     "preinstall": "npx only-allow pnpm",
     "icons": "node scripts/generate-icons.js"
   },
