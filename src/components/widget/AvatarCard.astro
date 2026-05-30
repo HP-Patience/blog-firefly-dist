@@ -290,12 +290,12 @@ const { src, alt = "Avatar" } = Astro.props;
 
 <script>
   (function () {
-    let overlayEl = null;
+    let overlayEl: HTMLDivElement | null = null;
     let expanded = false;
-    let savedRect = null;
+    let savedRect: { left: number; top: number; width: number; height: number } | null = null;
 
     function init() {
-      const card = document.querySelector(".avatar-card");
+      const card = document.querySelector<HTMLElement>(".avatar-card");
       if (!card) return;
       if (card.dataset.avatarCardInit) return;
       card.dataset.avatarCardInit = "1";
@@ -485,8 +485,9 @@ const { src, alt = "Avatar" } = Astro.props;
       if (!expanded || !overlayEl) return;
       expanded = false;
 
-      const card = overlayEl.querySelector(".avatar-card");
+      const card = overlayEl.querySelector<HTMLElement>(".avatar-card");
       if (!card) return;
+      if (!savedRect) return;
 
       document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = "";
@@ -512,6 +513,7 @@ const { src, alt = "Avatar" } = Astro.props;
       overlayEl.addEventListener(
         "animationend",
         function onAnimEnd() {
+          if (!overlayEl) return;
           overlayEl.removeEventListener("animationend", onAnimEnd);
           card.classList.remove("active");
           card.style.left = "";

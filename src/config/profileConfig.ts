@@ -2,7 +2,8 @@ import type { ProfileConfig } from "../types/config";
 
 export const profileConfig: ProfileConfig = {
 	// 头像
-	avatar: "https://cdn.jsdelivr.net/gh/HP-Patience/HP-Patience.github.io@main/source/avatar_img/me.jpg",
+	avatar:
+		"https://cdn.jsdelivr.net/gh/HP-Patience/HP-Patience.github.io@main/source/avatar_img/me.jpg",
 
 	// 名字
 	name: "Celyn",
