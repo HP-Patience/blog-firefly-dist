@@ -1,11 +1,11 @@
 // 字体配置
 export const fontConfig = {
 	// 是否启用自定义字体功能
-	enable: false,
+	enable: true,
 	// 是否预加载字体文件
 	preload: true,
 	// 当前选择的字体，支持多个字体组合
-	selected: ["misans-regular"],
+	selected: ["source-serif-4", "noto-serif-sc"],
 
 	// 字体列表
 	// 推荐使用可靠的 CDN 服务商提供的字体链接，它天然做了按需分片加载，且性能较好
@@ -20,6 +20,24 @@ export const fontConfig = {
 			src: "", // 系统字体无需 src
 			family:
 				"system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+		},
+
+		// Google Fonts - Source Serif 4 (Anthropic 风格英文衬线)
+		"source-serif-4": {
+			id: "source-serif-4",
+			name: "Source Serif 4",
+			src: "https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap",
+			family: "Source Serif 4",
+			display: "swap" as const,
+		},
+
+		// Google Fonts - Noto Serif SC (中文衬线)
+		"noto-serif-sc": {
+			id: "noto-serif-sc",
+			name: "Noto Serif SC",
+			src: "https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap",
+			family: "Noto Serif SC",
+			display: "swap" as const,
 		},
 
 		// Google Fonts - Zen Maru Gothic
@@ -73,11 +91,8 @@ export const fontConfig = {
 
 	// 全局字体回退
 	fallback: [
-		"system-ui",
-		"-apple-system",
-		"BlinkMacSystemFont",
-		"Segoe UI",
-		"Roboto",
-		"sans-serif",
+		"Georgia",
+		"Times New Roman",
+		"serif",
 	],
 };

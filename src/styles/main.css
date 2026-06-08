@@ -3,8 +3,9 @@
 @import './navbar.css';
 @import './banner-title.css';
 @import './waves.css';
-@import './transition.css'; 
+@import './transition.css';
 @import './custom-scrollbar.css';
+@import './texture.css';
 
 
 @plugin '@tailwindcss/typography';
@@ -15,8 +16,10 @@
 /* Tailwind v4 配置 - 从 tailwind.config.cjs 迁移 */
 @theme {
   --font-sans:
-    'Roboto', 'sans-serif', ui-sans-serif, system-ui, sans-serif,
+    'Inter', ui-sans-serif, system-ui, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-serif:
+    'Source Serif 4', 'Noto Serif SC', Georgia, 'Times New Roman', serif;
 }
 
 /* 自定义工具类 - Tailwind v4 使用 @utility 定义 */

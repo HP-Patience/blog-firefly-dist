@@ -2,6 +2,14 @@
 
 .custom-md {
   overflow-wrap: break-word;
+  /* Editorial body text sizing */
+  font-size: 1.0625rem;
+  line-height: 1.75;
+
+  /* Responsive font sizing */
+  @media (min-width: 768px) {
+    font-size: 1.125rem;
+  }
 
   body.sticky-navbar & {
     [id] {
@@ -10,7 +18,22 @@
   }
 
   h1 {
-    @apply text-3xl;
+    @apply text-4xl;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-weight: 650;
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    font-weight: 600;
+  }
+
+  h4 {
+    font-weight: 600;
   }
 
   h1,
@@ -34,23 +57,28 @@
     }
   }
 
+  p {
+    margin-bottom: 1.25em;
+  }
+
   a:not(.no-styling) {
-    @apply relative bg-none font-medium text-(--primary) underline decoration-(--link-underline) decoration-1 decoration-dashed underline-offset-4;
+    @apply relative bg-none font-medium text-(--primary) underline decoration-(--primary) decoration-1 underline-offset-[3px];
+    text-decoration-color: color-mix(in oklch, var(--primary) 30%, transparent);
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
     word-break: break-word;
+    transition: all 0.15s ease;
 
     &:hover,
     &:active {
-      @apply decoration-transparent;
-      background: var(--btn-plain-bg-hover);
-      border-bottom: 1px dashed var(--link-hover);
-      text-decoration: none;
+      text-decoration-color: var(--primary);
+      background: transparent;
+      border-bottom: none;
     }
   }
 
   code {
-    @apply bg-(--inline-code-bg) text-(--inline-code-color) px-1 py-0.5 rounded-md overflow-hidden;
+    @apply bg-(--inline-code-bg) text-(--inline-code-color) px-1 py-0.5 rounded overflow-hidden;
 
     font-family:
       "JetBrains Mono Variable",
@@ -89,7 +117,9 @@
   }
 
   .expressive-code {
-    @apply my-4;
+    @apply my-6;
+    border-radius: calc(var(--radius-large) + 0.25rem);
+    overflow: hidden;
   }
 
   ul,
@@ -100,11 +130,12 @@
   }
 
   blockquote {
-    @apply not-italic border-transparent relative;
+    @apply not-italic border-transparent relative pl-6;
     font-weight: inherit;
 
     &:before {
-      @apply content-[''] absolute -left-1 block transition bg-(--btn-regular-bg) h-full w-1 rounded-full;
+      @apply content-[''] absolute left-0 top-0 block transition bg-(--primary) w-0.5 h-full rounded-full;
+      opacity: 0.3;
     }
 
     /* Remove the double quotes from default styles */
@@ -112,6 +143,13 @@
     p:after {
       @apply content-none;
     }
+
+    p {
+      margin-bottom: 0.5em;
+    }
+
+    /* Slightly larger quote text for editorial feel */
+    font-size: 1.05em;
   }
 
   .katex-display-container {
@@ -153,18 +191,18 @@
 
 .custom-md {
   table {
-    @apply my-4;
+    @apply my-6;
     min-width: 100%;
     width: max-content;
     border-collapse: separate;
     border-spacing: 0;
-    border-radius: calc(var(--radius-large) - 0.5rem);
+    border-radius: calc(var(--radius-large) - 0.125rem);
     overflow: hidden;
   }
 
   .horizontal-scroll-container {
     @apply my-4;
-    border-radius: calc(var(--radius-large) - 0.5rem);
+    border-radius: calc(var(--radius-large) - 0.125rem);
   }
 
   .horizontal-scroll-container > table {
