@@ -314,6 +314,8 @@ export const ru: Translation = {
 	[Key.galleryAlbums]: "альбомов",
 	[Key.galleryNoAlbums]: "Пока нет альбомов",
 	[Key.galleryBackToAlbums]: "Вернуться к альбомам",
+	[Key.story]: "Истории",
+	[Key.storyDescription]: "Повседневные мысли, переживания и размышления",
 
 	// Защита паролем
 	[Key.passwordProtected]: "Защищено паролем",

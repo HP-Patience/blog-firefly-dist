@@ -313,6 +313,8 @@ export const en: Translation = {
 	[Key.galleryAlbums]: "albums",
 	[Key.galleryNoAlbums]: "No albums yet",
 	[Key.galleryBackToAlbums]: "Back to albums",
+	[Key.story]: "Stories",
+	[Key.storyDescription]: "Daily thoughts, experiences, and reflections",
 
 	// Password Protection
 	[Key.passwordProtected]: "Password Protected",

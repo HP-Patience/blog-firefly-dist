@@ -304,6 +304,8 @@ export const zh_CN: Translation = {
 	[Key.galleryAlbums]: "本相册",
 	[Key.galleryNoAlbums]: "暂无相册",
 	[Key.galleryBackToAlbums]: "返回相册列表",
+	[Key.story]: "故事",
+	[Key.storyDescription]: "日常所思所想，经历与感悟",
 
 	// 密码保护
 	[Key.passwordProtected]: "密码保护",

@@ -86,6 +86,7 @@ export type SiteConfig = {
 		guestbook: boolean; // 留言板页面开关
 		bangumi: boolean;
 		gallery: boolean; // 相册页面开关
+			story: boolean; // 故事页面开关
 	};
 
 	// 分类导航栏开关
@@ -179,6 +180,7 @@ export enum LinkPreset {
 	Guestbook = 5,
 	Bangumi = 6,
 	Gallery = 7,
+	Story = 8,
 }
 
 export type NavBarLink = {

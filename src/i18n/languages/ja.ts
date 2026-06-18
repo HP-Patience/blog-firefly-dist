@@ -312,6 +312,8 @@ export const ja: Translation = {
 	[Key.galleryAlbums]: "冊のアルバム",
 	[Key.galleryNoAlbums]: "アルバムがありません",
 	[Key.galleryBackToAlbums]: "アルバム一覧に戻る",
+	[Key.story]: "物語",
+	[Key.storyDescription]: "日常の思い、経験と感悟",
 
 	// パスワード保護
 	[Key.passwordProtected]: "パスワード保護",
