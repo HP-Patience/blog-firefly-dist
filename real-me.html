@@ -1,0 +1,3163 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Firefly 博客里的隐藏个人空间。" />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="/favicon/favicon.ico" sizes="any" />
+  <title>Real me · Firefly</title>
+  <script>
+    (() => {
+      // 与博客主页共用 theme localStorage key：light / dark / system。
+      const storedTheme = localStorage.getItem("theme") || "system";
+      const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const isDark = storedTheme === "dark" || (storedTheme === "system" && systemDark);
+      document.documentElement.dataset.themeMode = storedTheme;
+      document.documentElement.classList.toggle("dark", isDark);
+    })();
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --hue: 255;
+      --page-bg: oklch(0.965 0.005 var(--hue));
+      --card-bg: oklch(0.99 0.003 var(--hue));
+      --card-soft: oklch(0.975 0.008 var(--hue));
+      --btn-content: oklch(0.45 0.06 var(--hue));
+      --btn-plain-bg-hover: oklch(0.955 0.008 var(--hue));
+      --btn-card-bg-hover: oklch(0.95 0.008 var(--hue));
+      --btn-card-bg-active: oklch(0.92 0.015 var(--hue));
+      --deep-text: oklch(0.2 0.01 var(--hue));
+      --primary: oklch(0.55 0.08 var(--hue));
+      --primary-soft: oklch(0.84 0.055 var(--hue));
+      --firefly: oklch(0.88 0.18 105);
+      --firefly-core: oklch(0.98 0.12 105);
+      --line-divider: oklch(0.88 0.005 var(--hue));
+      --content-meta: oklch(0.5 0.015 var(--hue));
+      --danger: oklch(0.57 0.17 28);
+      --success: oklch(0.58 0.13 155);
+      --radius-large: 0.65rem;
+      --radius-lg: 0.45rem;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-card: 0 12px 34px rgba(22, 20, 34, 0.09);
+      --shadow-button: 0 5px 14px rgba(22, 20, 34, 0.13);
+    }
+
+    html.dark {
+        color-scheme: dark;
+        --page-bg: oklch(0.14 0.006 var(--hue));
+        --card-bg: oklch(0.185 0.008 var(--hue));
+        --card-soft: oklch(0.205 0.012 var(--hue));
+        --btn-content: oklch(0.72 0.06 var(--hue));
+        --btn-plain-bg-hover: oklch(0.26 0.015 var(--hue));
+        --btn-card-bg-hover: oklch(0.26 0.015 var(--hue));
+        --btn-card-bg-active: oklch(0.3 0.02 var(--hue));
+        --deep-text: oklch(0.92 0.01 var(--hue));
+        --primary: oklch(0.72 0.08 var(--hue));
+        --primary-soft: oklch(0.36 0.07 var(--hue));
+        --firefly: oklch(0.91 0.2 110);
+        --firefly-core: oklch(1 0.13 105);
+        --line-divider: oklch(0.3 0.008 var(--hue));
+        --content-meta: oklch(0.65 0.01 var(--hue));
+        --danger: oklch(0.72 0.15 28);
+        --success: oklch(0.72 0.13 155);
+        --shadow-card: 0 12px 34px rgba(0, 0, 0, 0.25);
+        --shadow-button: 0 5px 14px rgba(255, 255, 255, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      animation: realMePageFadeIn 0.6s ease both;
+      color: var(--deep-text);
+      font-family: "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 18% 0%, oklch(0.88 0.045 var(--hue) / 0.3), transparent 32rem),
+        radial-gradient(circle at 82% 8%, oklch(0.82 0.05 210 / 0.18), transparent 30rem),
+        linear-gradient(180deg, transparent 0, oklch(0.86 0.02 var(--hue) / 0.08) 100%),
+        var(--page-bg);
+    }
+
+    @keyframes realMePageFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      content: "";
+      opacity: 0.22;
+      background-image: radial-gradient(circle, color-mix(in oklch, var(--primary) 40%, transparent) 0.7px, transparent 0.8px);
+      background-size: 24px 24px;
+      mask-image: linear-gradient(to bottom, black, transparent 74%);
+    }
+
+    button,
+    textarea {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid color-mix(in oklch, var(--primary) 38%, transparent);
+      outline-offset: 3px;
+    }
+
+    #firefly-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .page {
+      position: relative;
+      z-index: 2;
+      width: min(1080px, calc(100vw - 2rem));
+      margin: 0 auto;
+      padding: 1.25rem 0 2.5rem;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 4rem;
+      margin-bottom: 1.25rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--line-divider);
+      border-radius: var(--radius-large);
+      background: color-mix(in oklch, var(--card-bg) 86%, transparent);
+      box-shadow: var(--shadow-sm);
+      backdrop-filter: blur(18px);
+    }
+
+    .navbar-side {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .theme-switcher {
+      position: relative;
+    }
+
+    .theme-button {
+      min-height: 2.35rem;
+      padding: 0.45rem 0.7rem;
+      border-radius: var(--radius-lg);
+      color: var(--btn-content);
+      font-size: 0.82rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .theme-button:hover {
+      color: var(--primary);
+      background: var(--btn-plain-bg-hover);
+    }
+
+    .theme-icon {
+      display: inline-grid;
+      width: 1.1rem;
+      place-items: center;
+      font-size: 1rem;
+    }
+
+    .brand,
+    .nav-link {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-icon,
+    .title-icon {
+      display: grid;
+      place-items: center;
+      flex: none;
+      color: white;
+      background: var(--primary);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24);
+    }
+
+    .brand-icon {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 0.55rem;
+    }
+
+    .nav-link {
+      color: var(--btn-content);
+      font-size: 0.95rem;
+      font-weight: 650;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--primary);
+    }
+
+    .shell {
+      overflow: hidden;
+      border: 1px solid var(--line-divider);
+      border-radius: var(--radius-large);
+      background: color-mix(in oklch, var(--card-bg) 91%, transparent);
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(18px);
+    }
+
+    .shell-inner {
+      padding: clamp(1.35rem, 4vw, 2.5rem);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1.25rem;
+      align-items: end;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--line-divider);
+    }
+
+    .eyebrow,
+    .module-kicker,
+    .signal,
+    .status-key,
+    .capsule-date,
+    .achievement-count {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      letter-spacing: 0.03em;
+    }
+
+    .eyebrow {
+      margin: 0 0 0.6rem;
+      color: var(--primary);
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .title-icon {
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 0.7rem;
+      font-family: "STKaiti", "KaiTi", serif;
+      font-size: 1.25rem;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      overflow-wrap: anywhere;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "STKaiti", "KaiTi", "Songti SC", serif;
+      font-size: clamp(2.25rem, 6vw, 3.6rem);
+      line-height: 1;
+      letter-spacing: -0.055em;
+    }
+
+    .subtitle {
+      max-width: 44rem;
+      margin: 0.8rem 0 0;
+      color: var(--content-meta);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .signal {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      min-width: max-content;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid var(--line-divider);
+      border-radius: 999px;
+      color: var(--content-meta);
+      font-size: 0.72rem;
+      background: var(--card-soft);
+    }
+
+    .signal-dot {
+      width: 0.48rem;
+      height: 0.48rem;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 0 0 color-mix(in oklch, var(--success) 35%, transparent);
+      animation: signal-pulse 2.4s ease-out infinite;
+    }
+
+    @keyframes signal-pulse {
+      60%, 100% { box-shadow: 0 0 0 0.55rem transparent; }
+    }
+
+    .intro-panel {
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      padding: clamp(1.15rem, 3vw, 1.65rem);
+      border: 1px solid var(--line-divider);
+      border-radius: var(--radius-large);
+      background:
+        linear-gradient(120deg, color-mix(in oklch, var(--primary-soft) 18%, transparent), transparent 55%),
+        var(--btn-plain-bg-hover);
+    }
+
+    .intro-panel::after {
+      position: absolute;
+      top: -2.5rem;
+      right: -1rem;
+      content: "✦";
+      color: var(--primary);
+      font-size: 8rem;
+      line-height: 1;
+      opacity: 0.055;
+      transform: rotate(12deg);
+    }
+
+    .intro-panel > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .intro-panel strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-family: "STKaiti", "KaiTi", serif;
+      font-size: clamp(1.25rem, 3vw, 1.55rem);
+    }
+
+    .intro-panel p {
+      margin: 0;
+      color: var(--content-meta);
+      line-height: 1.75;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .module {
+      position: relative;
+      grid-column: span 6;
+      min-width: 0;
+      padding: clamp(1.05rem, 2.5vw, 1.45rem);
+      border: 1px solid var(--line-divider);
+      border-radius: var(--radius-large);
+      background: color-mix(in oklch, var(--card-bg) 94%, transparent);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .module-wide {
+      grid-column: 1 / -1;
+    }
+
+    .module-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .module-kicker {
+      margin: 0 0 0.3rem;
+      color: var(--primary);
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .module h2 {
+      margin: 0;
+      font-family: "STKaiti", "KaiTi", "Songti SC", serif;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+    }
+
+    .module-note {
+      margin: 0.35rem 0 0;
+      color: var(--content-meta);
+      font-size: 0.84rem;
+      line-height: 1.65;
+    }
+
+    .module-mark {
+      display: grid;
+      width: 2.2rem;
+      height: 2.2rem;
+      flex: none;
+      place-items: center;
+      border: 1px solid var(--line-divider);
+      border-radius: 0.6rem;
+      color: var(--primary);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.82rem;
+      font-weight: 800;
+      background: var(--card-soft);
+    }
+
+    .status-list {
+      display: grid;
+      gap: 0;
+      margin: 0;
+    }
+
+    .status-row {
+      display: grid;
+      grid-template-columns: 7.2rem 1fr;
+      gap: 1rem;
+      align-items: baseline;
+      padding: 0.72rem 0;
+      border-top: 1px dashed var(--line-divider);
+    }
+
+    .status-row:first-child {
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    .status-row:last-child {
+      padding-bottom: 0;
+    }
+
+    .status-key {
+      color: var(--content-meta);
+      font-size: 0.74rem;
+    }
+
+    .status-value {
+      margin: 0;
+      font-size: 0.94rem;
+      font-weight: 650;
+      line-height: 1.6;
+    }
+
+    .thought-box {
+      display: grid;
+      min-height: 11.2rem;
+      grid-template-rows: 1fr auto;
+      gap: 1rem;
+    }
+
+    .thought-output {
+      display: grid;
+      place-items: center start;
+      margin: 0;
+      padding: 1rem;
+      border-left: 3px solid var(--primary-soft);
+      color: var(--deep-text);
+      font-family: "STKaiti", "KaiTi", "Songti SC", serif;
+      font-size: clamp(1.05rem, 2.6vw, 1.28rem);
+      line-height: 1.75;
+      background: var(--card-soft);
+      transition: opacity 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+    }
+
+    .thought-output.is-changing {
+      opacity: 0;
+      transform: translateY(0.35rem);
+    }
+
+    .thought-output.is-rare {
+      border-left-color: var(--firefly);
+      text-shadow: 0 0 14px color-mix(in oklch, var(--firefly) 30%, transparent);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 2.55rem;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.95rem;
+      border: 1px solid var(--line-divider);
+      border-radius: var(--radius-lg);
+      color: var(--btn-content);
+      font-size: 0.9rem;
+      font-weight: 650;
+      text-decoration: none;
+      cursor: pointer;
+      background: var(--card-bg);
+      box-shadow: var(--shadow-sm);
+      transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .button:hover {
+      color: var(--primary);
+      background: var(--btn-card-bg-hover);
+      box-shadow: var(--shadow-button);
+      transform: translateY(-1px);
+    }
+
+    .button:active {
+      background: var(--btn-card-bg-active);
+      box-shadow: var(--shadow-sm);
+      transform: translateY(0);
+    }
+
+    .button-primary {
+      border-color: color-mix(in oklch, var(--primary) 30%, var(--line-divider));
+      color: white;
+      background: var(--primary);
+    }
+
+    .button-primary:hover {
+      color: white;
+      background: color-mix(in oklch, var(--primary) 88%, black);
+    }
+
+    .button-quiet {
+      min-height: 2.1rem;
+      padding: 0.35rem 0.65rem;
+      color: var(--content-meta);
+      font-size: 0.78rem;
+      box-shadow: none;
+    }
+
+    .capsule-deck {
+      overflow: visible;
+    }
+
+    .capsule-view {
+      height: 38rem;
+      min-width: 0;
+    }
+
+    .capsule-empty {
+      display: grid;
+      height: 100%;
+      padding: 2rem;
+      place-content: center;
+      gap: 0.55rem;
+      border: 1px dashed var(--line-divider);
+      border-radius: var(--radius-large);
+      color: var(--content-meta);
+      text-align: center;
+      background: color-mix(in oklch, var(--card-soft) 72%, transparent);
+    }
+
+    .capsule-empty strong {
+      color: var(--content);
+      font-size: 1rem;
+    }
+
+    .capsule-empty p {
+      margin: 0;
+      font-size: 0.78rem;
+    }
+
+    .capsule-timeline-box {
+      margin: 1rem 0;
+      padding: 0.9rem 0.7rem 0.7rem;
+      border: 1px solid var(--line-divider);
+      border-radius: var(--radius-large);
+      background: color-mix(in oklch, var(--card-soft) 72%, transparent);
+    }
+
+    .capsule-timeline-scale {
+      user-select: none;
+    }
+
+    .capsule-timeline-scale > span {
+      align-self: start;
+      padding-top: 0.05rem;
+    }
+
+    .capsule-timeline-scale {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 0.7rem;
+      align-items: center;
+      color: var(--content-meta);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.7rem;
+      font-weight: 800;
+    }
+
+    .capsule-timeline-track {
+      position: relative;
+      height: 4.8rem;
+      cursor: crosshair;
+      border-top: 2px solid color-mix(in oklch, var(--primary) 36%, var(--line-divider));
+    }
+
+    .capsule-timeline-track::before,
+    .capsule-timeline-track::after {
+      position: absolute;
+      top: -0.35rem;
+      width: 0.55rem;
+      height: 0.55rem;
+      border: 2px solid var(--primary);
+      border-radius: 50%;
+      content: "";
+      background: var(--card-bg);
+    }
+
+    .capsule-timeline-track::before { left: 0; }
+    .capsule-timeline-track::after { right: 0; }
+
+    .capsule-timeline-marker {
+      position: absolute;
+      top: -0.55rem;
+      left: 0;
+      display: grid;
+      width: 1rem;
+      min-height: 1rem;
+      padding: 0;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      color: var(--primary);
+      cursor: pointer;
+      background: transparent;
+      transform: translateX(-50%);
+      transition: color 0.2s ease, transform 0.2s ease;
+      z-index: 2;
+    }
+
+    .capsule-timeline-marker::before {
+      width: 0.72rem;
+      height: 0.72rem;
+      border: 2px solid currentColor;
+      border-radius: 50%;
+      content: "";
+      background: var(--card-bg);
+      box-shadow: 0 0 0 3px var(--card-soft);
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .capsule-timeline-marker:hover,
+    .capsule-timeline-marker.is-selected {
+      color: var(--primary);
+      transform: translateX(-50%) scale(1.18);
+    }
+
+    .capsule-timeline-marker.is-selected::before {
+      background: var(--primary);
+      box-shadow: 0 0 0 3px var(--card-soft), 0 0 14px color-mix(in oklch, var(--primary) 52%, transparent);
+    }
+
+    .capsule-timeline-current {
+      position: absolute;
+      top: -0.25rem;
+      left: 0;
+      width: 1px;
+      height: 3.5rem;
+      border-left: 1px dashed color-mix(in oklch, var(--success) 70%, transparent);
+      pointer-events: none;
+      transform: translateX(-50%);
+    }
+
+    .capsule-timeline-current::after {
+      position: absolute;
+      top: calc(100% + 0.18rem);
+      left: 50%;
+      content: "当前";
+      color: var(--success);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.58rem;
+      font-weight: 800;
+      white-space: nowrap;
+      transform: translateX(-50%);
+    }
+
+    .capsule-timeline-event-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.55rem;
+      margin-top: 0.15rem;
+      color: var(--content-meta);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.64rem;
+    }
+
+    .capsule-timeline-event {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      min-height: 1.65rem;
+      padding: 0.18rem 0.35rem;
+      border: 1px solid transparent;
+      border-radius: 0.25rem;
+      color: inherit;
+      cursor: pointer;
+      background: transparent;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .capsule-timeline-event:hover,
+    .capsule-timeline-event.is-selected {
+      border-color: color-mix(in oklch, var(--primary) 28%, var(--line-divider));
+      color: var(--deep-text);
+      background: color-mix(in oklch, var(--card-bg) 76%, transparent);
+    }
+
+    .capsule-timeline-event.is-selected {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    .capsule-timeline-event .event-dot {
+      width: 0.42rem;
+      height: 0.42rem;
+      flex: none;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      background: var(--card-bg);
+    }
+
+    .capsule-timeline-event.is-selected .event-dot {
+      border-color: var(--primary);
+      background: var(--primary);
+      box-shadow: 0 0 8px color-mix(in oklch, var(--primary) 48%, transparent);
+    }
+
+    .capsule-add-form {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr 1.6fr auto;
+      gap: 0.55rem;
+      align-items: end;
+      margin: 0.8rem 0 1rem;
+      padding: 0.8rem;
+      border: 1px dashed var(--line-divider);
+      border-radius: var(--radius-large);
+      background: var(--card-soft);
+    }
+
+    .capsule-add-field {
+      display: grid;
+      gap: 0.28rem;
+    }
+
+    .capsule-add-field label {
+      color: var(--content-meta);
+      font-size: 0.68rem;
+      font-weight: 700;
+    }
+
+    .capsule-add-field input,
+    .capsule-add-field textarea {
+      width: 100%;
+      min-height: 2.35rem;
+      padding: 0.45rem 0.6rem;
+      border: 1px solid var(--line-divider);
+      border-radius: var(--radius-lg);
+      color: var(--deep-text);
+      font-size: 0.78rem;
+      line-height: 1.45;
+      background: var(--card-bg);
+    }
+
+    .capsule-add-field textarea {
+      min-height: 4.6rem;
+      resize: vertical;
+    }
+
+    .capsule-add-field input:focus,
+    .capsule-add-field textarea:focus {
+      border-color: color-mix(in oklch, var(--primary) 45%, var(--line-divider));
+      outline: 0;
+      box-shadow: 0 0 0 4px color-mix(in oklch, var(--primary) 10%, transparent);
+    }
+
+    .capsule-add-help {
+      margin: 0;
+      color: var(--content-meta);
+      font-size: 0.7rem;
+      line-height: 1.5;
+    }
+
+    .capsule-card {
+      position: relative;
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      height: 100%;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 1rem;
+      scrollbar-gutter: stable;
+      border: 1px solid var(--line-divider);
+      border-radius: var(--radius-large);
+      background:
+        linear-gradient(145deg, color-mix(in oklch, var(--primary-soft) 10%, transparent), transparent 48%),
+        var(--card-soft);
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+    }
+
+    .capsule-card:hover {
+      border-color: color-mix(in oklch, var(--primary) 28%, var(--line-divider));
+      box-shadow: var(--shadow-card);
+      transform: translateY(-2px);
+    }
+
+    .capsule-card.is-sealing,
+    .capsule-card.is-unlocking {
+      border-color: color-mix(in oklch, var(--firefly) 65%, var(--line-divider));
+      box-shadow: 0 0 0 1px color-mix(in oklch, var(--firefly) 22%, transparent), 0 0 30px color-mix(in oklch, var(--firefly) 18%, transparent);
+    }
+
+    .capsule-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .capsule-card-title {
+      margin: 0;
+      font-family: "STKaiti", "KaiTi", "Songti SC", serif;
+      font-size: 1.18rem;
+      line-height: 1.3;
+    }
+
+    .capsule-card-kicker {
+      margin: 0 0 0.22rem;
+      color: var(--primary);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .capsule-status {
+      display: inline-flex;
+      flex: none;
+      align-items: center;
+      padding: 0.3rem 0.48rem;
+      border: 1px solid var(--line-divider);
+      border-radius: 999px;
+      color: var(--content-meta);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      background: var(--card-bg);
+    }
+
+    .capsule-card.is-draft .capsule-status { color: var(--content-meta); }
+    .capsule-card.is-sealed .capsule-status,
+    .capsule-card.is-locked .capsule-status { color: var(--primary); }
+    .capsule-card.is-open .capsule-status,
+    .capsule-card.is-replied .capsule-status { color: var(--success); }
+
+    .capsule-meta {
+      display: grid;
+      gap: 0.35rem;
+      margin-bottom: 0.75rem;
+      color: var(--content-meta);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.68rem;
+      line-height: 1.55;
+    }
+
+    .capsule-countdown {
+      min-height: 1.1rem;
+      color: var(--deep-text);
+      font-weight: 700;
+    }
+
+    .capsule-progress {
+      height: 0.3rem;
+      margin-bottom: 0.85rem;
+      overflow: hidden;
+      border-radius: 999px;
+      background: color-mix(in oklch, var(--line-divider) 60%, transparent);
+    }
+
+    .capsule-progress-bar {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--primary), var(--firefly));
+      transition: width 0.7s ease;
+    }
+
+    .capsule-body {
+      position: relative;
+      flex: 1;
+      min-height: 12rem;
+      overflow: hidden;
+      border: 1px dashed var(--line-divider);
+      border-radius: var(--radius-lg);
+      background: color-mix(in oklch, var(--card-bg) 55%, transparent);
+    }
+
+    .capsule-entries {
+      display: grid;
+      gap: 0.55rem;
+      padding: 0.75rem;
+      transition: filter 0.6s ease, opacity 0.6s ease;
+    }
+
+    .capsule-card.is-locked .capsule-entries {
+      user-select: none;
+      filter: blur(7px);
+      opacity: 0.42;
+    }
+
+    .capsule-card.is-draft .capsule-entries {
+      filter: blur(1.5px);
+      opacity: 0.65;
+    }
+
+    .capsule-entry {
+      padding: 0.65rem 0.7rem;
+      border: 1px solid color-mix(in oklch, var(--line-divider) 82%, transparent);
+      border-radius: var(--radius-lg);
+      background: color-mix(in oklch, var(--card-bg) 78%, transparent);
+    }
+
+    .capsule-entry dt {
+      margin-bottom: 0.25rem;
+      color: var(--primary);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .capsule-entry dd {
+      margin: 0;
+      color: var(--deep-text);
+      font-size: 0.83rem;
+      line-height: 1.6;
+    }
+
+    .capsule-lock-layer {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 0.9rem;
+      text-align: center;
+      background: color-mix(in oklch, var(--card-bg) 34%, transparent);
+      backdrop-filter: blur(2px);
+    }
+
+    .capsule-card.is-open .capsule-lock-layer {
+      display: none;
+    }
+
+    .capsule-lock-box {
+      max-width: 19rem;
+      padding: 0.8rem 0.95rem;
+      border: 1px solid var(--line-divider);
+      border-radius: var(--radius-large);
+      background: color-mix(in oklch, var(--card-bg) 93%, transparent);
+      box-shadow: var(--shadow-card);
+    }
+
+    .capsule-lock-icon {
+      display: block;
+      margin-bottom: 0.25rem;
+      color: var(--primary);
+      font-size: 1.3rem;
+    }
+
+    .capsule-lock-box strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.86rem;
+    }
+
+    .capsule-lock-box p {
+      margin: 0;
+      color: var(--content-meta);
+      font-size: 0.75rem;
+      line-height: 1.55;
+    }
+
+    .capsule-card-footer {
+      display: grid;
+      gap: 0.55rem;
+      margin-top: 0.85rem;
+    }
+
+    .capsule-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .capsule-actions .button {
+      min-height: 2.2rem;
+      padding: 0.4rem 0.65rem;
+      font-size: 0.75rem;
+    }
+
+    .capsule-seal-note {
+      min-height: 1.1rem;
+      color: var(--content-meta);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.64rem;
+      line-height: 1.45;
+    }
+
+    .capsule-reply {
+      display: grid;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed var(--line-divider);
+    }
+
+    .capsule-reply[hidden] {
+      display: none;
+    }
+
+    .capsule-reply label {
+      color: var(--content-meta);
+      font-size: 0.74rem;
+      line-height: 1.5;
+    }
+
+    .capsule-reply textarea {
+      min-height: 4.5rem;
+      padding: 0.65rem 0.7rem;
+      font-size: 0.78rem;
+    }
+
+    .capsule-reply-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .capsule-reply-saved {
+      color: var(--success);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.64rem;
+    }
+
+    .capsule-ritual {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+      color: var(--firefly);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-shadow: 0 0 18px color-mix(in oklch, var(--firefly) 65%, transparent);
+      opacity: 0;
+    }
+
+    .capsule-card.is-unlocking .capsule-ritual {
+      animation: capsule-ritual 2.5s ease both;
+    }
+
+    .capsule-disclaimer {
+      margin: 0.85rem 0 0;
+      color: var(--content-meta);
+      font-size: 0.72rem;
+      line-height: 1.6;
+    }
+
+    @keyframes capsule-ritual {
+      0% { opacity: 0; transform: scale(0.8); letter-spacing: 0.42em; }
+      18%, 74% { opacity: 1; transform: scale(1); letter-spacing: 0.16em; }
+      100% { opacity: 0; transform: scale(1.08); letter-spacing: 0.05em; }
+    }
+
+    .wall-form {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .wall-label {
+      color: var(--content-meta);
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 6.5rem;
+      resize: vertical;
+      padding: 0.85rem 0.9rem;
+      border: 1px solid var(--line-divider);
+      border-radius: var(--radius-lg);
+      color: var(--deep-text);
+      line-height: 1.65;
+      background: var(--card-soft);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    textarea::placeholder {
+      color: color-mix(in oklch, var(--content-meta) 70%, transparent);
+    }
+
+    textarea:focus {
+      border-color: color-mix(in oklch, var(--primary) 45%, var(--line-divider));
+      box-shadow: 0 0 0 4px color-mix(in oklch, var(--primary) 10%, transparent);
+    }
+
+    .wall-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .char-count {
+      color: var(--content-meta);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.72rem;
+    }
+
+    .wall-list {
+      display: grid;
+      gap: 0.65rem;
+      max-height: 17rem;
+      margin: 1rem 0 0;
+      padding: 0;
+      overflow: auto;
+      list-style: none;
+      scrollbar-width: thin;
+    }
+
+    .wall-item,
+    .wall-empty {
+      padding: 0.8rem;
+      border: 1px solid var(--line-divider);
+      border-radius: var(--radius-lg);
+      background: var(--card-soft);
+    }
+
+    .wall-item p {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.65;
+      white-space: pre-wrap;
+    }
+
+    .wall-time {
+      display: block;
+      margin-top: 0.45rem;
+      color: var(--content-meta);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.68rem;
+    }
+
+    .wall-empty {
+      color: var(--content-meta);
+      font-size: 0.84rem;
+      line-height: 1.6;
+    }
+
+    .achievement-count {
+      color: var(--content-meta);
+      font-size: 0.72rem;
+    }
+
+    .achievement-list {
+      display: grid;
+      gap: 0.6rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .achievement-item {
+      display: grid;
+      grid-template-columns: 1.6rem 1fr;
+      gap: 0.65rem;
+      align-items: center;
+      min-height: 2.8rem;
+      padding: 0.55rem 0.7rem;
+      border: 1px solid var(--line-divider);
+      border-radius: var(--radius-lg);
+      color: var(--content-meta);
+      background: var(--card-soft);
+      transition: color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+    }
+
+    .achievement-item.is-unlocked {
+      border-color: color-mix(in oklch, var(--success) 34%, var(--line-divider));
+      color: var(--deep-text);
+    }
+
+    .achievement-item.is-new {
+      animation: achievement-pop 0.5s ease both;
+    }
+
+    .achievement-check {
+      display: grid;
+      width: 1.6rem;
+      height: 1.6rem;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--content-meta);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      background: color-mix(in oklch, var(--line-divider) 60%, transparent);
+    }
+
+    .achievement-item.is-unlocked .achievement-check {
+      color: white;
+      background: var(--success);
+    }
+
+    .achievement-name {
+      font-size: 0.88rem;
+      font-weight: 650;
+      line-height: 1.4;
+    }
+
+    @keyframes achievement-pop {
+      50% { transform: translateX(0.35rem); }
+    }
+
+    .command-hint {
+      margin: 0.9rem 0 0;
+      padding-top: 0.8rem;
+      border-top: 1px dashed var(--line-divider);
+      color: var(--content-meta);
+      font-size: 0.76rem;
+      line-height: 1.6;
+    }
+
+    .command-hint span {
+      color: var(--primary);
+      font-family: "SFMono-Regular", Consolas, monospace;
+    }
+
+    .danger-module {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      min-height: 5.5rem;
+    }
+
+    .danger-copy h2 {
+      font-size: 1.05rem;
+    }
+
+    .danger-copy p {
+      margin: 0.3rem 0 0;
+      color: var(--content-meta);
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .danger-button {
+      flex: none;
+      min-height: 2.15rem;
+      padding: 0.4rem 0.75rem;
+      color: color-mix(in oklch, var(--danger) 70%, var(--content-meta));
+      font-size: 0.78rem;
+      opacity: 0.72;
+    }
+
+    .danger-button:hover {
+      color: var(--danger);
+      opacity: 1;
+    }
+
+    .footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--line-divider);
+    }
+
+    .footer-note {
+      margin: 0;
+      color: var(--content-meta);
+      font-size: 0.78rem;
+      line-height: 1.6;
+    }
+
+    .toast {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 20;
+      max-width: min(24rem, calc(100vw - 2rem));
+      padding: 0.8rem 1rem;
+      border: 1px solid var(--line-divider);
+      border-radius: var(--radius-lg);
+      color: var(--deep-text);
+      font-size: 0.84rem;
+      line-height: 1.55;
+      background: color-mix(in oklch, var(--card-bg) 94%, transparent);
+      box-shadow: var(--shadow-card);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(0.8rem);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      backdrop-filter: blur(16px);
+    }
+
+    .toast.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    html.is-prank-locked,
+    body.is-prank-locked {
+      overflow: hidden !important;
+      overscroll-behavior: none;
+    }
+
+    .glitch-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: grid;
+      overflow: hidden;
+      place-items: center;
+      pointer-events: none;
+      background: #050507;
+      opacity: 0;
+      transition: opacity 0.16s linear;
+      isolation: isolate;
+    }
+
+    .glitch-overlay.is-visible {
+      opacity: 1;
+    }
+
+    .glitch-overlay.is-capturing {
+      pointer-events: auto;
+    }
+
+    .glitch-overlay::before,
+    .glitch-overlay::after {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      content: "";
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .glitch-overlay::before {
+      background:
+        linear-gradient(90deg, rgba(255, 0, 54, 0.12), transparent 20% 80%, rgba(0, 210, 255, 0.1)),
+        repeating-linear-gradient(0deg, transparent 0 5px, rgba(255, 255, 255, 0.04) 5px 6px);
+      mix-blend-mode: screen;
+    }
+
+    .glitch-overlay::after {
+      background: radial-gradient(circle at center, transparent 38%, rgba(0, 0, 0, 0.58) 100%);
+    }
+
+    .glitch-overlay.is-split::before,
+    .glitch-overlay.is-split::after {
+      opacity: 1;
+    }
+
+    .glitch-snapshot {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+      background: #050507;
+    }
+
+    .glitch-fragment {
+      position: absolute;
+      inset: -1px;
+      background-image: var(--snapshot-image);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 100vw 100vh;
+      clip-path: var(--fragment-clip);
+      filter: none;
+      transform: translate3d(0, 0, 0) rotate(0deg) scale(1.003);
+      transform-origin: var(--fragment-origin, center);
+      transition:
+        transform 1.15s cubic-bezier(0.18, 0.76, 0.2, 1),
+        filter 0.45s ease;
+      will-change: transform, filter;
+    }
+
+    .glitch-overlay.is-split .glitch-snapshot {
+      animation: fracture-impact 0.72s steps(2, end) both;
+    }
+
+    .glitch-overlay.is-split .glitch-fragment {
+      filter:
+        drop-shadow(5px 0 0 rgba(255, 0, 55, 0.36))
+        drop-shadow(-5px 0 0 rgba(0, 205, 255, 0.3))
+        contrast(1.08);
+      transform:
+        translate3d(var(--fragment-x), var(--fragment-y), 0)
+        rotate(var(--fragment-rotate))
+        scale(0.992);
+    }
+
+    .glitch-overlay.is-returning .glitch-fragment {
+      filter: none;
+      transform: translate3d(0, 0, 0) rotate(0deg) scale(1.003);
+      transition-duration: 1.45s, 0.8s;
+      transition-timing-function: cubic-bezier(0.28, 0.02, 0.16, 1), ease;
+    }
+
+    .glitch-message {
+      position: relative;
+      z-index: 4;
+      min-width: min(34rem, calc(100vw - 2rem));
+      max-width: min(38rem, calc(100vw - 2rem));
+      min-height: 4.1rem;
+      padding: 1rem 1.2rem;
+      border: 1px solid rgba(255, 92, 92, 0.78);
+      border-radius: 0.3rem;
+      color: #fff;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: clamp(0.82rem, 2vw, 1rem);
+      line-height: 1.65;
+      text-align: center;
+      background: rgba(18, 5, 8, 0.95);
+      box-shadow:
+        0 0 0 1px rgba(0, 210, 255, 0.08),
+        0 0 42px rgba(255, 30, 65, 0.3);
+      opacity: 0;
+      transform: translateY(0.8rem) scale(0.97);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .glitch-overlay.is-capturing .glitch-message,
+    .glitch-overlay.is-split .glitch-message {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .glitch-overlay.is-capturing .glitch-message {
+      border-color: rgba(160, 183, 210, 0.52);
+      color: rgba(235, 240, 247, 0.82);
+      background: rgba(8, 11, 15, 0.92);
+      box-shadow: 0 0 38px rgba(120, 160, 205, 0.12);
+    }
+
+    .glitch-overlay.is-returning .glitch-message {
+      opacity: 0;
+      transform: translateY(-0.45rem) scale(0.98);
+    }
+
+    .glitch-message::after {
+      display: inline-block;
+      width: 0.55em;
+      height: 1em;
+      margin-left: 0.2em;
+      vertical-align: -0.16em;
+      content: "";
+      background: currentColor;
+      animation: terminal-cursor 0.82s steps(1, end) infinite;
+    }
+
+    @keyframes fracture-impact {
+      0% { transform: translate3d(0, 0, 0) rotate(0); }
+      14% { transform: translate3d(-18px, 11px, 0) rotate(-0.45deg); }
+      30% { transform: translate3d(21px, -14px, 0) rotate(0.55deg); }
+      48% { transform: translate3d(-14px, -9px, 0) rotate(-0.35deg); }
+      68% { transform: translate3d(11px, 8px, 0) rotate(0.24deg); }
+      84% { transform: translate3d(-5px, 3px, 0) rotate(-0.1deg); }
+      100% { transform: translate3d(0, 0, 0) rotate(0); }
+    }
+
+    @keyframes terminal-cursor {
+      50% { opacity: 0; }
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        grid-template-columns: 1fr;
+        align-items: start;
+      }
+
+      .signal {
+        justify-self: start;
+      }
+
+      .module {
+        grid-column: 1 / -1;
+      }
+
+      .status-row {
+        grid-template-columns: 1fr;
+        gap: 0.2rem;
+      }
+
+      .capsule-view {
+        height: 34rem;
+      }
+
+      .capsule-add-form {
+        grid-template-columns: 1fr;
+      }
+
+      .danger-module {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page {
+        width: min(100% - 1rem, 1080px);
+        padding-top: 0.5rem;
+      }
+
+      .navbar {
+        min-height: 3.4rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .shell-inner {
+        padding: 1rem;
+      }
+
+      .module {
+        padding: 1rem;
+      }
+
+      .wall-actions {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      #firefly-canvas {
+        display: none;
+      }
+
+      .glitch-fragment {
+        transition-duration: 0.01ms !important;
+      }
+
+      .glitch-overlay.is-split .glitch-fragment,
+      .glitch-overlay.is-returning .glitch-fragment {
+        filter: none !important;
+        transform: none !important;
+      }
+
+      .glitch-overlay::before,
+      .glitch-overlay::after {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="firefly-canvas" aria-hidden="true"></canvas>
+
+  <main class="page">
+    <nav class="navbar" aria-label="页面导航">
+      <a class="brand" href="/">
+        <span class="brand-icon" aria-hidden="true">✦</span>
+        <span>Firefly</span>
+      </a>
+      <div class="navbar-side">
+        <a class="nav-link" href="/about/">关于我</a>
+        <div class="theme-switcher">
+          <button class="button theme-button" id="theme-toggle" type="button" aria-label="切换主题">
+            <span class="theme-icon" id="theme-icon" aria-hidden="true">◐</span>
+            <span id="theme-label">主题</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <article class="shell">
+      <div class="shell-inner">
+        <header class="hero">
+          <div>
+            <p class="eyebrow">private workspace / local signal</p>
+            <div class="title-row">
+              <span class="title-icon" aria-hidden="true">私</span>
+              <h1>Real me</h1>
+            </div>
+            <p class="subtitle">一个从暗号里打开的私人空间。这里可以不考虑 SEO，也不必解释每一个没用但好玩的想法。</p>
+          </div>
+          <div class="signal" title="页面正在监听键盘信号">
+            <span class="signal-dot" aria-hidden="true"></span>
+            <span id="command-state">等待键盘信号</span>
+          </div>
+        </header>
+
+        <section class="intro-panel" aria-labelledby="intro-title">
+          <strong id="intro-title">这是真正由我操作的空间</strong>
+          <p>状态、想法与时间胶囊都写在页面底部的 JavaScript 配置对象中，以后不需要改 HTML 结构。</p>
+        </section>
+
+        <div class="grid">
+          <section class="module" aria-labelledby="status-title">
+            <div class="module-header">
+              <div>
+                <p class="module-kicker">01 / now</p>
+                <h2 id="status-title">今日状态</h2>
+                <p class="module-note">一份不保证实时，但保证诚实的运行记录。</p>
+              </div>
+              <span class="module-mark" aria-hidden="true">ON</span>
+            </div>
+
+            <dl class="status-list">
+              <div class="status-row"><dt class="status-key">今日状态</dt><dd class="status-value" data-status="mood"></dd></div>
+              <div class="status-row"><dt class="status-key">当前循环</dt><dd class="status-value" data-status="loop"></dd></div>
+              <div class="status-row"><dt class="status-key">正在学习</dt><dd class="status-value" data-status="learning"></dd></div>
+              <div class="status-row"><dt class="status-key">当前行动</dt><dd class="status-value" data-status="doing"></dd></div>
+              <div class="status-row"><dt class="status-key">脑内音乐</dt><dd class="status-value" data-status="music"></dd></div>
+              <div class="status-row"><dt class="status-key">最后更新</dt><dd class="status-value" data-status="updated"></dd></div>
+            </dl>
+          </section>
+
+          <section class="module" aria-labelledby="thought-title">
+            <div class="module-header">
+              <div>
+                <p class="module-kicker">02 / cache</p>
+                <h2 id="thought-title">脑内缓存</h2>
+                <p class="module-note">每次读取一条。偶尔会读到不在列表里的东西。</p>
+              </div>
+              <span class="module-mark" aria-hidden="true">?</span>
+            </div>
+
+            <div class="thought-box">
+              <blockquote class="thought-output" id="thought-output" aria-live="polite">缓存尚未读取。</blockquote>
+              <div class="button-row">
+                <button class="button button-primary" id="thought-button" type="button">读取一条脑内缓存</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="module module-wide capsule-deck" id="time-capsule" aria-labelledby="capsule-title">
+            <div class="module-header">
+              <div>
+                <p class="module-kicker">03 / future archive</p>
+                <h2 id="capsule-title">时间胶囊档案</h2>
+                <p class="module-note">多颗胶囊，分别封存；时间到了，才把它们交还给未来的我。</p>
+              </div>
+              <span class="module-mark" aria-hidden="true">TIME</span>
+            </div>
+
+            <div class="capsule-view" id="capsule-view" aria-live="polite"></div>
+
+            <div class="capsule-timeline-box" aria-label="时间胶囊时间线">
+              <div class="capsule-timeline-scale">
+                <span id="capsule-timeline-start">2026</span>
+                <div class="capsule-timeline-track" id="capsule-timeline-track"></div>
+                <span id="capsule-timeline-end">2027</span>
+              </div>
+              <div class="capsule-timeline-event-list" id="capsule-timeline-events"></div>
+            </div>
+
+            <div class="button-row">
+              <button class="button button-quiet" id="capsule-add-toggle" type="button" aria-expanded="false">＋ 添加时间胶囊</button>
+              <p class="capsule-add-help">添加胶囊后，可以点击时间线上的圆点、连线或标签进行切换。</p>
+            </div>
+
+            <form class="capsule-add-form" id="capsule-add-form" hidden>
+              <div class="capsule-add-field">
+                <label for="capsule-add-title">胶囊标题</label>
+                <input id="capsule-add-title" name="title" maxlength="40" required placeholder="例如：给生日的我" />
+              </div>
+              <div class="capsule-add-field">
+                <label for="capsule-add-date">解锁时间（本机时间）</label>
+                <input id="capsule-add-date" name="unlockAt" type="datetime-local" required />
+              </div>
+              <div class="capsule-add-field">
+                <label for="capsule-add-message">写给未来的内容</label>
+                <textarea id="capsule-add-message" name="message" maxlength="180" required placeholder="希望那时的我……"></textarea>
+              </div>
+              <button class="button button-primary" type="submit">加入时间线</button>
+            </form>
+
+            <p class="capsule-disclaimer">这里的时间锁是前端体验，不是安全保险箱；内容仍写在页面脚本里，想查看源代码时可以打开开发者工具。</p>
+          </section>
+          <section class="module" aria-labelledby="wall-title">
+            <div class="module-header">
+              <div>
+                <p class="module-kicker">04 / local</p>
+                <h2 id="wall-title">本地留言墙</h2>
+                <p class="module-note">内容只保存在你的浏览器里，我看不到。</p>
+              </div>
+              <span class="module-mark" aria-hidden="true">LS</span>
+            </div>
+
+            <form class="wall-form" id="wall-form">
+              <label class="wall-label" for="wall-input">给下一次打开这个页面的自己留一句话。</label>
+              <textarea id="wall-input" maxlength="180" placeholder="我来过这里。"></textarea>
+              <div class="wall-actions">
+                <span class="char-count" id="char-count">0 / 180</span>
+                <div class="button-row">
+                  <button class="button button-quiet" id="wall-clear" type="button" hidden>清空我的留言</button>
+                  <button class="button" type="submit">保存到本地</button>
+                </div>
+              </div>
+            </form>
+            <ul class="wall-list" id="wall-list" aria-live="polite"></ul>
+          </section>
+
+          <section class="module" aria-labelledby="achievement-title">
+            <div class="module-header">
+              <div>
+                <p class="module-kicker">05 / trace</p>
+                <h2 id="achievement-title">访客成就</h2>
+                <p class="module-note">这个浏览器记得你在这里做过什么。</p>
+              </div>
+              <span class="achievement-count" id="achievement-count">0 / 5</span>
+            </div>
+
+            <ul class="achievement-list" id="achievement-list"></ul>
+            <p class="command-hint">提示：这个页面会听见你直接敲下的字符。<span id="signal-trace">signal: idle</span></p>
+          </section>
+
+          <section class="module module-wide danger-module" aria-labelledby="danger-title">
+            <div class="danger-copy">
+              <p class="module-kicker">06 / unstable</p>
+              <h2 id="danger-title">一块看起来没有任何用途的区域</h2>
+              <p>没有跳转，没有下载，也不会阻止你离开。大概。</p>
+            </div>
+            <button class="button danger-button" id="danger-button" type="button">不要点击</button>
+          </section>
+        </div>
+
+        <footer class="footer">
+          <p class="footer-note">点击页面空白处，可以留下一只短暂停靠的萤火虫。</p>
+          <div class="button-row">
+            <a class="button" href="/about/">返回关于我</a>
+            <a class="button" href="/">回到首页</a>
+          </div>
+        </footer>
+      </div>
+    </article>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="glitch-overlay" id="glitch-overlay" aria-hidden="true">
+    <div class="glitch-snapshot" id="glitch-snapshot" aria-hidden="true"></div>
+    <div class="glitch-message" id="glitch-message" role="status" aria-live="assertive"></div>
+  </div>
+
+  <script src="/vendor/html2canvas.min.js"></script>
+  <script>
+    (() => {
+      "use strict";
+
+      // ===== 以后主要改这里：状态、随机想法与时间胶囊 =====
+      const status = {
+        mood: "正在缓慢加载",
+        loop: "写代码 → 遇到问题 → 查资料 → 写博客",
+        learning: "FastAPI / Vite",
+        doing: "搭建自己的秘密空间",
+        music: "随机播放中",
+        updated: "2026-08-17"
+      };
+
+      const thoughts = [
+        "今天学到的东西，过几天可能又忘了。",
+        "先做出来，再慢慢理解。",
+        "博客是写给未来自己的说明书。",
+        "这里不需要考虑 SEO。",
+        "有些东西不一定有用，但很好玩。"
+      ];
+
+      const hiddenThoughts = [
+        "你读到了一条概率很低的缓存。它没有意义，但它确实存在。",
+        "系统提示：页面里似乎还藏着一个没有写出来的命令。",
+        "如果萤火虫能保存记忆，这里大概已经堆满了。"
+      ];
+
+      // 初始不预置胶囊；以后都通过页面下方的表单手动添加。
+      const defaultCapsules = [];
+
+      // 清理旧版已经存在的默认与手动胶囊，让时间线从空白重新开始。
+      [
+        "firefly-real-me-capsule-configs-v1",
+        "firefly-real-me-capsules-v2",
+        "firefly-real-me-capsule-selection-v1"
+      ].forEach(safeRemove);
+
+      let capsules = defaultCapsules.slice();
+      const savedCapsuleConfigs = safeRead("firefly-real-me-capsule-configs-v2", []);
+      if (Array.isArray(savedCapsuleConfigs)) capsules.push(...savedCapsuleConfigs);
+      // ===== 配置区结束 =====
+
+      const storageKeys = {
+        achievements: "firefly-real-me-achievements-v1",
+        wall: "firefly-real-me-wall-v1",
+        capsules: "firefly-real-me-capsules-v3",
+        capsuleConfigs: "firefly-real-me-capsule-configs-v2",
+        capsuleSelection: "firefly-real-me-capsule-selection-v2"
+      };
+
+      const achievementDefinitions = [
+        ["entry", "找到秘密入口"],
+        ["command", "输入第一条命令"],
+        ["danger", "点击了“不要点击”"],
+        ["hidden", "找到隐藏命令"],
+        ["firefly", "召唤萤火虫"]
+      ];
+
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const systemDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
+      const toast = document.getElementById("toast");
+      let toastTimer = 0;
+
+      function showToast(message, duration) {
+        window.clearTimeout(toastTimer);
+        toast.textContent = message;
+        toast.classList.add("is-visible");
+        toastTimer = window.setTimeout(() => toast.classList.remove("is-visible"), duration || 2600);
+      }
+
+      // ===== 主题：与主页共用 localStorage 的 theme 设置 =====
+      const themeToggle = document.getElementById("theme-toggle");
+      const themeLabel = document.getElementById("theme-label");
+      const themeIcon = document.getElementById("theme-icon");
+      const themeNames = { light: "亮色", dark: "深色" };
+      const themeIcons = { light: "☼", dark: "☾" };
+
+      function readThemeMode() {
+        const stored = localStorage.getItem("theme");
+        return stored === "light" || stored === "dark" || stored === "system" ? stored : "system";
+      }
+
+      function applyThemeMode(mode, persist) {
+        const isDark = mode === "dark" || (mode === "system" && systemDarkMode.matches);
+        document.documentElement.dataset.themeMode = mode;
+        document.documentElement.classList.toggle("dark", isDark);
+        if (persist) {
+          try {
+            localStorage.setItem("theme", mode);
+          } catch (error) {
+            // 主题仍然会在当前页面生效，即使浏览器禁用了 localStorage。
+          }
+        }
+        const resolvedMode = isDark ? "dark" : "light";
+        const nextMode = isDark ? "light" : "dark";
+        themeLabel.textContent = themeNames[resolvedMode];
+        themeIcon.textContent = themeIcons[resolvedMode];
+        themeToggle.setAttribute("aria-label", `切换到${themeNames[nextMode]}模式`);
+        themeToggle.title = `切换到${themeNames[nextMode]}模式`;
+      }
+
+      applyThemeMode(readThemeMode(), false);
+      themeToggle.addEventListener("click", () => {
+        const currentIsDark = document.documentElement.classList.contains("dark");
+        applyThemeMode(currentIsDark ? "light" : "dark", true);
+      });
+      window.addEventListener("storage", (event) => {
+        if (event.key === "theme") applyThemeMode(readThemeMode(), false);
+      });
+      const handleSystemThemeChange = () => {
+        if (readThemeMode() === "system") applyThemeMode("system", false);
+      };
+      if (systemDarkMode.addEventListener) {
+        systemDarkMode.addEventListener("change", handleSystemThemeChange);
+      } else {
+        systemDarkMode.addListener(handleSystemThemeChange);
+      }
+
+      function safeRead(key, fallback) {
+        try {
+          const value = localStorage.getItem(key);
+          return value ? JSON.parse(value) : fallback;
+        } catch (error) {
+          return fallback;
+        }
+      }
+
+      function safeWrite(key, value) {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+          return true;
+        } catch (error) {
+          showToast("浏览器拒绝了本地保存，但其他功能仍然可以使用。");
+          return false;
+        }
+      }
+
+      function safeRemove(key) {
+        try {
+          localStorage.removeItem(key);
+        } catch (error) {
+          // 无法访问本地存储时保持页面正常运行。
+        }
+      }
+
+      document.querySelectorAll("[data-status]").forEach((element) => {
+        element.textContent = status[element.dataset.status] || "未设置";
+      });
+
+      const thoughtButton = document.getElementById("thought-button");
+      const thoughtOutput = document.getElementById("thought-output");
+      let previousThought = -1;
+
+      thoughtButton.addEventListener("click", () => {
+        thoughtOutput.classList.add("is-changing");
+        window.setTimeout(() => {
+          const isRare = Math.random() < 0.015;
+          let nextThought;
+
+          if (isRare) {
+            nextThought = hiddenThoughts[Math.floor(Math.random() * hiddenThoughts.length)];
+          } else {
+            let index = Math.floor(Math.random() * thoughts.length);
+            if (thoughts.length > 1 && index === previousThought) index = (index + 1) % thoughts.length;
+            previousThought = index;
+            nextThought = thoughts[index];
+          }
+
+          thoughtOutput.textContent = "“" + nextThought + "”";
+          thoughtOutput.classList.toggle("is-rare", isRare);
+          thoughtOutput.classList.remove("is-changing");
+          if (isRare) showToast("读取到稀有缓存 · 1.5%");
+        }, 180);
+      });
+
+      // ===== 时间胶囊：时间线、封存、倒计时、解锁仪式与未来回信 =====
+      const capsuleView = document.getElementById("capsule-view");
+      const capsuleTimelineTrack = document.getElementById("capsule-timeline-track");
+      const capsuleTimelineEvents = document.getElementById("capsule-timeline-events");
+      const capsuleTimelineStart = document.getElementById("capsule-timeline-start");
+      const capsuleTimelineEnd = document.getElementById("capsule-timeline-end");
+      const capsuleAddToggle = document.getElementById("capsule-add-toggle");
+      const capsuleAddForm = document.getElementById("capsule-add-form");
+      let capsuleStates = safeRead(storageKeys.capsules, {});
+      if (!capsuleStates || typeof capsuleStates !== "object" || Array.isArray(capsuleStates)) capsuleStates = {};
+      let selectedCapsuleId = safeRead(storageKeys.capsuleSelection, null);
+      const capsuleLastOpen = {};
+
+      function getSortedCapsules() {
+        return capsules.slice().sort((a, b) => new Date(a.unlockAt) - new Date(b.unlockAt));
+      }
+
+      function getCapsuleState(config) {
+        const stored = capsuleStates[config.id];
+        if (!stored || typeof stored !== "object") {
+          return {
+            sealed: Boolean(config.sealed),
+            sealedAt: config.sealed ? "configured" : "",
+            reply: ""
+          };
+        }
+        return {
+          sealed: Boolean(stored.sealed),
+          sealedAt: stored.sealedAt || "",
+          reply: typeof stored.reply === "string" ? stored.reply : ""
+        };
+      }
+
+      function saveCapsuleStates() {
+        safeWrite(storageKeys.capsules, capsuleStates);
+      }
+
+      function formatCapsuleDate(timestamp) {
+        const date = new Date(timestamp);
+        if (Number.isNaN(date.getTime())) return "时间未知";
+        return new Intl.DateTimeFormat("zh-CN", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit"
+        }).format(date);
+      }
+
+      function formatRemaining(milliseconds) {
+        if (milliseconds <= 0) return "时间已到";
+        const totalSeconds = Math.max(1, Math.floor(milliseconds / 1000));
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        if (days > 0) return `${days} 天 ${String(hours).padStart(2, "0")} 小时后打开`;
+        return `${String(hours).padStart(2, "0")} : ${String(minutes).padStart(2, "0")} : ${String(seconds).padStart(2, "0")}`;
+      }
+
+      function capsuleStatus(config, state, now) {
+        if (!state.sealed) return "DRAFT";
+        if (now < new Date(config.unlockAt).getTime()) return "LOCKED";
+        return state.reply.trim() ? "REPLIED" : "UNLOCKED";
+      }
+
+      function createCapsuleEntry(entry) {
+        const wrapper = document.createElement("div");
+        wrapper.className = "capsule-entry";
+        const term = document.createElement("dt");
+        const description = document.createElement("dd");
+        term.textContent = entry[0];
+        description.textContent = entry[1];
+        wrapper.append(term, description);
+        return wrapper;
+      }
+
+      function createCapsuleCard(config, now) {
+        const state = getCapsuleState(config);
+        const unlockTimestamp = new Date(config.unlockAt).getTime();
+        const status = capsuleStatus(config, state, now);
+        const isOpen = status === "UNLOCKED" || status === "REPLIED";
+        const card = document.createElement("article");
+        card.className = "capsule-card " +
+          (status === "DRAFT" ? "is-draft" : status === "LOCKED" ? "is-sealed is-locked" : status === "REPLIED" ? "is-replied is-open" : "is-open");
+        card.dataset.capsuleId = config.id;
+
+        const header = document.createElement("header");
+        header.className = "capsule-card-header";
+        const headingGroup = document.createElement("div");
+        const kicker = document.createElement("p");
+        kicker.className = "capsule-card-kicker";
+        kicker.textContent = "CAPSULE / " + config.id;
+        const title = document.createElement("h3");
+        title.className = "capsule-card-title";
+        title.textContent = config.title;
+        headingGroup.append(kicker, title);
+        const statusBadge = document.createElement("span");
+        statusBadge.className = "capsule-status";
+        statusBadge.textContent = status;
+        header.append(headingGroup, statusBadge);
+
+        const meta = document.createElement("div");
+        meta.className = "capsule-meta";
+        const unlockDate = document.createElement("span");
+        unlockDate.textContent = "解锁时间 · " + formatCapsuleDate(unlockTimestamp);
+        const countdown = document.createElement("span");
+        countdown.className = "capsule-countdown";
+        countdown.dataset.capsuleCountdown = config.id;
+        countdown.textContent = !state.sealed
+          ? "封存后才开始计时"
+          : (now >= unlockTimestamp ? "时间已到 · 欢迎回来" : formatRemaining(unlockTimestamp - now));
+        meta.append(unlockDate, countdown);
+
+        const progress = document.createElement("div");
+        progress.className = "capsule-progress";
+        const progressBar = document.createElement("div");
+        progressBar.className = "capsule-progress-bar";
+        const startTimestamp = state.sealedAt && state.sealedAt !== "configured"
+          ? new Date(state.sealedAt).getTime()
+          : Date.now();
+        const progressPercent = state.sealed && now >= unlockTimestamp
+          ? 100
+          : state.sealed
+            ? Math.max(2, Math.min(98, ((now - startTimestamp) / Math.max(1, unlockTimestamp - startTimestamp)) * 100))
+            : 0;
+        progressBar.style.width = progressPercent + "%";
+        progress.appendChild(progressBar);
+
+        const body = document.createElement("div");
+        body.className = "capsule-body";
+        const entries = document.createElement("dl");
+        entries.className = "capsule-entries";
+        entries.setAttribute("aria-label", config.title + "内容");
+        config.entries.forEach((entry) => entries.appendChild(createCapsuleEntry(entry)));
+        body.appendChild(entries);
+
+        const lockLayer = document.createElement("div");
+        lockLayer.className = "capsule-lock-layer";
+        const lockBox = document.createElement("div");
+        lockBox.className = "capsule-lock-box";
+        const lockIcon = document.createElement("span");
+        lockIcon.className = "capsule-lock-icon";
+        lockIcon.textContent = state.sealed ? "⌛" : "✎";
+        const lockStrong = document.createElement("strong");
+        lockStrong.textContent = state.sealed ? "这颗胶囊已封存" : "这颗胶囊还在草稿状态";
+        const lockDescription = document.createElement("p");
+        lockDescription.textContent = state.sealed
+          ? (now >= unlockTimestamp ? "正在准备把它交还给你……" : "内容已经模糊，等时间把它打开。")
+          : "确认内容后点击“封存”，倒计时才会正式开始。";
+        lockBox.append(lockIcon, lockStrong, lockDescription);
+        lockLayer.appendChild(lockBox);
+        body.appendChild(lockLayer);
+
+        const ritual = document.createElement("div");
+        ritual.className = "capsule-ritual";
+        ritual.textContent = "✦ 未来信号已抵达 ✦";
+        body.appendChild(ritual);
+
+        const footer = document.createElement("div");
+        footer.className = "capsule-card-footer";
+        const actions = document.createElement("div");
+        actions.className = "capsule-actions";
+        if (!state.sealed) {
+          const sealButton = document.createElement("button");
+          sealButton.className = "button button-primary";
+          sealButton.type = "button";
+          sealButton.dataset.capsuleAction = "seal";
+          sealButton.dataset.capsuleId = config.id;
+          sealButton.textContent = "封存这颗胶囊";
+          actions.appendChild(sealButton);
+        } else if (isOpen) {
+          const replyButton = document.createElement("button");
+          replyButton.className = "button";
+          replyButton.type = "button";
+          replyButton.dataset.capsuleAction = "reply";
+          replyButton.dataset.capsuleId = config.id;
+          replyButton.textContent = state.reply ? "修改未来回信" : "写回一句话";
+          actions.appendChild(replyButton);
+        }
+        const stateNote = document.createElement("span");
+        stateNote.className = "capsule-seal-note";
+        stateNote.textContent = !state.sealed
+          ? "状态：DRAFT · 内容还可以继续修改配置。"
+          : state.sealedAt === "configured"
+            ? "状态：SEALED · 由页面配置预先封存。"
+            : "状态：SEALED · 封存于 " + formatCapsuleDate(new Date(state.sealedAt).getTime());
+        footer.append(actions, stateNote);
+
+        const reply = document.createElement("form");
+        reply.className = "capsule-reply";
+        reply.hidden = !isOpen;
+        reply.dataset.capsuleReply = config.id;
+        const replyLabel = document.createElement("label");
+        replyLabel.textContent = config.replyPrompt;
+        const replyInput = document.createElement("textarea");
+        replyInput.maxLength = 240;
+        replyInput.placeholder = "等时间把信封拆开后，再写给现在的自己。";
+        replyInput.value = state.reply;
+        replyInput.dataset.capsuleReplyInput = config.id;
+        const replyActions = document.createElement("div");
+        replyActions.className = "capsule-reply-actions";
+        const saved = document.createElement("span");
+        saved.className = "capsule-reply-saved";
+        saved.textContent = state.reply ? "已保存在这个浏览器里" : "只保存在本地";
+        const saveReply = document.createElement("button");
+        saveReply.className = "button button-quiet";
+        saveReply.type = "submit";
+        saveReply.textContent = "保存回信";
+        replyActions.append(saved, saveReply);
+        reply.append(replyLabel, replyInput, replyActions);
+
+        card.append(header, meta, progress, body, footer, reply);
+        return card;
+      }
+
+      function getTimelineBounds() {
+        const currentYear = new Date().getFullYear();
+        const unlockYears = capsules.map((config) => new Date(config.unlockAt).getFullYear()).filter(Number.isFinite);
+        const startYear = Math.min(currentYear, ...unlockYears);
+        const endYear = Math.max(currentYear + 1, ...unlockYears.map((year) => year + 1));
+        return {
+          start: new Date(startYear, 0, 1).getTime(),
+          end: new Date(endYear, 0, 1).getTime(),
+          startYear,
+          endYear
+        };
+      }
+
+      function getTimelinePosition(timestamp, bounds) {
+        return Math.max(0, Math.min(1, (timestamp - bounds.start) / Math.max(1, bounds.end - bounds.start)));
+      }
+
+      function renderCapsuleTimeline(now) {
+        const bounds = getTimelineBounds();
+        capsuleTimelineStart.textContent = bounds.startYear;
+        capsuleTimelineEnd.textContent = bounds.endYear;
+        capsuleTimelineTrack.replaceChildren();
+        capsuleTimelineEvents.replaceChildren();
+
+        const currentMarker = document.createElement("span");
+        currentMarker.className = "capsule-timeline-current";
+        currentMarker.style.left = getTimelinePosition(now, bounds) * 100 + "%";
+        currentMarker.setAttribute("aria-hidden", "true");
+        capsuleTimelineTrack.appendChild(currentMarker);
+
+        getSortedCapsules().forEach((config) => {
+          const marker = document.createElement("button");
+          marker.className = "capsule-timeline-marker" + (config.id === selectedCapsuleId ? " is-selected" : "");
+          marker.type = "button";
+          marker.dataset.capsuleSelect = config.id;
+          marker.style.left = getTimelinePosition(new Date(config.unlockAt).getTime(), bounds) * 100 + "%";
+          marker.title = "切换到：" + config.title;
+          marker.setAttribute("aria-label", "显示时间胶囊：" + config.title);
+          marker.setAttribute("aria-current", config.id === selectedCapsuleId ? "true" : "false");
+          marker.dataset.label = config.title;
+          capsuleTimelineTrack.appendChild(marker);
+
+          const eventLabel = document.createElement("button");
+          eventLabel.className = "capsule-timeline-event" + (config.id === selectedCapsuleId ? " is-selected" : "");
+          eventLabel.type = "button";
+          eventLabel.dataset.capsuleSelect = config.id;
+          eventLabel.setAttribute("aria-current", config.id === selectedCapsuleId ? "true" : "false");
+          eventLabel.setAttribute("aria-label", "显示时间胶囊：" + config.title);
+          const dot = document.createElement("span");
+          dot.className = "event-dot";
+          dot.setAttribute("aria-hidden", "true");
+          const label = document.createElement("span");
+          label.textContent = config.title + " · " + new Date(config.unlockAt).getFullYear();
+          eventLabel.append(dot, label);
+          capsuleTimelineEvents.appendChild(eventLabel);
+        });
+      }
+
+      function updateCapsuleCountdowns() {
+        const selected = capsules.find((config) => config.id === selectedCapsuleId);
+        if (!selected) return;
+        const state = getCapsuleState(selected);
+        const target = capsuleView.querySelector(`[data-capsule-countdown="${selected.id}"]`);
+        if (!target) return;
+        const unlockTimestamp = new Date(selected.unlockAt).getTime();
+        target.textContent = !state.sealed
+          ? "封存后才开始计时"
+          : (Date.now() >= unlockTimestamp ? "时间已到 · 欢迎回来" : formatRemaining(unlockTimestamp - Date.now()));
+      }
+
+      function playCapsuleUnlockRitual(id) {
+        const card = capsuleView.querySelector(`[data-capsule-id="${id}"]`);
+        if (!card) return;
+        const ritual = card.querySelector(".capsule-ritual");
+        const phrase = "✦ 未来信号已抵达 ✦";
+        card.classList.add("is-unlocking");
+        if (ritual) {
+          ritual.textContent = "";
+          let cursor = 0;
+          const typeTimer = window.setInterval(() => {
+            ritual.textContent = phrase.slice(0, cursor + 1);
+            cursor += 1;
+            if (cursor >= phrase.length) window.clearInterval(typeTimer);
+          }, 75);
+        }
+        if (typeof summonFireflies === "function") summonFireflies();
+        showToast("时间胶囊已解锁 · 未来信号抵达", 3600);
+        window.setTimeout(() => card.classList.remove("is-unlocking"), 2600);
+      }
+
+      function renderCapsuleArchive() {
+        const now = Date.now();
+        const sorted = getSortedCapsules();
+        if (!selectedCapsuleId || !capsules.some((config) => config.id === selectedCapsuleId)) {
+          selectedCapsuleId = sorted[0] ? sorted[0].id : null;
+          if (selectedCapsuleId) safeWrite(storageKeys.capsuleSelection, selectedCapsuleId);
+        }
+        renderCapsuleTimeline(now);
+        capsuleView.replaceChildren();
+        const selected = capsules.find((config) => config.id === selectedCapsuleId);
+        if (selected) {
+          capsuleView.appendChild(createCapsuleCard(selected, now));
+        } else {
+          const empty = document.createElement("div");
+          empty.className = "capsule-empty";
+          const title = document.createElement("strong");
+          title.textContent = "时间线还是空的";
+          const note = document.createElement("p");
+          note.textContent = "点击下方的“添加时间胶囊”，写下第一封给未来的信。";
+          empty.append(title, note);
+          capsuleView.appendChild(empty);
+        }
+
+        sorted.forEach((config) => {
+          const state = getCapsuleState(config);
+          const isOpen = state.sealed && now >= new Date(config.unlockAt).getTime();
+          const previous = capsuleLastOpen[config.id];
+          capsuleLastOpen[config.id] = isOpen;
+          if (previous === false && isOpen && config.id === selectedCapsuleId) playCapsuleUnlockRitual(config.id);
+        });
+      }
+
+      function selectCapsule(id) {
+        if (!capsules.some((config) => config.id === id)) return;
+        selectedCapsuleId = id;
+        safeWrite(storageKeys.capsuleSelection, selectedCapsuleId);
+        renderCapsuleArchive();
+      }
+
+      function handleCapsuleTimelineClick(event) {
+        const target = event.target;
+        const marker = target instanceof Element ? target.closest("[data-capsule-select]") : null;
+        if (marker instanceof HTMLElement) {
+          selectCapsule(marker.dataset.capsuleSelect);
+          return;
+        }
+
+        // 连线上任意位置也可以切换：选择离点击位置最近的那颗胶囊。
+        if (event.currentTarget !== capsuleTimelineTrack) return;
+        const rect = capsuleTimelineTrack.getBoundingClientRect();
+        if (!rect.width || typeof event.clientX !== "number") return;
+        const ratio = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+        const bounds = getTimelineBounds();
+        const timestamp = bounds.start + ratio * (bounds.end - bounds.start);
+        const nearest = getSortedCapsules().reduce((winner, config) => {
+          const distance = Math.abs(new Date(config.unlockAt).getTime() - timestamp);
+          if (!winner || distance < winner.distance) return { config, distance };
+          return winner;
+        }, null);
+        if (nearest) selectCapsule(nearest.config.id);
+      }
+
+      capsuleTimelineTrack.addEventListener("click", handleCapsuleTimelineClick);
+      capsuleTimelineEvents.addEventListener("click", handleCapsuleTimelineClick);
+
+      capsuleView.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-capsule-action]");
+        if (!(button instanceof HTMLElement)) return;
+        const config = capsules.find((item) => item.id === button.dataset.capsuleId);
+        if (!config) return;
+        const state = getCapsuleState(config);
+
+        if (button.dataset.capsuleAction === "seal") {
+          button.disabled = true;
+          capsuleStates[config.id] = {
+            sealed: true,
+            sealedAt: new Date().toISOString(),
+            reply: state.reply || ""
+          };
+          saveCapsuleStates();
+          const card = button.closest(".capsule-card");
+          if (card) card.classList.add("is-sealing");
+          showToast("封存完成。倒计时从现在开始。", 3000);
+          window.setTimeout(renderCapsuleArchive, 760);
+        }
+
+        if (button.dataset.capsuleAction === "reply") {
+          const form = capsuleView.querySelector(`[data-capsule-reply="${config.id}"]`);
+          const input = form && form.querySelector("textarea");
+          if (form) form.hidden = false;
+          if (input) input.focus();
+        }
+      });
+
+      capsuleView.addEventListener("submit", (event) => {
+        const form = event.target.closest("[data-capsule-reply]");
+        if (!(form instanceof HTMLFormElement)) return;
+        event.preventDefault();
+        const id = form.dataset.capsuleReply;
+        const config = capsules.find((item) => item.id === id);
+        if (!config) return;
+        const input = form.querySelector("textarea");
+        const state = getCapsuleState(config);
+        if (!(input instanceof HTMLTextAreaElement)) return;
+        const text = input.value.trim();
+        if (!text) {
+          showToast("未来回信还没有写内容。", 2400);
+          input.focus();
+          return;
+        }
+        capsuleStates[id] = { sealed: state.sealed, sealedAt: state.sealedAt, reply: text };
+        saveCapsuleStates();
+        renderCapsuleArchive();
+        showToast("回信已归档。只保存在这个浏览器里。", 3200);
+      });
+
+      capsuleAddToggle.addEventListener("click", () => {
+        capsuleAddForm.hidden = !capsuleAddForm.hidden;
+        capsuleAddToggle.setAttribute("aria-expanded", String(!capsuleAddForm.hidden));
+        if (!capsuleAddForm.hidden) document.getElementById("capsule-add-title").focus();
+      });
+
+      capsuleAddForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const titleInput = document.getElementById("capsule-add-title");
+        const dateInput = document.getElementById("capsule-add-date");
+        const messageInput = document.getElementById("capsule-add-message");
+        const title = titleInput.value.trim();
+        const message = messageInput.value.trim();
+        const unlockDate = new Date(dateInput.value);
+        if (!title || !message || Number.isNaN(unlockDate.getTime())) {
+          showToast("标题、解锁时间和内容都要填写。", 2600);
+          return;
+        }
+
+        const newCapsule = {
+          id: "manual-" + Date.now().toString(36),
+          title,
+          unlockAt: unlockDate.toISOString(),
+          sealed: false,
+          replyPrompt: "时间到了以后，你想给现在的自己回什么？",
+          entries: [["写给未来的我", message]]
+        };
+        capsules.push(newCapsule);
+        savedCapsuleConfigs.push(newCapsule);
+        safeWrite(storageKeys.capsuleConfigs, savedCapsuleConfigs);
+        selectedCapsuleId = newCapsule.id;
+        safeWrite(storageKeys.capsuleSelection, selectedCapsuleId);
+        capsuleAddForm.reset();
+        capsuleAddForm.hidden = true;
+        capsuleAddToggle.setAttribute("aria-expanded", "false");
+        renderCapsuleArchive();
+        showToast("新的时间胶囊已加入时间线。", 3000);
+      });
+
+      renderCapsuleArchive();
+      window.setInterval(() => {
+        updateCapsuleCountdowns();
+        const now = Date.now();
+        let shouldRender = false;
+        capsules.forEach((config) => {
+          const state = getCapsuleState(config);
+          const open = state.sealed && now >= new Date(config.unlockAt).getTime();
+          if (capsuleLastOpen[config.id] === false && open) shouldRender = true;
+          capsuleLastOpen[config.id] = open;
+        });
+        if (shouldRender) renderCapsuleArchive();
+      }, 1000);
+
+      const wallForm = document.getElementById("wall-form");
+      const wallInput = document.getElementById("wall-input");
+      const wallList = document.getElementById("wall-list");
+      const wallClear = document.getElementById("wall-clear");
+      const charCount = document.getElementById("char-count");
+      let wallMessages = safeRead(storageKeys.wall, []);
+      if (!Array.isArray(wallMessages)) wallMessages = [];
+
+      function formatWallTime(timestamp) {
+        try {
+          return new Intl.DateTimeFormat("zh-CN", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit"
+          }).format(new Date(timestamp));
+        } catch (error) {
+          return "时间未知";
+        }
+      }
+
+      function renderWall() {
+        wallList.replaceChildren();
+        wallClear.hidden = wallMessages.length === 0;
+
+        if (wallMessages.length === 0) {
+          const empty = document.createElement("li");
+          empty.className = "wall-empty";
+          empty.textContent = "这里还没有留言。第一句话会留给下一次打开页面的你。";
+          wallList.appendChild(empty);
+          return;
+        }
+
+        wallMessages.slice().reverse().forEach((message) => {
+          const item = document.createElement("li");
+          item.className = "wall-item";
+          const content = document.createElement("p");
+          const time = document.createElement("time");
+          content.textContent = message.text;
+          time.className = "wall-time";
+          time.dateTime = message.createdAt;
+          time.textContent = formatWallTime(message.createdAt);
+          item.append(content, time);
+          wallList.appendChild(item);
+        });
+      }
+
+      wallInput.addEventListener("input", () => {
+        charCount.textContent = wallInput.value.length + " / 180";
+      });
+
+      wallForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const text = wallInput.value.trim();
+        if (!text) {
+          showToast("先写点什么，再保存。" );
+          wallInput.focus();
+          return;
+        }
+
+        wallMessages.push({
+          text: text,
+          createdAt: new Date().toISOString()
+        });
+        wallMessages = wallMessages.slice(-12);
+
+        if (safeWrite(storageKeys.wall, wallMessages)) {
+          wallInput.value = "";
+          charCount.textContent = "0 / 180";
+          renderWall();
+          showToast("已保存。下次用这个浏览器打开时，它还会在这里。" );
+        }
+      });
+
+      wallClear.addEventListener("click", () => {
+        wallMessages = [];
+        safeWrite(storageKeys.wall, wallMessages);
+        renderWall();
+        showToast("这个浏览器里的留言已经清空。" );
+      });
+
+      renderWall();
+
+      const achievementList = document.getElementById("achievement-list");
+      const achievementCount = document.getElementById("achievement-count");
+      let achievements = safeRead(storageKeys.achievements, {});
+      if (!achievements || typeof achievements !== "object" || Array.isArray(achievements)) achievements = {};
+
+      function renderAchievements(newId) {
+        achievementList.replaceChildren();
+        let unlockedCount = 0;
+
+        achievementDefinitions.forEach((definition) => {
+          const id = definition[0];
+          const name = definition[1];
+          const unlocked = Boolean(achievements[id]);
+          if (unlocked) unlockedCount += 1;
+
+          const item = document.createElement("li");
+          item.className = "achievement-item" + (unlocked ? " is-unlocked" : "") + (id === newId ? " is-new" : "");
+          item.dataset.achievement = id;
+
+          const check = document.createElement("span");
+          check.className = "achievement-check";
+          check.setAttribute("aria-hidden", "true");
+          check.textContent = unlocked ? "✓" : "□";
+
+          const label = document.createElement("span");
+          label.className = "achievement-name";
+          label.textContent = name;
+
+          item.append(check, label);
+          achievementList.appendChild(item);
+        });
+
+        achievementCount.textContent = unlockedCount + " / " + achievementDefinitions.length;
+      }
+
+      function unlockAchievement(id, quiet) {
+        if (achievements[id]) return false;
+        achievements[id] = new Date().toISOString();
+        safeWrite(storageKeys.achievements, achievements);
+        renderAchievements(id);
+
+        if (!quiet) {
+          const definition = achievementDefinitions.find((item) => item[0] === id);
+          if (definition) showToast("成就解锁：" + definition[1]);
+        }
+        return true;
+      }
+
+      renderAchievements();
+      const firstEntry = unlockAchievement("entry", true);
+      if (firstEntry) window.setTimeout(() => showToast("成就解锁：找到秘密入口"), 700);
+
+      const dangerButton = document.getElementById("danger-button");
+      const glitchOverlay = document.getElementById("glitch-overlay");
+      const glitchMessage = document.getElementById("glitch-message");
+      const glitchSnapshot = document.getElementById("glitch-snapshot");
+      let glitching = false;
+      let glitchRunId = 0;
+
+      // 固定碎裂算法：九块拼图始终完整覆盖视口，裂开时分别远离中心。
+      const fracturePattern = [
+        { clip: "polygon(0 0, 35% 0, 33% 20%, 38% 34%, 0 31%)", x: "-12vw", y: "-9vh", rotate: "-2.8deg", origin: "0 0" },
+        { clip: "polygon(34% 0, 69% 0, 65% 18%, 70% 35%, 38% 34%, 33% 20%)", x: "-1vw", y: "-13vh", rotate: "1.2deg", origin: "50% 0" },
+        { clip: "polygon(68% 0, 100% 0, 100% 30%, 70% 35%, 65% 18%)", x: "12vw", y: "-8vh", rotate: "3.1deg", origin: "100% 0" },
+        { clip: "polygon(0 30%, 38% 33%, 47% 50%, 36% 68%, 0 64%)", x: "-15vw", y: "1vh", rotate: "-1.9deg", origin: "0 50%" },
+        { clip: "polygon(38% 33%, 70% 34%, 64% 53%, 72% 68%, 36% 68%, 47% 50%)", x: "1vw", y: "2vh", rotate: "0.8deg", origin: "50% 50%" },
+        { clip: "polygon(70% 34%, 100% 29%, 100% 66%, 72% 68%, 64% 53%)", x: "15vw", y: "2vh", rotate: "2.4deg", origin: "100% 50%" },
+        { clip: "polygon(0 63%, 36% 67%, 44% 82%, 40% 100%, 0 100%)", x: "-11vw", y: "12vh", rotate: "2.7deg", origin: "0 100%" },
+        { clip: "polygon(36% 67%, 72% 67%, 67% 84%, 72% 100%, 40% 100%, 44% 82%)", x: "0", y: "15vh", rotate: "-1.5deg", origin: "50% 100%" },
+        { clip: "polygon(72% 66%, 100% 65%, 100% 100%, 71% 100%, 67% 84%)", x: "12vw", y: "11vh", rotate: "-3deg", origin: "100% 100%" }
+      ];
+
+      function wait(milliseconds) {
+        return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
+      }
+
+      function lockPrankScreen() {
+        document.documentElement.classList.add("is-prank-locked");
+        document.body.classList.add("is-prank-locked");
+      }
+
+      function unlockPrankScreen() {
+        document.documentElement.classList.remove("is-prank-locked");
+        document.body.classList.remove("is-prank-locked");
+      }
+
+      function enableSnapshotCaptureTheme() {
+        const isDarkSnapshot = document.documentElement.classList.contains("dark");
+        const palette = isDarkSnapshot
+          ? {
+              page: "#111419", card: "#171b20", soft: "#20262d", text: "#e0e5eb",
+              muted: "#9ba5b1", line: "#3b444e", primary: "#aeb8d4",
+              accent: "#dfff62", danger: "#ef7373", success: "#69d8a4"
+            }
+          : {
+              page: "#f5f7f8", card: "#ffffff", soft: "#f0f3f5", text: "#28313a",
+              muted: "#697581", line: "#d7dde3", primary: "#66718d",
+              accent: "#809b25", danger: "#c34f4f", success: "#2c9165"
+            };
+        const style = document.createElement("style");
+        style.id = "snapshot-capture-theme";
+        style.textContent = `
+          html.is-snapshot-capture, html.is-snapshot-capture body,
+          html.is-snapshot-capture .page {
+            color: ${palette.text} !important;
+            background-color: ${palette.page} !important;
+            background-image: none !important;
+          }
+          html.is-snapshot-capture *, html.is-snapshot-capture *::before,
+          html.is-snapshot-capture *::after {
+            color: ${palette.text} !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            border-color: ${palette.line} !important;
+            outline-color: ${palette.line} !important;
+            text-decoration-color: ${palette.line} !important;
+            column-rule-color: ${palette.line} !important;
+            caret-color: ${palette.text} !important;
+            accent-color: ${palette.primary} !important;
+            fill: currentColor !important;
+            stroke: currentColor !important;
+            box-shadow: none !important;
+            text-shadow: none !important;
+          }
+          html.is-snapshot-capture :is(.navbar, .shell, .intro-panel, .module, .lock-box, .toast) {
+            background-color: ${palette.card} !important;
+          }
+          html.is-snapshot-capture :is(.signal, .module-mark, .thought-output, .capsule-status,
+          .capsule-body, .capsule-entry, .wall-label, .wall-empty, .achievement-item,
+          .achievement-check, .button) {
+            background-color: ${palette.soft} !important;
+          }
+          html.is-snapshot-capture :is(.button-primary, .title-icon) {
+            color: #ffffff !important;
+            background-color: ${palette.primary} !important;
+          }
+          html.is-snapshot-capture :is(.signal-dot, .achievement-item.is-unlocked .achievement-check) {
+            background-color: ${palette.success} !important;
+          }
+          html.is-snapshot-capture :is(.eyebrow, .module-kicker, .status-key, .capsule-entry dt,
+          .command-hint span, .brand, .nav-link:hover) { color: ${palette.primary} !important; }
+          html.is-snapshot-capture :is(.subtitle, .module-note, .status-value, .danger-copy p,
+          .footer-note, .wall-time, .char-count) { color: ${palette.muted} !important; }
+          html.is-snapshot-capture .danger-button { color: ${palette.danger} !important; }
+          html.is-snapshot-capture :is(.thought-output.is-rare, .brand-icon) {
+            color: ${palette.accent} !important;
+          }
+        `;
+        document.head.appendChild(style);
+        document.documentElement.classList.add("is-snapshot-capture");
+
+        return () => {
+          document.documentElement.classList.remove("is-snapshot-capture");
+          style.remove();
+        };
+      }
+
+      async function captureCurrentViewport() {
+        if (typeof window.html2canvas !== "function") {
+          throw new Error("html2canvas is unavailable");
+        }
+
+        const disableSnapshotTheme = enableSnapshotCaptureTheme();
+        await new Promise((resolve) => window.requestAnimationFrame(resolve));
+        const viewportWidth = Math.ceil(window.innerWidth);
+        const viewportHeight = Math.ceil(window.innerHeight);
+        let canvas;
+        try {
+          canvas = await window.html2canvas(document.body, {
+          x: window.scrollX,
+          y: window.scrollY,
+          width: viewportWidth,
+          height: viewportHeight,
+          windowWidth: viewportWidth,
+          windowHeight: viewportHeight,
+          scrollX: 0,
+          scrollY: 0,
+          scale: Math.min(window.devicePixelRatio || 1, 1.5),
+          useCORS: true,
+          allowTaint: false,
+          foreignObjectRendering: false,
+          logging: false,
+          backgroundColor: document.documentElement.classList.contains("dark") ? "#111419" : "#f5f7f8",
+          ignoreElements: (element) => element.id === "glitch-overlay" || element.id === "toast"
+          });
+        } finally {
+          disableSnapshotTheme();
+        }
+
+        return canvas.toDataURL("image/png");
+      }
+
+      function buildFracturedScreen(snapshotImage) {
+        const fragmentNodes = document.createDocumentFragment();
+        fracturePattern.forEach((part) => {
+          const fragment = document.createElement("div");
+          fragment.className = "glitch-fragment";
+          fragment.style.setProperty("--snapshot-image", 'url("' + snapshotImage + '")');
+          fragment.style.setProperty("--fragment-clip", part.clip);
+          fragment.style.setProperty("--fragment-x", part.x);
+          fragment.style.setProperty("--fragment-y", part.y);
+          fragment.style.setProperty("--fragment-rotate", part.rotate);
+          fragment.style.setProperty("--fragment-origin", part.origin);
+          fragmentNodes.appendChild(fragment);
+        });
+        glitchSnapshot.replaceChildren(fragmentNodes);
+      }
+
+      async function typeGlitchMessage(text, runId) {
+        glitchMessage.textContent = "";
+        for (const character of text) {
+          if (runId !== glitchRunId) return false;
+          glitchMessage.textContent += character;
+          await wait(68);
+        }
+        return true;
+      }
+
+      function resetGlitchScene() {
+        glitchOverlay.classList.remove("is-visible", "is-capturing", "is-split", "is-returning");
+        glitchOverlay.setAttribute("aria-hidden", "true");
+        glitchSnapshot.replaceChildren();
+        glitchMessage.textContent = "";
+        unlockPrankScreen();
+        glitching = false;
+      }
+
+      async function runGlitchSequence(runId) {
+        const sequence = [
+          ["REAL_ME.EXE 正在锁定当前画面……", 420],
+          ["[ERROR] 检测到页面结构异常。", 620],
+          ["[FATAL] 当前画面已经碎裂。", 820],
+          ["正在尝试恢复，请稍候……", 680],
+          ["没事，只是想看看你会不会点。", 1500]
+        ];
+
+        for (const item of sequence) {
+          const completed = await typeGlitchMessage(item[0], runId);
+          if (!completed) return;
+          await wait(item[1]);
+          if (runId !== glitchRunId) return;
+        }
+
+        glitchOverlay.classList.remove("is-split");
+        glitchOverlay.classList.add("is-returning");
+        await wait(reducedMotion.matches ? 80 : 1500);
+        if (runId !== glitchRunId) return;
+
+        resetGlitchScene();
+        showToast("成就解锁：点击了“不要点击”", 3200);
+      }
+
+      dangerButton.addEventListener("click", async () => {
+        if (glitching) return;
+        glitching = true;
+        const runId = ++glitchRunId;
+        unlockAchievement("danger", true);
+        lockPrankScreen();
+        showToast("正在锁定当前画面……", 1800);
+        glitchMessage.textContent = "REAL_ME.EXE 正在截取当前画面……";
+        glitchOverlay.classList.add("is-visible", "is-capturing");
+        glitchOverlay.setAttribute("aria-hidden", "false");
+
+        try {
+          await new Promise((resolve) => window.requestAnimationFrame(() => window.requestAnimationFrame(resolve)));
+          const snapshotImage = await captureCurrentViewport();
+          if (runId !== glitchRunId) return;
+          buildFracturedScreen(snapshotImage);
+          glitchOverlay.classList.remove("is-capturing");
+          glitchMessage.textContent = "";
+
+          await new Promise((resolve) => window.requestAnimationFrame(() => window.requestAnimationFrame(resolve)));
+          if (runId !== glitchRunId) return;
+          glitchOverlay.classList.add("is-split");
+          runGlitchSequence(runId);
+        } catch (error) {
+          console.error("Unable to capture prank snapshot:", error);
+          resetGlitchScene();
+          showToast("画面捕获失败，恶作剧被浏览器拦截了。", 3200);
+        }
+      });
+
+      const canvas = document.getElementById("firefly-canvas");
+      const context = canvas.getContext("2d");
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      let pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      let fireflies = [];
+      let trails = [];
+      let lastPointer = { x: -100, y: -100 };
+      let wordmarkFadeInAt = 0;
+      let wordmarkFadeOutAt = 0;
+      let wordmarkUntil = 0;
+      let animationFrame = 0;
+
+      function resizeCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(width * pixelRatio);
+        canvas.height = Math.round(height * pixelRatio);
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
+        context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      }
+
+      function randomEdgePosition() {
+        const edge = Math.floor(Math.random() * 4);
+        if (edge === 0) return { x: Math.random() * width, y: -20 };
+        if (edge === 1) return { x: width + 20, y: Math.random() * height };
+        if (edge === 2) return { x: Math.random() * width, y: height + 20 };
+        return { x: -20, y: Math.random() * height };
+      }
+
+      function createFirefly(x, y, options) {
+        const settings = options || {};
+        return {
+          x: x,
+          y: y,
+          vx: (Math.random() - 0.5) * (settings.speed || 0.6),
+          vy: (Math.random() - 0.5) * (settings.speed || 0.6),
+          size: settings.size || 1.3 + Math.random() * 1.7,
+          alpha: 0,
+          phase: Math.random() * Math.PI * 2,
+          mode: settings.mode || "wander",
+          targetX: settings.targetX || x,
+          targetY: settings.targetY || y,
+          gatherUntil: settings.gatherUntil || 0,
+          bornAt: performance.now(),
+          maxLife: settings.maxLife || 18000
+        };
+      }
+
+      function addFireflyAt(x, y) {
+        if (reducedMotion.matches) {
+          showToast("萤火虫停在了这里。（已遵循减少动态效果设置）");
+          return;
+        }
+        fireflies.push(createFirefly(x, y, { speed: 0.9, maxLife: 16000 }));
+        fireflies = fireflies.slice(-280);
+      }
+
+      function addTrail(x, y) {
+        const distance = Math.hypot(x - lastPointer.x, y - lastPointer.y);
+        if (distance < 11 || reducedMotion.matches) return;
+        lastPointer = { x: x, y: y };
+        trails.push({
+          x: x + (Math.random() - 0.5) * 5,
+          y: y + (Math.random() - 0.5) * 5,
+          size: 0.7 + Math.random() * 1.3,
+          life: 1
+        });
+        trails = trails.slice(-90);
+      }
+
+      function getWordmarkLayout() {
+        const textWidth = Math.min(width * 0.78, 760);
+        const fontSize = Math.max(42, Math.min(118, textWidth / 6.2));
+        const sampleHeight = Math.ceil(fontSize * 1.55);
+        return {
+          textWidth,
+          fontSize,
+          sampleHeight,
+          offsetX: (width - textWidth) / 2,
+          offsetY: Math.max(70, (height - sampleHeight) / 2),
+          x: width / 2,
+          y: Math.max(70, (height - sampleHeight) / 2) + sampleHeight / 2
+        };
+      }
+
+      function getTextPoints(text) {
+        const sampleCanvas = document.createElement("canvas");
+        const sampleContext = sampleCanvas.getContext("2d", { willReadFrequently: true });
+        const layout = getWordmarkLayout();
+        sampleCanvas.width = Math.ceil(layout.textWidth);
+        sampleCanvas.height = layout.sampleHeight;
+        sampleContext.fillStyle = "#fff";
+        sampleContext.textAlign = "center";
+        sampleContext.textBaseline = "middle";
+        sampleContext.font = "800 " + layout.fontSize + "px Georgia, serif";
+        sampleContext.fillText(text, sampleCanvas.width / 2, sampleCanvas.height / 2);
+
+        const image = sampleContext.getImageData(0, 0, sampleCanvas.width, sampleCanvas.height).data;
+        // 更密的采样让字形连续，但粒子本身保持小而清晰。
+        const step = width < 560 ? 5 : 4;
+        const points = [];
+        const offsetX = layout.offsetX;
+        const offsetY = layout.offsetY;
+
+        for (let y = 0; y < sampleCanvas.height; y += step) {
+          for (let x = 0; x < sampleCanvas.width; x += step) {
+            const alpha = image[(y * sampleCanvas.width + x) * 4 + 3];
+            if (alpha > 70 && Math.random() > 0.08) {
+              points.push({ x: offsetX + x, y: offsetY + y });
+            }
+          }
+        }
+
+        for (let i = points.length - 1; i > 0; i -= 1) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const temporary = points[i];
+          points[i] = points[j];
+          points[j] = temporary;
+        }
+        return points.slice(0, width < 560 ? 260 : 560);
+      }
+
+      function summonFireflies() {
+        unlockAchievement("firefly", true);
+
+        if (reducedMotion.matches) {
+          showToast("成就解锁：召唤萤火虫。已遵循减少动态效果设置。", 3400);
+          return;
+        }
+
+        const now = performance.now();
+        // 先让萤火虫抵达字形；轮廓在字形稳定后才淡入，并与萤火虫同步淡出。
+        wordmarkFadeInAt = now + 3000;
+        wordmarkFadeOutAt = now + 9000;
+        wordmarkUntil = now + 10800;
+        const points = getTextPoints("REAL ME");
+        points.forEach((point) => {
+          const start = randomEdgePosition();
+          const firefly = createFirefly(start.x, start.y, {
+            mode: "gather",
+            targetX: point.x,
+            targetY: point.y,
+            gatherUntil: wordmarkUntil,
+            maxLife: 10800,
+            size: 1.25 + Math.random() * 1.05
+          });
+          fireflies.push(firefly);
+        });
+        fireflies = fireflies.slice(-620);
+        showToast("信号已接收。萤火虫会先组成字形。", 3400);
+      }
+
+      function drawWordmark(now) {
+        if (now < wordmarkFadeInAt || now >= wordmarkUntil) return;
+        const layout = getWordmarkLayout();
+        const fadeIn = Math.min(1, (now - wordmarkFadeInAt) / 1100);
+        const fadeOut = now < wordmarkFadeOutAt
+          ? 1
+          : Math.max(0, (wordmarkUntil - now) / (wordmarkUntil - wordmarkFadeOutAt));
+        const fade = fadeIn * fadeOut;
+        const isDark = document.documentElement.classList.contains("dark");
+        context.save();
+        context.font = "800 " + layout.fontSize + "px Georgia, serif";
+        context.textAlign = "center";
+        context.textBaseline = "middle";
+        context.lineJoin = "round";
+        context.lineWidth = 1.25;
+        context.fillStyle = isDark
+          ? "rgba(206, 255, 100, " + (0.055 * fade) + ")"
+          : "rgba(113, 145, 40, " + (0.045 * fade) + ")";
+        context.strokeStyle = isDark
+          ? "rgba(228, 255, 172, " + (0.25 * fade) + ")"
+          : "rgba(92, 120, 35, " + (0.2 * fade) + ")";
+        context.fillText("REAL ME", layout.x, layout.y);
+        context.strokeText("REAL ME", layout.x, layout.y);
+        context.restore();
+      }
+
+      function drawGlow(x, y, size, alpha) {
+        const glowAlpha = document.documentElement.classList.contains("dark") ? alpha : alpha * 0.92;
+        const glowRadius = size * 3.1;
+        const gradient = context.createRadialGradient(x, y, 0, x, y, glowRadius);
+        gradient.addColorStop(0, "rgba(255, 255, 210, " + Math.min(1, glowAlpha * 1.35) + ")");
+        gradient.addColorStop(0.24, "rgba(222, 255, 92, " + Math.min(0.58, glowAlpha * 0.58) + ")");
+        gradient.addColorStop(1, "rgba(180, 240, 70, 0)");
+        context.fillStyle = gradient;
+        context.beginPath();
+        context.arc(x, y, glowRadius, 0, Math.PI * 2);
+        context.fill();
+
+        // 小而亮的核心保留字形轮廓，避免所有萤火虫糊成一团。
+        context.fillStyle = "rgba(255, 255, 232, " + Math.min(1, alpha * 1.75) + ")";
+        context.beginPath();
+        context.arc(x, y, Math.max(1, size * 0.58), 0, Math.PI * 2);
+        context.fill();
+      }
+
+      function animateFireflies(now) {
+        context.clearRect(0, 0, width, height);
+        drawWordmark(now);
+
+        trails = trails.filter((trail) => {
+          trail.life -= 0.035;
+          trail.y -= 0.08;
+          if (trail.life <= 0) return false;
+          drawGlow(trail.x, trail.y, trail.size, trail.life * 0.34);
+          return true;
+        });
+
+        fireflies = fireflies.filter((firefly) => {
+          const age = now - firefly.bornAt;
+          if (age > firefly.maxLife) return false;
+
+          if (firefly.mode === "gather" && now < firefly.gatherUntil) {
+            firefly.x += (firefly.targetX - firefly.x) * 0.032;
+            firefly.y += (firefly.targetY - firefly.y) * 0.032;
+            firefly.x += Math.sin(now * 0.002 + firefly.phase) * 0.18;
+            firefly.y += Math.cos(now * 0.0018 + firefly.phase) * 0.16;
+          } else {
+            if (firefly.mode === "gather") {
+              firefly.mode = "wander";
+              firefly.vx = (Math.random() - 0.5) * 1.1;
+              firefly.vy = (Math.random() - 0.5) * 0.8;
+            }
+            firefly.vx += Math.sin(now * 0.0013 + firefly.phase) * 0.004;
+            firefly.vy += Math.cos(now * 0.0011 + firefly.phase) * 0.004;
+            firefly.vx *= 0.994;
+            firefly.vy *= 0.994;
+            firefly.x += firefly.vx;
+            firefly.y += firefly.vy;
+          }
+
+          const fadeIn = Math.min(1, age / 650);
+          const fadeOut = Math.min(1, (firefly.maxLife - age) / 1800);
+          const pulse = firefly.mode === "gather"
+            ? 0.82 + Math.sin(now * 0.004 + firefly.phase) * 0.16
+            : 0.52 + Math.sin(now * 0.004 + firefly.phase) * 0.28;
+          firefly.alpha = fadeIn * fadeOut * pulse;
+          drawGlow(firefly.x, firefly.y, firefly.size, firefly.alpha);
+          return true;
+        });
+
+        animationFrame = window.requestAnimationFrame(animateFireflies);
+      }
+
+      if (!reducedMotion.matches) {
+        resizeCanvas();
+        animationFrame = window.requestAnimationFrame(animateFireflies);
+      }
+
+      window.addEventListener("resize", resizeCanvas, { passive: true });
+      document.addEventListener("pointermove", (event) => addTrail(event.clientX, event.clientY), { passive: true });
+      document.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        if (target.closest("a, button, textarea, input, form, nav")) return;
+        if (target.closest(".module, .intro-panel, .shell")) return;
+        addFireflyAt(event.clientX, event.clientY);
+      });
+
+      const commandState = document.getElementById("command-state");
+      const signalTrace = document.getElementById("signal-trace");
+      let commandBuffer = "";
+      let signalTimer = 0;
+      let commandCooldown = false;
+
+      function executeCommand(command) {
+        if (commandCooldown) return;
+        commandCooldown = true;
+        window.setTimeout(() => { commandCooldown = false; }, 550);
+        unlockAchievement("command", true);
+
+        if (command === "firefly") {
+          commandState.textContent = "萤火虫信号已接收";
+          signalTrace.textContent = "signal: firefly / accepted";
+          summonFireflies();
+        } else if (command === "whoami") {
+          unlockAchievement("hidden", true);
+          commandState.textContent = "隐藏信号已接收";
+          signalTrace.textContent = "signal: identity / accepted";
+          showToast("隐藏命令：你是这个空间唯一的管理员。", 3600);
+        }
+
+        renderAchievements();
+        window.setTimeout(() => { commandState.textContent = "等待键盘信号"; }, 3600);
+      }
+
+      document.addEventListener("keydown", (event) => {
+        const active = document.activeElement;
+        if (active && (active.matches("input, textarea") || active.isContentEditable)) return;
+        if (event.ctrlKey || event.metaKey || event.altKey || event.key.length !== 1) return;
+        const character = event.key.toLowerCase();
+        if (!/[a-z0-9]/.test(character)) return;
+
+        commandBuffer = (commandBuffer + character).slice(-16);
+        commandState.textContent = "正在接收信号…";
+        signalTrace.textContent = "signal: " + "•".repeat(Math.min(commandBuffer.length, 8));
+        window.clearTimeout(signalTimer);
+        signalTimer = window.setTimeout(() => {
+          commandBuffer = "";
+          commandState.textContent = "等待键盘信号";
+          signalTrace.textContent = "signal: idle";
+        }, 2200);
+
+        if (commandBuffer.endsWith("firefly")) {
+          commandBuffer = "";
+          executeCommand("firefly");
+        } else if (commandBuffer.endsWith("whoami")) {
+          commandBuffer = "";
+          executeCommand("whoami");
+        }
+      });
+
+      reducedMotion.addEventListener("change", (event) => {
+        if (event.matches) {
+          window.cancelAnimationFrame(animationFrame);
+          context.clearRect(0, 0, width, height);
+          fireflies = [];
+          trails = [];
+        } else {
+          resizeCanvas();
+          window.cancelAnimationFrame(animationFrame);
+          animationFrame = window.requestAnimationFrame(animateFireflies);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

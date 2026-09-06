@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sprite Cutter</title>
+  <style>
+    :root { color-scheme: dark; --bg: #11120f; --panel: #1b1d18; --line: #3a3e34; --text: #f3f0e7; --muted: #a6aa9d; --accent: #f08a5d; --blue: #8ecbff; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; background: var(--bg); color: var(--text); font: 14px/1.5 system-ui, sans-serif; }
+    button, input { font: inherit; }
+    button { border: 1px solid var(--line); padding: 9px 13px; color: var(--text); background: transparent; cursor: pointer; }
+    button:hover { border-color: var(--accent); color: var(--accent); }
+    button:disabled { opacity: .45; cursor: not-allowed; }
+    .app { width: min(1500px, 100%); margin: 0 auto; padding: 28px; }
+    header { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 24px; }
+    h1 { margin: 0; font-size: clamp(24px, 4vw, 42px); line-height: 1; letter-spacing: .02em; }
+    header p { max-width: 560px; margin: 8px 0 0; color: var(--muted); }
+    .workspace { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 18px; }
+    .panel { border: 1px solid var(--line); background: var(--panel); }
+    .canvas-wrap { position: relative; min-height: 430px; display: grid; place-items: center; padding: 18px; overflow: auto; background: #0a0b09; }
+    canvas { display: block; max-width: 100%; height: auto; cursor: crosshair; image-rendering: auto; }
+    .empty { color: var(--muted); text-align: center; padding: 100px 20px; }
+    .empty strong { display: block; margin-bottom: 8px; color: var(--text); font-size: 18px; }
+    .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 14px; border-bottom: 1px solid var(--line); }
+    .toolbar label { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); }
+    .toolbar input[type=file] { max-width: 230px; }
+    .toolbar .spacer { flex: 1; }
+    .hint { padding: 12px 14px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--line); }
+    aside { min-width: 0; }
+    .side-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px; border-bottom: 1px solid var(--line); }
+    .side-head strong { font-size: 15px; }
+    .rect-list { display: grid; gap: 8px; max-height: 520px; padding: 12px; overflow: auto; }
+    .rect-row { display: grid; grid-template-columns: 28px repeat(4, minmax(0, 1fr)) 28px; gap: 5px; align-items: center; padding: 8px; border: 1px solid var(--line); }
+    .rect-row.selected { border-color: var(--accent); background: rgba(240, 138, 93, .08); }
+    .rect-row b { color: var(--accent); text-align: center; }
+    .rect-row input { width: 100%; min-width: 0; padding: 5px; color: var(--text); background: #11120f; border: 1px solid var(--line); }
+    .rect-row input:focus { outline: 1px solid var(--blue); border-color: var(--blue); }
+    .delete { width: 28px; height: 28px; padding: 0; color: var(--muted); }
+    .output { padding: 14px; border-top: 1px solid var(--line); }
+    .output textarea { width: 100%; height: 160px; padding: 10px; resize: vertical; color: var(--blue); background: #10120f; border: 1px solid var(--line); font: 12px/1.45 ui-monospace, monospace; }
+    .output-actions { display: flex; gap: 8px; margin-top: 10px; }
+    .status { min-height: 22px; margin-top: 10px; color: var(--muted); font-size: 12px; }
+    .status.error { color: #ff9b88; }
+    @media (max-width: 900px) { .workspace { grid-template-columns: 1fr; } .rect-list { max-height: 360px; } }
+    @media (max-width: 560px) { .app { padding: 18px; } header { display: block; } .canvas-wrap { min-height: 300px; padding: 10px; } .toolbar { align-items: stretch; } .toolbar .spacer { display: none; } .toolbar button, .toolbar label { width: 100%; } .toolbar input[type=file] { max-width: none; width: 100%; } }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <div><h1>Sprite Cutter</h1><p>上传精灵图，在原图上手动画矩形。坐标始终按原图像素记录。</p></div>
+      <button id="copyTop" type="button" disabled>复制全部坐标</button>
+    </header>
+    <div class="workspace">
+      <section class="panel">
+        <div class="toolbar">
+          <label>选择图片 <input id="fileInput" type="file" accept="image/*"></label>
+          <button id="undo" type="button" disabled>撤销上一个</button>
+          <button id="clear" type="button" disabled>清空矩形</button>
+          <span class="spacer"></span>
+          <span id="imageInfo">未加载图片</span>
+        </div>
+        <div id="canvasWrap" class="canvas-wrap"><div id="empty" class="empty"><strong>先选择一张图片</strong>然后用鼠标拖出每一帧的矩形范围</div><canvas id="canvas" hidden></canvas></div>
+        <div class="hint">拖拽创建矩形。点击已有矩形可选中；右侧坐标输入框可精调。坐标格式：x、y、width、height。</div>
+      </section>
+      <aside class="panel">
+        <div class="side-head"><strong>矩形列表</strong><span id="count">0 个</span></div>
+        <div id="rectList" class="rect-list"><div class="empty" style="padding: 35px 10px">还没有矩形</div></div>
+        <div class="output">
+          <textarea id="jsonOutput" readonly spellcheck="false" placeholder="坐标 JSON 会显示在这里"></textarea>
+          <div class="output-actions"><button id="copy" type="button" disabled>复制坐标 JSON</button><button id="download" type="button" disabled>下载 JSON</button></div>
+          <div id="status" class="status" role="status" aria-live="polite"></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+  <script>
+    const fileInput = document.querySelector('#fileInput');
+    const canvas = document.querySelector('#canvas');
+    const ctx = canvas.getContext('2d');
+    const empty = document.querySelector('#empty');
+    const imageInfo = document.querySelector('#imageInfo');
+    const rectList = document.querySelector('#rectList');
+    const jsonOutput = document.querySelector('#jsonOutput');
+    const count = document.querySelector('#count');
+    const status = document.querySelector('#status');
+    const undo = document.querySelector('#undo');
+    const clear = document.querySelector('#clear');
+    const copy = document.querySelector('#copy');
+    const copyTop = document.querySelector('#copyTop');
+    const download = document.querySelector('#download');
+    let image = null;
+    let imageName = '';
+    let rectangles = [];
+    let selected = -1;
+    let draft = null;
+
+    function setStatus(message, error = false) { status.textContent = message; status.classList.toggle('error', error); }
+    function canvasPoint(event) {
+      const box = canvas.getBoundingClientRect();
+      return { x: (event.clientX - box.left) * canvas.width / box.width, y: (event.clientY - box.top) * canvas.height / box.height };
+    }
+    function normalizedRect(a, b) {
+      const x = Math.round(Math.min(a.x, b.x)); const y = Math.round(Math.min(a.y, b.y));
+      return { x, y, width: Math.round(Math.abs(b.x - a.x)), height: Math.round(Math.abs(b.y - a.y)) };
+    }
+    function clampRect(rect) {
+      const x = Math.max(0, Math.min(canvas.width, Math.round(Number(rect.x) || 0)));
+      const y = Math.max(0, Math.min(canvas.height, Math.round(Number(rect.y) || 0)));
+      return { x, y, width: Math.max(1, Math.min(canvas.width - x, Math.round(Number(rect.width) || 1))), height: Math.max(1, Math.min(canvas.height - y, Math.round(Number(rect.height) || 1))) };
+    }
+    function draw() {
+      if (!image) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.drawImage(image, 0, 0);
+      rectangles.forEach((rect, index) => {
+        ctx.fillStyle = index === selected ? 'rgba(240,138,93,.18)' : 'rgba(142,203,255,.12)';
+        ctx.strokeStyle = index === selected ? '#f08a5d' : '#8ecbff'; ctx.lineWidth = Math.max(2, canvas.width / 700);
+        ctx.fillRect(rect.x, rect.y, rect.width, rect.height); ctx.strokeRect(rect.x, rect.y, rect.width, rect.height);
+        ctx.fillStyle = index === selected ? '#f08a5d' : '#8ecbff'; ctx.font = `bold ${Math.max(14, canvas.width / 65)}px system-ui`; ctx.fillText(String(index + 1), rect.x + 5, rect.y + Math.max(18, canvas.width / 55));
+      });
+      if (draft) { const rect = normalizedRect(draft.start, draft.end); ctx.setLineDash([7, 5]); ctx.strokeStyle = '#fff'; ctx.strokeRect(rect.x, rect.y, rect.width, rect.height); ctx.setLineDash([]); }
+    }
+    function exportData() {
+      return { image: imageName, sourceSize: { width: canvas.width, height: canvas.height }, rectangles: rectangles.map((rect, index) => ({ index: index + 1, ...rect })) };
+    }
+    function updateOutput() {
+      const data = JSON.stringify(exportData(), null, 2); jsonOutput.value = data; count.textContent = `${rectangles.length} 个`;
+      const enabled = Boolean(image && rectangles.length); copy.disabled = !enabled; copyTop.disabled = !enabled; download.disabled = !enabled; undo.disabled = !rectangles.length; clear.disabled = !rectangles.length; renderList(); draw();
+    }
+    function renderList() {
+      if (!rectangles.length) { rectList.innerHTML = '<div class="empty" style="padding:35px 10px">还没有矩形</div>'; return; }
+      rectList.replaceChildren(...rectangles.map((rect, index) => {
+        const row = document.createElement('div'); row.className = `rect-row${index === selected ? ' selected' : ''}`; row.addEventListener('click', () => { selected = index; updateOutput(); });
+        const label = document.createElement('b'); label.textContent = index + 1; row.append(label);
+        for (const key of ['x', 'y', 'width', 'height']) { const input = document.createElement('input'); input.type = 'number'; input.min = key === 'width' || key === 'height' ? '1' : '0'; input.value = rect[key]; input.title = key; input.setAttribute('aria-label', `${key} ${index + 1}`); input.addEventListener('click', event => event.stopPropagation()); input.addEventListener('change', () => { rectangles[index] = clampRect({ ...rectangles[index], [key]: input.value }); updateOutput(); }); row.append(input); }
+        const remove = document.createElement('button'); remove.className = 'delete'; remove.type = 'button'; remove.textContent = '×'; remove.title = '删除矩形'; remove.addEventListener('click', event => { event.stopPropagation(); rectangles.splice(index, 1); selected = Math.min(selected, rectangles.length - 1); updateOutput(); }); row.append(remove); return row;
+      }));
+    }
+    function copyCoordinates() { navigator.clipboard.writeText(jsonOutput.value).then(() => setStatus('坐标已复制。')).catch(() => { jsonOutput.select(); document.execCommand('copy'); setStatus('坐标已复制。'); }); }
+    fileInput.addEventListener('change', () => { const file = fileInput.files[0]; if (!file) return; const url = URL.createObjectURL(file); const next = new Image(); next.onload = () => { image = next; imageName = file.name; canvas.width = image.naturalWidth; canvas.height = image.naturalHeight; canvas.hidden = false; empty.hidden = true; rectangles = []; selected = -1; imageInfo.textContent = `${file.name} · ${canvas.width}×${canvas.height}`; setStatus('图片已加载，可以开始框选。'); updateOutput(); URL.revokeObjectURL(url); }; next.onerror = () => setStatus('无法读取这张图片。', true); next.src = url; });
+    canvas.addEventListener('pointerdown', event => { if (!image) return; canvas.setPointerCapture(event.pointerId); const point = canvasPoint(event); const hit = rectangles.findIndex(rect => point.x >= rect.x && point.x <= rect.x + rect.width && point.y >= rect.y && point.y <= rect.y + rect.height); if (hit >= 0) { selected = hit; updateOutput(); return; } draft = { start: point, end: point }; draw(); });
+    canvas.addEventListener('pointermove', event => { if (!draft) return; draft.end = canvasPoint(event); draw(); });
+    canvas.addEventListener('pointerup', event => { if (!draft) return; draft.end = canvasPoint(event); const rect = normalizedRect(draft.start, draft.end); draft = null; if (rect.width < 2 || rect.height < 2) { draw(); return; } rectangles.push(clampRect(rect)); selected = rectangles.length - 1; updateOutput(); });
+    undo.addEventListener('click', () => { rectangles.pop(); selected = Math.min(selected, rectangles.length - 1); updateOutput(); });
+    clear.addEventListener('click', () => { rectangles = []; selected = -1; updateOutput(); setStatus('已清空矩形。'); });
+    copy.addEventListener('click', copyCoordinates); copyTop.addEventListener('click', copyCoordinates);
+    download.addEventListener('click', () => { const blob = new Blob([jsonOutput.value], { type: 'application/json' }); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = `${imageName.replace(/\.[^.]+$/, '') || 'sprite-coordinates'}.json`; link.click(); URL.revokeObjectURL(link.href); setStatus('JSON 已下载。'); });
+  </script>
+</body>
+</html>
