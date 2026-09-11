@@ -1,53 +1,85 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1000"><defs>
-  <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#cbdad2"/><stop offset="1" stop-color="#f0e9d7"/></linearGradient>
-  <linearGradient id="wall" x2="1" y2=".4"><stop stop-color="#ece9d8"/><stop offset="1" stop-color="#bfcbbd"/></linearGradient>
-  <linearGradient id="side" x2="1" y2=".4"><stop stop-color="#91a79a"/><stop offset="1" stop-color="#c3cbb9"/></linearGradient>
-  <linearGradient id="water" x2=".3" y2="1"><stop stop-color="#508b7b"/><stop offset=".5" stop-color="#8eb5a0"/><stop offset="1" stop-color="#bad0b6"/></linearGradient>
-  <linearGradient id="dark" x2="1" y2="0"><stop stop-color="#172e29"/><stop offset="1" stop-color="#597c69"/></linearGradient>
-  <linearGradient id="light" x2="0" y2="1"><stop stop-color="#fffae3" stop-opacity=".85"/><stop offset="1" stop-color="#fffae3" stop-opacity="0"/></linearGradient>
-  <radialGradient id="glow"><stop stop-color="#fffce7" stop-opacity=".75"/><stop offset="1" stop-color="#fffce7" stop-opacity="0"/></radialGradient>
-  <pattern id="tiles" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M34 0H0V34" fill="none" stroke="#516f60" stroke-opacity=".18" stroke-width="1"/></pattern>
-  <pattern id="smalltiles" width="19" height="19" patternUnits="userSpaceOnUse"><path d="M19 0H0V19" fill="none" stroke="#e3ead6" stroke-opacity=".3" stroke-width=".8"/></pattern>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1000"><title>雾蓝泳池与彭罗斯循环楼梯</title><desc>无人拱廊前悬浮着四段首尾相接的阶梯，清晰踏步在矛盾的透视中形成闭环，下方水面映出朦胧倒影。</desc><defs>
+  <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#cad2db"/><stop offset="1" stop-color="#d8e3ef"/></linearGradient>
+  <linearGradient id="wall" x2="1" y2=".4"><stop stop-color="#d8e2ec"/><stop offset="1" stop-color="#b9c4cf"/></linearGradient>
+  <linearGradient id="side" x2="1" y2=".4"><stop stop-color="#8a9bae"/><stop offset="1" stop-color="#b7c2cd"/></linearGradient>
+  <linearGradient id="water" x2=".3" y2="1"><stop stop-color="#4d7898"/><stop offset=".5" stop-color="#88aec5"/><stop offset="1" stop-color="#bfd6e3"/></linearGradient>
+  <linearGradient id="dark" x2="1" y2="0"><stop stop-color="#17222e"/><stop offset="1" stop-color="#576a7e"/></linearGradient>
+  <linearGradient id="light" x2="0" y2="1"><stop stop-color="#ebf1f7" stop-opacity=".85"/><stop offset="1" stop-color="#ebf1f7" stop-opacity="0"/></linearGradient>
+  <radialGradient id="glow"><stop stop-color="#eef3f8" stop-opacity=".75"/><stop offset="1" stop-color="#eef3f8" stop-opacity="0"/></radialGradient>
+  <pattern id="tiles" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M34 0H0V34" fill="none" stroke="#4f5f71" stroke-opacity=".18" stroke-width="1"/></pattern>
+  <pattern id="smalltiles" width="19" height="19" patternUnits="userSpaceOnUse"><path d="M19 0H0V19" fill="none" stroke="#d6e0ea" stroke-opacity=".3" stroke-width=".8"/></pattern>
   <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".11"/></feComponentTransfer><feBlend in="SourceGraphic" mode="soft-light"/></filter>
   <filter id="blur"><feGaussianBlur stdDeviation="22"/></filter>
   <clipPath id="pool"><path d="M385 583H1160L1105 1020H-160Z"/></clipPath>
+
+  <!-- Stair topology adapted from Sakurambo / Philip Ronan, public domain.
+       https://commons.wikimedia.org/wiki/File:Impossible_staircase.svg
+       Local adaptation: blue materials, tile joints, lighting, placement and reflection. -->
+  <linearGradient id="stair-tread" x2="0" y2="1"><stop stop-color="#f0f5fa"/><stop offset="1" stop-color="#d3e0ed"/></linearGradient>
+  <linearGradient id="stair-front" x2=".3" y2="1"><stop stop-color="#bacddd"/><stop offset="1" stop-color="#7f9ab3"/></linearGradient>
+  <linearGradient id="stair-inner" x2="1" y2=".3"><stop stop-color="#536e8b"/><stop offset="1" stop-color="#8ba4ba"/></linearGradient>
+  <pattern id="stair-tiles" width="18.5" height="9" patternUnits="userSpaceOnUse"><path d="M18.5 0H0V9" fill="none" stroke="#3e5c79" stroke-opacity=".15" stroke-width=".35"/></pattern>
+  <filter id="reflection-blur" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="2.5 1.2"/></filter>
+  <path id="penrose-tread" d="m0,0 37,18 -37,18 -37,-18 z"/>
+  <path id="stair-inside-wall" d="m279,36 -37,18 v-8 l-37,18 v-8 l-37,18 v-8 l-37,18 v-8 l-37,18 v77 h185 z"/>
+  <path id="stair-front-wall" d="m20,159 v-73 l37,18 v-8 l37,18 v-8 l37,18 v-8 l37,18 v-8 l37,18 v-8 l37,18 v113 z"/>
+  <path id="stair-right-wall" d="m353,86 -37,18 v7 l-37,18 v7 l-37,18 v113 l111,-54 z"/>
+  <g id="penrose-staircase" transform="translate(345 160) scale(2 1.18)" stroke="#607f9a" stroke-width=".7" stroke-linejoin="round" fill="url(#stair-tread)">
+    <!-- Painter order is essential: these shared landings create the impossible loop. -->
+    <use href="#penrose-tread" x="242" y="18"/>
+    <use href="#penrose-tread" x="205" y="28"/>
+    <use href="#penrose-tread" x="168" y="38"/>
+    <use href="#penrose-tread" x="131" y="48"/>
+    <use href="#penrose-tread" x="94" y="58"/>
+    <use href="#penrose-tread" x="57" y="68"/>
+    <use href="#stair-inside-wall" fill="url(#stair-inner)"/>
+    <use href="#stair-inside-wall" fill="url(#stair-tiles)" stroke="none"/>
+    <use href="#penrose-tread" x="279" y="43"/>
+    <path fill="#7593ae" d="m316,61 v7 l-37,18 v-7 z"/>
+    <path fill="url(#stair-front)" d="m316,104 -37,-18 v-7 l-37,-18 v99 h74 z"/>
+    <use href="#penrose-tread" x="94" y="78"/>
+    <use href="#penrose-tread" x="131" y="88"/>
+    <use href="#penrose-tread" x="168" y="98"/>
+    <use href="#penrose-tread" x="205" y="108"/>
+    <use href="#penrose-tread" x="242" y="118"/>
+    <use href="#penrose-tread" x="279" y="93"/>
+    <use href="#penrose-tread" x="316" y="68"/>
+    <use href="#stair-right-wall" fill="url(#stair-inner)"/>
+    <use href="#stair-right-wall" fill="url(#stair-tiles)" stroke="none"/>
+    <use href="#stair-front-wall" fill="url(#stair-front)"/>
+    <use href="#stair-front-wall" fill="url(#stair-tiles)" stroke="none"/>
+  </g>
 </defs><g filter="url(#grain)">
 <path fill="url(#sky)" d="M0 0h1200v1000H0z"/>
-<circle cx="903" cy="162" r="83" fill="#f4f0d9"/><circle cx="905" cy="160" r="150" fill="url(#glow)"/>
+<circle cx="903" cy="162" r="83" fill="#dce6f1"/><circle cx="905" cy="160" r="150" fill="url(#glow)"/>
 <path d="M0 0H299V599L0 824Z" fill="url(#side)"/>
 <path d="M0 0H299V599L0 824Z" fill="url(#tiles)"/>
 <path d="M299 316L1200 266V649L299 685Z" fill="url(#wall)"/>
 <path d="M299 316L1200 266V649L299 685Z" fill="url(#tiles)"/>
-<path d="M299 316L1200 266V286L299 338Z" fill="#f5f1df"/>
-<path d="M424 615V440a55 55 0 0 1 110 0V615Z" fill="url(#dark)"/><path d="M506.5 615V444.4Q501 397 470.2 393" stroke="#9aaa90" stroke-width="6" fill="none" opacity=".5"/><path d="M632 603V419.5a52.5 52.5 0 0 1 105 0V603Z" fill="url(#dark)"/><path d="M710.75 603V423.7Q705.5 379 676.1 375" stroke="#9aaa90" stroke-width="6" fill="none" opacity=".5"/><path d="M832 591V399.5a50.5 50.5 0 0 1 101 0V591Z" fill="url(#dark)"/><path d="M907.75 591V403.54Q902.7 361 874.42 357" stroke="#9aaa90" stroke-width="6" fill="none" opacity=".5"/><path d="M1023 579V380a48 48 0 0 1 96 0V579Z" fill="url(#dark)"/><path d="M1095 579V383.84000000000003Q1090.2 344 1063.32 340" stroke="#9aaa90" stroke-width="6" fill="none" opacity=".5"/>
-<path d="M0 811L299 599L1200 565V1000H0Z" fill="#dadcc5"/>
+<path d="M299 316L1200 266V286L299 338Z" fill="#e1eaf3"/>
+<path d="M424 615V440a55 55 0 0 1 110 0V615Z" fill="url(#dark)"/><path d="M506.5 615V444.4Q501 397 470.2 393" stroke="#8b9caf" stroke-width="6" fill="none" opacity=".5"/><path d="M632 603V419.5a52.5 52.5 0 0 1 105 0V603Z" fill="url(#dark)"/><path d="M710.75 603V423.7Q705.5 379 676.1 375" stroke="#8b9caf" stroke-width="6" fill="none" opacity=".5"/><path d="M832 591V399.5a50.5 50.5 0 0 1 101 0V591Z" fill="url(#dark)"/><path d="M907.75 591V403.54Q902.7 361 874.42 357" stroke="#8b9caf" stroke-width="6" fill="none" opacity=".5"/><path d="M1023 579V380a48 48 0 0 1 96 0V579Z" fill="url(#dark)"/><path d="M1095 579V383.84000000000003Q1090.2 344 1063.32 340" stroke="#8b9caf" stroke-width="6" fill="none" opacity=".5"/>
+<path d="M0 811L299 599L1200 565V1000H0Z" fill="#c5d0dc"/>
 <path d="M0 811L299 599L1200 565V1000H0Z" fill="url(#tiles)"/>
-<path d="M368 568H1180L1125 1000H-170Z" fill="#eef0d9"/>
+<path d="M368 568H1180L1125 1000H-170Z" fill="#d9e4f0"/>
 <path d="M385 583H1160L1105 1020H-160Z" fill="url(#water)"/>
 <g clip-path="url(#pool)">
-<path d="M385 583v58h820V583" fill="#306d60" opacity=".5"/>
+<use href="#penrose-staircase" transform="translate(0 1120) scale(1 -.72)" opacity=".15" filter="url(#reflection-blur)"/>
+<path d="M385 583v58h820V583" fill="#304d6d" opacity=".5"/>
 <path d="M385 583L-160 1000H1105L1160 583Z" fill="url(#smalltiles)" opacity=".5"/>
-<path d="M200 646 Q480 623 1220 637" fill="none" stroke="#e9f2d0" stroke-opacity="0.08" stroke-width="1"/><path d="M176 668 Q489 645 1220 659" fill="none" stroke="#e9f2d0" stroke-opacity="0.125" stroke-width="2"/><path d="M152 690 Q498 667 1220 681" fill="none" stroke="#e9f2d0" stroke-opacity="0.16999999999999998" stroke-width="3"/><path d="M128 712 Q507 689 1220 703" fill="none" stroke="#e9f2d0" stroke-opacity="0.08" stroke-width="1"/><path d="M104 734 Q516 711 1220 725" fill="none" stroke="#e9f2d0" stroke-opacity="0.125" stroke-width="2"/><path d="M80 756 Q525 733 1220 747" fill="none" stroke="#e9f2d0" stroke-opacity="0.16999999999999998" stroke-width="3"/><path d="M56 778 Q534 755 1220 769" fill="none" stroke="#e9f2d0" stroke-opacity="0.08" stroke-width="1"/><path d="M32 800 Q543 777 1220 791" fill="none" stroke="#e9f2d0" stroke-opacity="0.125" stroke-width="2"/><path d="M8 822 Q552 799 1220 813" fill="none" stroke="#e9f2d0" stroke-opacity="0.16999999999999998" stroke-width="3"/><path d="M-16 844 Q561 821 1220 835" fill="none" stroke="#e9f2d0" stroke-opacity="0.08" stroke-width="1"/><path d="M-40 866 Q570 843 1220 857" fill="none" stroke="#e9f2d0" stroke-opacity="0.125" stroke-width="2"/><path d="M-64 888 Q579 865 1220 879" fill="none" stroke="#e9f2d0" stroke-opacity="0.16999999999999998" stroke-width="3"/><path d="M-88 910 Q588 887 1220 901" fill="none" stroke="#e9f2d0" stroke-opacity="0.08" stroke-width="1"/><path d="M-112 932 Q597 909 1220 923" fill="none" stroke="#e9f2d0" stroke-opacity="0.125" stroke-width="2"/><path d="M-136 954 Q606 931 1220 945" fill="none" stroke="#e9f2d0" stroke-opacity="0.16999999999999998" stroke-width="3"/><path d="M-160 976 Q615 953 1220 967" fill="none" stroke="#e9f2d0" stroke-opacity="0.08" stroke-width="1"/><path d="M-184 998 Q624 975 1220 989" fill="none" stroke="#e9f2d0" stroke-opacity="0.125" stroke-width="2"/><path d="M-208 1020 Q633 997 1220 1011" fill="none" stroke="#e9f2d0" stroke-opacity="0.16999999999999998" stroke-width="3"/><path d="M-232 1042 Q642 1019 1220 1033" fill="none" stroke="#e9f2d0" stroke-opacity="0.08" stroke-width="1"/><path d="M-256 1064 Q651 1041 1220 1055" fill="none" stroke="#e9f2d0" stroke-opacity="0.125" stroke-width="2"/><path d="M-280 1086 Q660 1063 1220 1077" fill="none" stroke="#e9f2d0" stroke-opacity="0.16999999999999998" stroke-width="3"/><path d="M-304 1108 Q669 1085 1220 1099" fill="none" stroke="#e9f2d0" stroke-opacity="0.08" stroke-width="1"/>
+<path d="M200 646 Q480 623 1220 637" fill="none" stroke="#d4e1ee" stroke-opacity="0.08" stroke-width="1"/><path d="M176 668 Q489 645 1220 659" fill="none" stroke="#d4e1ee" stroke-opacity="0.125" stroke-width="2"/><path d="M152 690 Q498 667 1220 681" fill="none" stroke="#d4e1ee" stroke-opacity="0.16999999999999998" stroke-width="3"/><path d="M128 712 Q507 689 1220 703" fill="none" stroke="#d4e1ee" stroke-opacity="0.08" stroke-width="1"/><path d="M104 734 Q516 711 1220 725" fill="none" stroke="#d4e1ee" stroke-opacity="0.125" stroke-width="2"/><path d="M80 756 Q525 733 1220 747" fill="none" stroke="#d4e1ee" stroke-opacity="0.16999999999999998" stroke-width="3"/><path d="M56 778 Q534 755 1220 769" fill="none" stroke="#d4e1ee" stroke-opacity="0.08" stroke-width="1"/><path d="M32 800 Q543 777 1220 791" fill="none" stroke="#d4e1ee" stroke-opacity="0.125" stroke-width="2"/><path d="M8 822 Q552 799 1220 813" fill="none" stroke="#d4e1ee" stroke-opacity="0.16999999999999998" stroke-width="3"/><path d="M-16 844 Q561 821 1220 835" fill="none" stroke="#d4e1ee" stroke-opacity="0.08" stroke-width="1"/><path d="M-40 866 Q570 843 1220 857" fill="none" stroke="#d4e1ee" stroke-opacity="0.125" stroke-width="2"/><path d="M-64 888 Q579 865 1220 879" fill="none" stroke="#d4e1ee" stroke-opacity="0.16999999999999998" stroke-width="3"/><path d="M-88 910 Q588 887 1220 901" fill="none" stroke="#d4e1ee" stroke-opacity="0.08" stroke-width="1"/><path d="M-112 932 Q597 909 1220 923" fill="none" stroke="#d4e1ee" stroke-opacity="0.125" stroke-width="2"/><path d="M-136 954 Q606 931 1220 945" fill="none" stroke="#d4e1ee" stroke-opacity="0.16999999999999998" stroke-width="3"/><path d="M-160 976 Q615 953 1220 967" fill="none" stroke="#d4e1ee" stroke-opacity="0.08" stroke-width="1"/><path d="M-184 998 Q624 975 1220 989" fill="none" stroke="#d4e1ee" stroke-opacity="0.125" stroke-width="2"/><path d="M-208 1020 Q633 997 1220 1011" fill="none" stroke="#d4e1ee" stroke-opacity="0.16999999999999998" stroke-width="3"/><path d="M-232 1042 Q642 1019 1220 1033" fill="none" stroke="#d4e1ee" stroke-opacity="0.08" stroke-width="1"/><path d="M-256 1064 Q651 1041 1220 1055" fill="none" stroke="#d4e1ee" stroke-opacity="0.125" stroke-width="2"/><path d="M-280 1086 Q660 1063 1220 1077" fill="none" stroke="#d4e1ee" stroke-opacity="0.16999999999999998" stroke-width="3"/><path d="M-304 1108 Q669 1085 1220 1099" fill="none" stroke="#d4e1ee" stroke-opacity="0.08" stroke-width="1"/>
 <path d="M720 583L348 1000H720L907 583Z" fill="url(#light)" opacity=".24"/>
 <ellipse cx="865" cy="793" rx="240" ry="86" fill="url(#glow)" opacity=".6"/>
-<g fill="none" stroke="#dfecd1" stroke-width="1.2" opacity=".48"><ellipse cx="710" cy="799" rx="82" ry="17"/><ellipse cx="710" cy="799" rx="119" ry="25"/><ellipse cx="710" cy="799" rx="160" ry="34"/><ellipse cx="710" cy="799" rx="201" ry="44"/></g>
+<g fill="none" stroke="#d1deec" stroke-width="1.2" opacity=".48"><ellipse cx="710" cy="799" rx="82" ry="17"/><ellipse cx="710" cy="799" rx="119" ry="25"/><ellipse cx="710" cy="799" rx="160" ry="34"/><ellipse cx="710" cy="799" rx="201" ry="44"/></g>
 </g>
-<path d="M0 694L221 542L376 600L129 803H0Z" fill="#536e5c" opacity=".16"/>
-<path d="M-100 814h179v22h-179Z" fill="#a7b5a0" stroke="#8fa18e" stroke-width=".6"/><path d="M-100 814l19 -11h179l-19 11Z" fill="#eeeeda" stroke="#bac3ad" stroke-width=".6"/><path d="M-81 792h179v22h-179Z" fill="#a7b5a0" stroke="#8fa18e" stroke-width=".6"/><path d="M-81 792l19 -11h179l-19 11Z" fill="#eeeeda" stroke="#bac3ad" stroke-width=".6"/><path d="M-62 770h179v22h-179Z" fill="#a7b5a0" stroke="#8fa18e" stroke-width=".6"/><path d="M-62 770l19 -11h179l-19 11Z" fill="#eeeeda" stroke="#bac3ad" stroke-width=".6"/><path d="M-43 748h179v22h-179Z" fill="#a7b5a0" stroke="#8fa18e" stroke-width=".6"/><path d="M-43 748l19 -11h179l-19 11Z" fill="#eeeeda" stroke="#bac3ad" stroke-width=".6"/><path d="M-24 726h179v22h-179Z" fill="#a7b5a0" stroke="#8fa18e" stroke-width=".6"/><path d="M-24 726l19 -11h179l-19 11Z" fill="#eeeeda" stroke="#bac3ad" stroke-width=".6"/><path d="M-5 704h179v22h-179Z" fill="#a7b5a0" stroke="#8fa18e" stroke-width=".6"/><path d="M-5 704l19 -11h179l-19 11Z" fill="#eeeeda" stroke="#bac3ad" stroke-width=".6"/><path d="M14 682h179v22h-179Z" fill="#a7b5a0" stroke="#8fa18e" stroke-width=".6"/><path d="M14 682l19 -11h179l-19 11Z" fill="#eeeeda" stroke="#bac3ad" stroke-width=".6"/><path d="M33 660h179v22h-179Z" fill="#a7b5a0" stroke="#8fa18e" stroke-width=".6"/><path d="M33 660l19 -11h179l-19 11Z" fill="#eeeeda" stroke="#bac3ad" stroke-width=".6"/><path d="M52 638h179v22h-179Z" fill="#a7b5a0" stroke="#8fa18e" stroke-width=".6"/><path d="M52 638l19 -11h179l-19 11Z" fill="#eeeeda" stroke="#bac3ad" stroke-width=".6"/><path d="M71 616h179v22h-179Z" fill="#a7b5a0" stroke="#8fa18e" stroke-width=".6"/><path d="M71 616l19 -11h179l-19 11Z" fill="#eeeeda" stroke="#bac3ad" stroke-width=".6"/><path d="M90 594h179v22h-179Z" fill="#a7b5a0" stroke="#8fa18e" stroke-width=".6"/><path d="M90 594l19 -11h179l-19 11Z" fill="#eeeeda" stroke="#bac3ad" stroke-width=".6"/><path d="M109 572h179v22h-179Z" fill="#a7b5a0" stroke="#8fa18e" stroke-width=".6"/><path d="M109 572l19 -11h179l-19 11Z" fill="#eeeeda" stroke="#bac3ad" stroke-width=".6"/><path d="M128 550h179v22h-179Z" fill="#a7b5a0" stroke="#8fa18e" stroke-width=".6"/><path d="M128 550l19 -11h179l-19 11Z" fill="#eeeeda" stroke="#bac3ad" stroke-width=".6"/><path d="M147 528h179v22h-179Z" fill="#a7b5a0" stroke="#8fa18e" stroke-width=".6"/><path d="M147 528l19 -11h179l-19 11Z" fill="#eeeeda" stroke="#bac3ad" stroke-width=".6"/><path d="M166 506h179v22h-179Z" fill="#a7b5a0" stroke="#8fa18e" stroke-width=".6"/><path d="M166 506l19 -11h179l-19 11Z" fill="#eeeeda" stroke="#bac3ad" stroke-width=".6"/><path d="M185 484h179v22h-179Z" fill="#a7b5a0" stroke="#8fa18e" stroke-width=".6"/><path d="M185 484l19 -11h179l-19 11Z" fill="#eeeeda" stroke="#bac3ad" stroke-width=".6"/>
-<path d="M184 484h180v18H184Z" fill="#f1eed9"/>
-<path d="M285 0h25v603l-25 22Z" fill="#e7e6d1"/>
-<path d="M305 0h37v572l-37 32Z" fill="#768e7a"/>
-<path d="M285 0h57v15h-57Z" fill="#f7f2db"/>
+<path d="M0 694L221 542L376 600L129 803H0Z" fill="#4f6072" opacity=".16"/>
+<path d="M-100 814h179v22h-179Z" fill="#9baaba" stroke="#8597aa" stroke-width=".6"/><path d="M-100 814l19 -11h179l-19 11Z" fill="#dae4ee" stroke="#abb8c5" stroke-width=".6"/><path d="M-81 792h179v22h-179Z" fill="#9baaba" stroke="#8597aa" stroke-width=".6"/><path d="M-81 792l19 -11h179l-19 11Z" fill="#dae4ee" stroke="#abb8c5" stroke-width=".6"/><path d="M-62 770h179v22h-179Z" fill="#9baaba" stroke="#8597aa" stroke-width=".6"/><path d="M-62 770l19 -11h179l-19 11Z" fill="#dae4ee" stroke="#abb8c5" stroke-width=".6"/><path d="M-43 748h179v22h-179Z" fill="#9baaba" stroke="#8597aa" stroke-width=".6"/><path d="M-43 748l19 -11h179l-19 11Z" fill="#dae4ee" stroke="#abb8c5" stroke-width=".6"/><path d="M-24 726h179v22h-179Z" fill="#9baaba" stroke="#8597aa" stroke-width=".6"/><path d="M-24 726l19 -11h179l-19 11Z" fill="#dae4ee" stroke="#abb8c5" stroke-width=".6"/><path d="M-5 704h179v22h-179Z" fill="#9baaba" stroke="#8597aa" stroke-width=".6"/><path d="M-5 704l19 -11h179l-19 11Z" fill="#dae4ee" stroke="#abb8c5" stroke-width=".6"/><path d="M14 682h179v22h-179Z" fill="#9baaba" stroke="#8597aa" stroke-width=".6"/><path d="M14 682l19 -11h179l-19 11Z" fill="#dae4ee" stroke="#abb8c5" stroke-width=".6"/><path d="M33 660h179v22h-179Z" fill="#9baaba" stroke="#8597aa" stroke-width=".6"/><path d="M33 660l19 -11h179l-19 11Z" fill="#dae4ee" stroke="#abb8c5" stroke-width=".6"/><path d="M52 638h179v22h-179Z" fill="#9baaba" stroke="#8597aa" stroke-width=".6"/><path d="M52 638l19 -11h179l-19 11Z" fill="#dae4ee" stroke="#abb8c5" stroke-width=".6"/><path d="M71 616h179v22h-179Z" fill="#9baaba" stroke="#8597aa" stroke-width=".6"/><path d="M71 616l19 -11h179l-19 11Z" fill="#dae4ee" stroke="#abb8c5" stroke-width=".6"/><path d="M90 594h179v22h-179Z" fill="#9baaba" stroke="#8597aa" stroke-width=".6"/><path d="M90 594l19 -11h179l-19 11Z" fill="#dae4ee" stroke="#abb8c5" stroke-width=".6"/><path d="M109 572h179v22h-179Z" fill="#9baaba" stroke="#8597aa" stroke-width=".6"/><path d="M109 572l19 -11h179l-19 11Z" fill="#dae4ee" stroke="#abb8c5" stroke-width=".6"/><path d="M128 550h179v22h-179Z" fill="#9baaba" stroke="#8597aa" stroke-width=".6"/><path d="M128 550l19 -11h179l-19 11Z" fill="#dae4ee" stroke="#abb8c5" stroke-width=".6"/><path d="M147 528h179v22h-179Z" fill="#9baaba" stroke="#8597aa" stroke-width=".6"/><path d="M147 528l19 -11h179l-19 11Z" fill="#dae4ee" stroke="#abb8c5" stroke-width=".6"/><path d="M166 506h179v22h-179Z" fill="#9baaba" stroke="#8597aa" stroke-width=".6"/><path d="M166 506l19 -11h179l-19 11Z" fill="#dae4ee" stroke="#abb8c5" stroke-width=".6"/><path d="M185 484h179v22h-179Z" fill="#9baaba" stroke="#8597aa" stroke-width=".6"/><path d="M185 484l19 -11h179l-19 11Z" fill="#dae4ee" stroke="#abb8c5" stroke-width=".6"/>
+<path d="M184 484h180v18H184Z" fill="#dae5f0"/>
+<path d="M285 0h25v603l-25 22Z" fill="#d1dce7"/>
+<path d="M305 0h37v572l-37 32Z" fill="#6b8199"/>
+<path d="M285 0h57v15h-57Z" fill="#e0e9f2"/>
 <path d="M1122 0h78v1000h-40V282h-38Z" fill="url(#side)"/>
 <path d="M1122 0h78v1000h-40V282h-38Z" fill="url(#tiles)"/>
-<path d="M0 47L798 0h214L0 139Z" fill="#dfe2ce"/>
-<path d="M0 139L1012 0v23L0 161Z" fill="#8a9e88"/>
-<path d="M321 119L788 61L989 237L953 273L786 117L354 175Z" fill="#eff0da"/>
-<path d="M354 175L786 117V143L354 199Z" fill="#849e86"/>
-<path d="M788 117L953 273V299L788 143Z" fill="#68876f"/>
-<path d="M953 273L1063 123L1096 153L953 333L523 226L554 185Z" fill="#d5dec7"/>
-<path d="M953 307L1096 127v26L953 333Z" fill="#7b9981"/>
-<path d="M523 200L953 307V333L523 226Z" fill="#79967c"/>
-<path d="M321 119L354 175L555 225L576 199L379 148L352 101Z" fill="#f2efda"/>
-<path d="M342 124L1094 954" stroke="#fffae0" stroke-width="75" opacity=".065" filter="url(#blur)"/>
+<!-- The impossible stair remains separate from the ordinary pool-access stairs. -->
+<use href="#penrose-staircase"/>
+<path d="M842 139L1094 954" stroke="#e9eff6" stroke-width="75" opacity=".045" filter="url(#blur)"/>
 </g></svg>

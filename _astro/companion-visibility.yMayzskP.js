@@ -1,0 +1,1 @@
+const i="blog-companion-hidden";let e=!0;try{e=localStorage.getItem(i)!=="false"}catch{}const t=new EventTarget;function o(){return e}function a(){e=!e;try{localStorage.setItem(i,String(e))}catch{}t.dispatchEvent(new Event("change"))}function c(n){return t.addEventListener("change",n),n(),()=>t.removeEventListener("change",n)}export{o as i,c as s,a as t};
