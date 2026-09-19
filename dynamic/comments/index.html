@@ -6,7 +6,7 @@ const defaultWallpaperMode = "banner";
 const isWallpaperSwitchable = true;
 const darkTheme = "one-dark-pro";
 const lightTheme = "one-light";
-const baseUrl = "/";
+const isHomePageCheck = false;
 const cardTransparentOpacity = 0.5;
 
       // 主题初始化 - 与setting-utils.ts保持一致
@@ -148,10 +148,7 @@ const cardTransparentOpacity = 0.5;
           const wallpaperWrapper = document.getElementById("wallpaper-wrapper");
 
           // 检查当前是否为首页
-          const isHomePage =
-            window.location.pathname === baseUrl ||
-            (baseUrl !== '/' && window.location.pathname === baseUrl.replace(/\/$/, '')) ||
-            window.location.pathname === "/";
+          const isHomePage = isHomePageCheck;
 
           if (wallpaperMode === WALLPAPER_OVERLAY) {
             // 全屏壁纸透明模式：切换为 overlay 显示
@@ -255,10 +252,6 @@ const cardTransparentOpacity = 0.5;
             ".banner-home-text-overlay"
           );
           if (bannerTextOverlay) {
-            const isHomePage =
-              window.location.pathname === baseUrl || 
-              (baseUrl !== '/' && window.location.pathname === baseUrl.replace(/\/$/, '')) ||
-              window.location.pathname === "/";
             if ((wallpaperMode === WALLPAPER_BANNER || wallpaperMode === WALLPAPER_FULLSCREEN) && isHomePage) {
               bannerTextOverlay.classList.remove("hidden");
             } else {
@@ -1110,4 +1103,4 @@ const darkTheme = "dark";
 				mgr.stop();
 			}
 		});
-	})();</script> <!-- Fancybox Manager --> <script type="module" src="/_astro/FancyboxManager.astro_astro_type_script_index_0_lang.IFtUndd7.js"></script>  <script type="module" src="/_astro/Layout.astro_astro_type_script_index_0_lang.BD4aWlCs.js"></script></body></html> <script type="module">window.addEventListener("message",e=>{e.origin!==window.location.origin||e.data?.type!=="dynamic-comment-theme"||(document.documentElement.classList.toggle("dark",!!e.data.dark),document.documentElement.dataset.theme=e.data.dark?"dark":"light")});const t=()=>{window.parent.postMessage({type:"dynamic-comment-height",height:document.documentElement.scrollHeight},window.location.origin)};new ResizeObserver(t).observe(document.body);window.addEventListener("load",t);</script>
+	})();</script> <!-- Fancybox Manager --> <script type="module" src="/_astro/FancyboxManager.astro_astro_type_script_index_0_lang.IFtUndd7.js"></script>  <script type="module" src="/_astro/Layout.astro_astro_type_script_index_0_lang.BbvZCnB4.js"></script></body></html> <script type="module">window.addEventListener("message",e=>{e.origin!==window.location.origin||e.data?.type!=="dynamic-comment-theme"||(document.documentElement.classList.toggle("dark",!!e.data.dark),document.documentElement.dataset.theme=e.data.dark?"dark":"light")});const t=()=>{window.parent.postMessage({type:"dynamic-comment-height",height:document.documentElement.scrollHeight},window.location.origin)};new ResizeObserver(t).observe(document.body);window.addEventListener("load",t);</script>
