@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="860" viewBox="0 0 1120 860" role="img" aria-labelledby="title desc">
+  <title id="title">GitHub Actions 的概念关系</title>
+  <desc id="desc">事件触发 workflow，workflow 包含 job，job 内的 step 按顺序执行。runner 是执行 job 的机器，不是流水线中的一个步骤。step 可以通过 uses 调用 action，或通过 run 执行命令。图中只展开一个构建任务作示意。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#333"/></marker>
+    <style>
+      text{font-family:Arial,'Microsoft YaHei',sans-serif;fill:#111}
+      .title{font-size:32px;font-weight:700}.head{font-size:24px;font-weight:700}.body{font-size:20px}.small{font-size:17px;fill:#555}.code{font-family:Consolas,'Microsoft YaHei',monospace;font-size:19px}
+      .panel{fill:#fff;stroke:#111;stroke-width:2}.soft{fill:#e7e7e7;stroke:#555;stroke-width:1.5}.line{fill:none;stroke:#333;stroke-width:2;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1120" height="860" fill="#f6f6f6"/>
+  <text class="title" x="40" y="55">GitHub Actions 如何组织一次自动化流程</text>
+  <text class="small" x="40" y="86">框的嵌套表示包含关系；runner 表示执行位置，而不是下一个步骤。</text>
+
+  <rect class="soft" x="40" y="112" width="1040" height="64" rx="10"/>
+  <text class="head" x="64" y="152">触发事件</text>
+  <text class="body" x="215" y="152">push 到 master / 手动运行</text>
+  <text class="code" x="825" y="152">on: 配置触发条件</text>
+  <path class="line" d="M390 176 V222"/>
+  <text class="small" x="409" y="207">触发</text>
+
+  <rect class="panel" x="40" y="230" width="720" height="536" rx="10"/>
+  <text class="head" x="64" y="268">workflow 工作流</text>
+  <text class="code" x="353" y="268">.github/workflows/*.yml</text>
+  <text class="small" x="64" y="299">包含一个或多个 job，下面只展开一个构建任务</text>
+
+  <rect class="soft" x="64" y="321" width="672" height="421" rx="10"/>
+  <text class="head" x="88" y="358">job 任务 · build</text>
+  <text class="small" x="437" y="358">steps：内部步骤按顺序执行</text>
+
+  <rect class="panel" x="88" y="379" width="624" height="56" rx="8"/>
+  <text class="body" x="105" y="414">① 拉取代码</text>
+  <text class="code" x="297" y="414">uses: actions/checkout</text>
+  <path class="line" d="M400 436 V449"/>
+
+  <rect class="panel" x="88" y="451" width="624" height="56" rx="8"/>
+  <text class="body" x="105" y="486">② 准备 Node.js</text>
+  <text class="code" x="297" y="486">uses: actions/setup-node</text>
+  <path class="line" d="M400 508 V521"/>
+
+  <rect class="panel" x="88" y="523" width="624" height="56" rx="8"/>
+  <text class="body" x="105" y="558">③ 安装依赖</text>
+  <text class="code" x="297" y="558">run: npm ci</text>
+  <path class="line" d="M400 580 V593"/>
+
+  <rect class="panel" x="88" y="595" width="624" height="56" rx="8"/>
+  <text class="body" x="105" y="630">④ 运行测试</text>
+  <text class="code" x="297" y="630">run: npm run test</text>
+  <path class="line" d="M400 652 V665"/>
+
+  <rect class="panel" x="88" y="667" width="624" height="56" rx="8"/>
+  <text class="body" x="105" y="702">⑤ 构建产物</text>
+  <text class="code" x="297" y="702">run: npm run build</text>
+
+  <rect class="panel" x="824" y="321" width="256" height="190" rx="10"/>
+  <text class="head" x="844" y="358">runner 执行机器</text>
+  <text class="code" x="844" y="402">runs-on:</text>
+  <text class="code" x="844" y="432">ubuntu-latest</text>
+  <text class="small" x="844" y="483">整个 job 在这台机器上运行</text>
+  <path class="line" d="M824 385 H740"/>
+  <text class="small" x="768" y="373">执行</text>
+
+  <text class="head" x="824" y="558">step 的两种写法</text>
+  <text class="code" x="824" y="596">uses → 调用 action</text>
+  <text class="small" x="824" y="623">复用别人封装好的操作</text>
+  <text class="code" x="824" y="668">run → 执行命令</text>
+  <text class="small" x="824" y="695">自己写要运行的命令</text>
+
+  <text class="small" x="40" y="805">这是结构示意，不是完整配置；部署步骤省略。只有明确通过 SSH 等连接生产服务器，命令才在那里执行。</text>
+  <text class="small" x="40" y="834">记住这组关系：事件触发 workflow → workflow 包含 job → job 包含 step；runner 负责执行 job。</text>
+</svg>

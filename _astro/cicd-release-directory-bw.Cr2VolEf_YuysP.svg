@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+  <title id="title">Release directory structure</title>
+  <desc id="desc">Production server release directory and current symbolic link.</desc>
+  <style>.bg{fill:#f6f6f6}.panel{fill:#fff;stroke:#111;stroke-width:2}.soft{fill:#e3e3e3;stroke:#222;stroke-width:1.5}.line{stroke:#111;stroke-width:3;fill:none}.dash{stroke:#111;stroke-width:3;fill:none;stroke-dasharray:8 8}.t{font-family:Arial,'Microsoft YaHei',sans-serif;fill:#111}.h{font-size:34px;font-weight:700}.s{font-size:23px}.xs{font-size:18px}.mono{font-family:Consolas,monospace;font-size:22px;fill:#111}.smallmono{font-family:Consolas,monospace;font-size:18px;fill:#111}.center{text-anchor:middle}</style>
+  <rect class="bg" width="1400" height="760"/>
+  <text class="t h" x="70" y="75">服务器上的 release 结构</text>
+  <text class="t s" x="70" y="116">新版本不直接覆盖旧版本，而是进入独立目录，再让 current 指过去。</text>
+  <rect class="panel" x="120" y="170" width="1160" height="500" rx="12"/>
+  <text class="mono" x="180" y="230">~/English_Context/</text>
+  <line class="line" x1="215" y1="250" x2="215" y2="600"/>
+  <line class="line" x1="215" y1="290" x2="300" y2="290"/><rect class="soft" x="300" y="260" width="250" height="58" rx="8"/><text class="smallmono center" x="425" y="297">incoming/</text>
+  <line class="line" x1="215" y1="380" x2="300" y2="380"/><rect class="soft" x="300" y="350" width="250" height="58" rx="8"/><text class="smallmono center" x="425" y="387">releases/</text>
+  <line class="line" x1="550" y1="380" x2="650" y2="330"/><rect class="soft" x="650" y="300" width="260" height="58" rx="8"/><text class="smallmono center" x="780" y="337">old-sha/</text>
+  <line class="line" x1="550" y1="380" x2="650" y2="430"/><rect class="soft" x="650" y="400" width="260" height="58" rx="8"/><text class="smallmono center" x="780" y="437">new-sha/</text>
+  <line class="line" x1="215" y1="510" x2="300" y2="510"/><rect class="soft" x="300" y="480" width="250" height="58" rx="8"/><text class="smallmono center" x="425" y="517">current</text>
+  <defs><marker id="symlink-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#111"/></marker></defs>
+  <path class="dash" d="M558 509 H780 V466" marker-end="url(#symlink-arrow)"/>
+  <text class="t xs" x="930" y="435">软链接指向当前运行版本</text>
+  <line class="line" x1="215" y1="600" x2="300" y2="600"/><rect class="soft" x="300" y="570" width="250" height="58" rx="8"/><text class="smallmono center" x="425" y="607">.env</text>
+  <text class="t xs" x="650" y="605">生产环境变量留在服务器，不进入 tar.gz。</text>
+</svg>

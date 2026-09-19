@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+  <title id="title">Application deployment and database migration separation</title>
+  <desc id="desc">Diagram showing why application releases and database migrations should be handled separately.</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#111"/></marker><style>.bg{fill:#f6f6f6}.box{fill:#fff;stroke:#111;stroke-width:2}.soft{fill:#e3e3e3;stroke:#222;stroke-width:1.5}.line{stroke:#111;stroke-width:3;fill:none;marker-end:url(#arrow)}.t{font-family:Arial,'Microsoft YaHei',sans-serif;fill:#111}.h{font-size:34px;font-weight:700}.s{font-size:23px}.xs{font-size:18px}.mono{font-family:Consolas,monospace;font-size:18px;fill:#111}.center{text-anchor:middle}</style></defs>
+  <rect class="bg" width="1400" height="760"/>
+  <text class="t h" x="70" y="75">应用发布和数据库迁移要分开看</text>
+  <text class="t s" x="70" y="116">应用目录可以靠 current 回滚，数据库 schema 一旦改错，通常不能简单“切回去”。</text>
+  <rect class="box" x="100" y="190" width="520" height="380" rx="12"/>
+  <text class="t s center" x="360" y="245">应用 release 链</text>
+  <rect class="soft" x="160" y="300" width="400" height="56" rx="8"/><text class="mono center" x="360" y="335">releases/old-sha</text>
+  <path class="line" d="M360 365 V405"/>
+  <rect class="soft" x="160" y="415" width="400" height="56" rx="8"/><text class="mono center" x="360" y="450">releases/new-sha</text>
+  <text class="t xs center" x="360" y="540">失败时 current 可以切回旧目录。</text>
+  <rect class="box" x="780" y="190" width="520" height="380" rx="12"/>
+  <text class="t s center" x="1040" y="245">数据库 schema 链</text>
+  <rect class="soft" x="840" y="300" width="400" height="56" rx="8"/><text class="mono center" x="1040" y="335">添加兼容字段</text>
+  <path class="line" d="M1040 365 V405"/>
+  <rect class="soft" x="840" y="415" width="400" height="56" rx="8"/><text class="mono center" x="1040" y="450">回填 / 建索引</text>
+  <text class="t xs center" x="1040" y="540">要先备份、验证兼容性，再执行。</text>
+  <text class="t xs center" x="700" y="660">底层原则：代码发布追求可替换，数据库迁移追求渐进兼容。</text>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+  <title id="title">Rollback mechanism</title>
+  <desc id="desc">How health check failure rolls current back to the previous release.</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#111"/></marker><style>.bg{fill:#f6f6f6}.box{fill:#fff;stroke:#111;stroke-width:2}.soft{fill:#e3e3e3;stroke:#222;stroke-width:1.5}.dark{fill:#222}.line{stroke:#111;stroke-width:3;fill:none;marker-end:url(#arrow)}.loop{stroke:#111;stroke-width:3;fill:none;stroke-dasharray:8 8;marker-end:url(#arrow)}.t{font-family:Arial,'Microsoft YaHei',sans-serif;fill:#111}.white{fill:#fff}.h{font-size:34px;font-weight:700}.s{font-size:23px}.xs{font-size:18px}.mono{font-family:Consolas,monospace;font-size:19px;fill:#111}.center{text-anchor:middle}</style></defs>
+  <rect class="bg" width="1400" height="760"/>
+  <text class="t h" x="70" y="75">回滚机制：失败时回到上一个完整版本</text>
+  <text class="t s" x="70" y="116">回滚依赖两个前提：旧 release 还在，current 是可以快速切换的软链接。</text>
+  <rect class="box" x="90" y="220" width="230" height="110" rx="10"/><text class="mono center" x="205" y="265">previous =</text><text class="mono center" x="205" y="295">old release</text>
+  <path class="line" d="M330 275 H420"/>
+  <rect class="box" x="430" y="220" width="250" height="110" rx="10"/><text class="mono center" x="555" y="265">current -&gt;</text><text class="mono center" x="555" y="295">new release</text>
+  <path class="line" d="M690 275 H780"/>
+  <rect class="box" x="790" y="220" width="250" height="110" rx="10"/><text class="mono center" x="915" y="265">restart</text><text class="mono center" x="915" y="295">systemd</text>
+  <path class="line" d="M1050 275 H1140"/>
+  <rect class="dark" x="1150" y="220" width="190" height="110" rx="10"/><text class="t white s center" x="1245" y="265">健康检查</text><text class="t white xs center" x="1245" y="298">curl 失败</text>
+   <path class="loop" d="M1245 338 V400 H555 V462"/>
+  <rect class="soft" x="430" y="470" width="250" height="110" rx="10"/><text class="mono center" x="555" y="515">current -&gt;</text><text class="mono center" x="555" y="545">old release</text>
+  <path class="line" d="M690 525 H780"/>
+  <rect class="soft" x="790" y="470" width="250" height="110" rx="10"/><text class="mono center" x="915" y="515">restart</text><text class="mono center" x="915" y="545">old version</text>
+  <text class="t xs center" x="700" y="665">注意：这只能回滚应用目录。数据库结构、用户数据、缓存等状态要单独设计。</text>
+</svg>

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+  <title id="title">CI/CD complete delivery chain</title>
+  <desc id="desc">Black, white, and gray overview diagram for a ContextVocab deployment pipeline.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#111"/>
+    </marker>
+    <marker id="arrowGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#555"/>
+    </marker>
+    <style>
+      .bg{fill:#f6f6f6}.panel{fill:#fff;stroke:#111;stroke-width:2}.soft{fill:#e7e7e7;stroke:#333;stroke-width:1.5}.line{stroke:#111;stroke-width:3;fill:none;marker-end:url(#arrow)}.dash{stroke:#555;stroke-width:2.5;fill:none;stroke-dasharray:8 8;marker-end:url(#arrowGray)}.t{font-family:Arial,'Microsoft YaHei',sans-serif;fill:#111}.h{font-size:34px;font-weight:700}.s{font-size:20px}.xs{font-size:16px}.cap{font-size:15px;fill:#555}.mono{font-family:Consolas,'SFMono-Regular',monospace;font-size:16px;fill:#111}.center{text-anchor:middle}.small{font-size:14px}
+    </style>
+  </defs>
+  <rect class="bg" width="1400" height="760"/>
+
+  <text class="t h" x="70" y="72">ContextVocab CI/CD 总览</text>
+  <text class="t s" x="70" y="112">核心逻辑：GitHub Actions 负责验证和构建，低内存服务器只接收、切换、运行产物。</text>
+
+  <rect class="panel" x="70" y="200" width="240" height="140" rx="10"/>
+  <text class="t s center" x="190" y="260">代码变更</text>
+  <text class="mono center" x="190" y="294">git push</text>
+  <path class="line" d="M318 270 H402"/>
+
+  <rect class="panel" x="410" y="200" width="240" height="140" rx="10"/>
+  <text class="t s center" x="530" y="245">GitHub Actions</text>
+  <text class="mono center" x="530" y="279">checkout</text>
+  <text class="mono center" x="530" y="305">Node.js 22</text>
+  <path class="line" d="M658 270 H742"/>
+
+  <rect class="panel" x="750" y="200" width="240" height="140" rx="10"/>
+  <text class="t s center" x="870" y="245">验证与构建</text>
+  <text class="mono center" x="870" y="279">npm ci</text>
+  <text class="mono center" x="870" y="305">test + build</text>
+  <path class="line" d="M998 270 H1082"/>
+
+  <rect class="panel" x="1090" y="200" width="240" height="140" rx="10"/>
+  <text class="t s center" x="1210" y="260">部署包</text>
+  <text class="mono center" x="1210" y="294">sha.tar.gz</text>
+  <path class="line" d="M1210 348 V442"/>
+
+  <rect class="panel" x="1090" y="450" width="240" height="140" rx="10"/>
+  <text class="t s center" x="1210" y="495">SSH/SCP</text>
+  <text class="mono center" x="1210" y="529">incoming/</text>
+  <text class="t cap center" x="1210" y="555">只传输产物</text>
+  <path class="line" d="M1082 520 H998"/>
+
+  <rect class="panel" x="750" y="450" width="240" height="140" rx="10"/>
+  <text class="t s center" x="870" y="485">生产服务器</text>
+  <text class="mono center" x="870" y="517">releases/&lt;sha&gt;</text>
+  <text class="mono center" x="870" y="542">current -&gt; 新版本</text>
+  <text class="mono center" x="870" y="567">systemd restart</text>
+  <path class="line" d="M742 520 H658"/>
+
+  <rect class="panel" x="410" y="450" width="240" height="140" rx="10"/>
+  <text class="t s center" x="530" y="510">健康检查</text>
+  <text class="mono center" x="530" y="544">curl :3456</text>
+  <path class="dash" d="M402 520 H318"/>
+  <text class="t cap center" x="360" y="497">失败</text>
+
+  <rect class="soft" x="70" y="450" width="240" height="140" rx="10"/>
+  <text class="t s center" x="190" y="510">失败回滚</text>
+  <text class="mono center" x="190" y="544">current -&gt; 旧版本</text>
+
+  <rect class="soft" x="70" y="650" width="1260" height="46" rx="8"/>
+  <text class="t xs" x="95" y="680">判断一条流水线是否完整：能不能验证、生成固定产物、传输、原子切换、检查失败并回退。</text>
+</svg>
